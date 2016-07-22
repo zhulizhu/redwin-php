@@ -1,0 +1,43 @@
+<extend name="Base/common"/>
+
+<block name="body">
+<script type="text/javascript" src="__STATIC__/jquery.lazyload.js"></script>
+<div id="userPrints">
+	<div class="head"><span>晒单分享</span>&nbsp;&nbsp;|&nbsp;&nbsp;共<em>{$counts}</em>条晒单</div>
+    <volist name="uPrints" id="list">
+    <div class="content">
+    <img class="award lazy" data-original="__IMG__/award.png" width="106" height="127" />
+    	<div class="left">
+			<a href="{:U('Product/detail?id='.$list['pro_id'])}"><img class="lazy" data-original="{$list.cover_id|thumb=389,259}" width="389" height="259"/></a>
+            <p><a href="{:U('Product/detail?id='.$list['pro_id'])}" title="({$list.periods}){$list.title}">({$list.periods}){$list.title}</a></p>
+            <p>幸运号码：<span><if condition="$list['state'] eq 2">{$list.awardnum}<else/>待定</if></span></p> 
+        </div>
+        <div class="right">
+        	<div class="user">
+            	<img class="lazy" data-original="{$list.photo|thumb=37,37}" width="37" height="37" />
+                <div class="nickname">{$list.nickname}</div>
+            </div>
+            <div class="say">
+                <div class="detail">{$list.say}</div>
+                <div class="time">{$list.create_time|date='Y-m-d',###}</div>
+            </div>
+        </div>
+    </div>
+   </volist> 
+</div>
+<div id="reco">
+    <div class="tit">
+      <h2>推荐奖品</h2>
+    </div>
+    <div class="pro">
+      <ul>
+        <volist name="reco" id="list" offset="0" length="5">
+          <li> <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}"><img class="lazy" data-original="{$list.cover_id|thumb=227,183}" width="227" height="183"/></a> <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}" class="title">{$list.title}</a>
+            <div class="people">总需:{$list.total}人次<span>仅剩:{$list.diff}人次</span></div>
+          </li>
+        </volist>
+      </ul>
+    </div>
+  </div>
+</block>
+

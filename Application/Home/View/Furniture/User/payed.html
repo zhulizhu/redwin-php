@@ -1,0 +1,87 @@
+<extend name="Base/common"/>
+<block name="Comm_top">
+  <div id="settle">
+    <div id="settle_globle_top">
+      <div class="top_top">
+        <div class="lable"> 欢迎来到99车盟汇！ </div>
+        <div class="sc"><a onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)" title="收藏我们">收藏我们</a></div>
+        <div class="gz"><a  href="{:U('Article/detail?id=572')}" title="关注我们">关注我们</a></div>
+        <if condition="get_nickname() eq null">
+          <div class="log"><a href="{:U('User/login')}" title="请登录">请登录</a></div>
+          <div class="reg"><a href="{:U('User/register')}" title="免费注册">免费注册</a></div>
+          <else/>
+          <div class="log"><a href="{:U('User/index')}" title="{:get_nickname()}">{:get_nickname()}</a></div>
+          <div class="reg"><a href="{:U('User/logout')}" title="退出">【退出】</a></div>
+        </if>
+      <div class="get"><a href="{:U('User/index')}" title="我的夺宝">我的夺宝&nbsp;<span class="icon-chevron-down"></span></a>
+            <div class="get_li">
+                <ul>
+                    <li><a href="{:U('User/index')}" title="夺宝记录">夺宝记录</a></li>
+                    <li><a href="{:U('User/index')}" title="中奖记录">中奖记录</a></li>
+                    <li><a href="{:U('User/index')}" title="个人设置">个人设置</a></li>
+                    <li><a href="{:U('User/index')}" title="个人晒单">个人晒单</a></li>
+                </ul>
+            </div>
+        </div>
+        <script type="text/javascript">
+             $(function(){
+                $("#settle_globle_top .top_top .get").hover(function(){
+                    $(this).find(".get_li").show();
+                },function(){
+                    $(this).find(".get_li").hide();
+                })
+            })
+            </script> 
+      </div>
+    </div>
+    <div id="settle_globle_bot">
+      <div class="logo"> <a href="{:U('Index/index')}" title="{:C('WEB_SITE_TITLE')}"> <img src="__IMG__/logo-reg.png" width="246" height="74" title="{:C('WEB_SITE_TITLE')}"/> </a> </div>
+      <div class="step3"></div>
+    </div>
+  </div>
+</block>
+<block name="body">
+  <div id="Success">
+    	<div class="comp">
+        	<div class="comp-t">恭喜你，参与成功！请等待系统为您揭晓！</div>
+            <div class="comp-b">你现在可以<a href="{:U('Index/index')}" class="back" title="返回首页">返回首页</a>&nbsp;或&nbsp;<a href="{:U('Index/index')}" class="look" title="查看更多奖品">查看更多奖品</a></div>
+        </div>
+        <div class="ynum">
+        	<table border="0" cellpadding="0" cellspacing="0">
+            	<tr class="tr1">
+                	<td width="20%">夺宝时间</td>
+                    <td width="20%">奖品名称</td>
+                    <td width="20%">参与人次</td>
+                    <td width="20%">参与期数</td>
+                    <td width="20%">当前号码</td>
+                </tr>
+                <volist name="ord" id="ord">
+            
+                <tr>
+                	<td>{:microtime_format('Y-m-d H:i:s.x', $ord['create_time'])}</td>
+                    <td><a href="{:U('Product/detail?id='.$ord['pro_id'])}">({$ord.periods}){$ord.title}</a></td>
+                    <td>{$ord.length}</td>
+                    <td>{$ord.periods}</td>
+                    <td>{$ord.mynum}</td>
+                </tr>
+            
+                </volist>
+            </table>
+        </div>
+  </div>
+    <div id="reco">
+      <div class="tit">
+        <h2>推荐奖品</h2>
+      </div>
+      <div class="pro">
+        <ul>
+          <volist name="reco" id="list" offset="0" length="5">
+            <li> <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}"><img src="{$list.cover_id|thumb=227,183}" width="227" height="183"/></a> <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}" class="title">{$list.title}</a>
+              <div class="people">总需:{$list.total}人次<span>仅剩:{$list.diff}人次</span></div>
+            </li>
+          </volist>
+        </ul>
+      </div>
+    </div>
+
+</block>

@@ -1,0 +1,41 @@
+<div class="top_Shopping">
+        	<em><a href="{:U('Shopping/cart')}" title="参与清单">参与清单</a></em>
+            <span>{$number}</span>
+			<div class="nbsp"></div>
+            <div class="more">
+              <div class="list">
+              	<h2>最新加入的商品</h2>
+                <if condition="$number == 0">
+                	<p>您的清单还没有任何奖品...</p>
+                <else/>
+                	<volist name="dingdans" id="data">
+                    <dl>
+                        <dd class="img">
+                        <a href="{:U('Product/detail?id='.$data[id])}" title="{$data.title}">
+                        <img src="{$data.cover_id|thumb=50,50}" width="50" height="50" alt="{$data.title}"/>
+                        </a>
+                        </dd>
+                        <dt><a href="{:U('Product/detail?id='.$data[id])}" title="{$data.title}">{$data.title}</a></dt>
+                        <dd class="price">{$data.price}<i>x{$data.length}</i></dd>
+                        <dd class="delete"><a href="{:U('Shopping/Delete?id='.$data['id'].'')}" title="删除">删除</a></dd>
+                    </dl>
+               		</volist>
+                </if>
+                <if condition="$number != 0">
+                  <div class="Settlement">
+                      <span>共<i>{$number}</i>件商品，共计<b>{$Total}</b>个夺宝币</span>
+                      <a href="{:U('Shopping/cart')}" target="_blank" title="去购物车结算">去购物车结算</a>
+                  </div>
+               </if>   
+              </div>
+            </div>
+</div>
+<script>
+$(function(){
+  $(".top_Shopping").hover(function(){
+	  $(this).addClass("focus");
+  },function(){
+	  $(this).removeClass("focus");
+  });
+})
+</script>

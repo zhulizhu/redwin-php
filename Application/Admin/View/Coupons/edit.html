@@ -1,0 +1,118 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>{:isset($info['id'])?'编辑':'新增'}优惠券</h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">名称<span class="check-tips">（优惠券名称）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="title" value="{$info.title|default=''}">
+            </div>
+        </div>
+        <!--<div class="form-item">
+            <label class="item-label">类型<span class="check-tips">（优惠券类型）</span></label>
+            <div class="controls">
+                <select name="cotype">
+                	<option value="yhq">优惠券</option>
+                    <option value="byk">包邮卡</option>
+                </select>
+            </div>
+        </div>-->
+        <div class="form-item">
+            <label class="item-label">用户级别<span class="check-tips">（适用于哪些用户级别）</span></label>
+            <div class="controls">
+            	<volist name="grouplist" id="list">
+           		<label><input type="checkbox" name="group[]" value="{$list.id}" /> {$list.title}</label>
+                </volist>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">开始时间<span class="check-tips">（开始的时间）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large time" name="start_time" value="{$info.start_time|default=date('Y-m-d H:i')}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">结束时间<span class="check-tips">（结束的时间）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large time" name="end_time" value="{$info.end_time|default=date('Y-m-d H:i')}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">领取次数<span class="check-tips">（每个用户最多领取的次数）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="times" value="{$info.times|default='1'}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">使用次数<span class="check-tips">（每个用户最多使用的次数）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="usetime" value="{$info.usetime|default='1'}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">价格区间<span class="check-tips">（格式： 1,10 表示1-10元之间取整数 包邮卡不用填写 ）</span></label>
+            <div class="controls">
+                <label>
+                	<select name="fromwhere">
+                    	<option value="pro">产品</option>
+                        <option value="youfei">邮费</option>
+                        <option value="zongfu">总付</option>
+                    </select>
+                </label>
+                <label>
+                	<select name="fromtype">
+                    	<option value="man">满</option>
+                    </select>
+                </label>
+                <label><input type="text" class="text input-small" name="frommoney" value="{$info.frommoney|default=''}"></label>
+                <label>
+                	<select name="gowhere">
+                    	<option value="pro">产品</option>
+                        <option value="youfei">邮费</option>
+                        <option value="zongfu">总付</option>
+                    </select>
+                </label>
+                <label>
+                	<select name="gotype">
+                    	<option value="jian">减</option>
+                        <option value="wei">为</option>
+                    </select>
+                </label>
+                
+                <label><input type="text" class="text input-small" name="gomoney" value="{$info.gomoney|default=''}"></label>
+            </div>
+        </div>
+        <div class="form-item">
+        	<input type="hidden" name="id" value="{$info.id}" />
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+        Think.setValue("pid", {$info.pid|default = 0});
+        Think.setValue("hide", {$info.hide|default = 0});
+        Think.setValue("is_dev", {$info.is_dev|default = 0});
+        //导航高亮
+        highlight_subnav('{:U('index')}');
+		$(function(){
+			$('.time').datetimepicker({
+				format: 'yyyy-mm-dd hh:ii',
+				language:"zh-CN",
+				minView:0,
+				autoclose:true
+			});
+		});
+    </script>
+    
+</block>

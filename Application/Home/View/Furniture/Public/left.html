@@ -1,0 +1,27 @@
+<div class="left">
+    <!--左侧分类-->
+    {:leftnav()}
+    <!--/左侧分类-->
+    <div class="left_tjcp">
+    <h2><em>推荐阅读</em></h2>
+    <div class="list">
+        <ul>
+        <Article:position pos="1" limit="8" name="list">
+            <li>
+                <a href="{:U('Article/detail?id='.$list[id])}" title="{$list.title}">
+                    <img src="{$list.cover_id|thumb=204,220}" width="121" height="91" alt="{$list.title}"/>
+                </a>
+                <span>
+                <a href="{:U('Article/detail?id='.$list[id])}" title="{$list.title}">
+                    {$list.title}
+                </a>
+                </span>
+            </li>
+        </Article:position>
+        </ul>
+    </div>
+    </div>
+    
+ 
+</div>
+<!--/left-->

@@ -1,0 +1,120 @@
+<extend name="Base/common"/>
+
+<block name="body">
+    <script src="http://cdn.bootcss.com/hammer.js/2.0.8/hammer.min.js"></script>
+<div id="home_page">
+    <header>
+        <img src="__IMG__/tyt_03.png" alt="">
+
+        <div class="group">
+            <form action="{:U('Product/search')}" method="get" class="index-search">
+            <input type="text" class="form-control text-search" name="txt" placeholder="请输入商品名称">
+            <a href="javascript:;" class="submit-search"> <img src="__IMG__/tyt_06.png" alt=""></a>
+            </form>
+            <script>
+                $(function(){
+                    $(".submit-search").click(function(){
+                        if($(".text-search").val()!=""){
+                            $(".index-search").submit();
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </header>
+    <div class="head">
+        <ul>
+            <a href="{:U('Product/index')}?id=one" target="_blank">
+                <li><img src="__IMG__/guojia22.png" alt="">
+                    <span>国家</span></li>
+            </a>
+            <a href="{:U('Product/index')}?id=nine" target="_blank">
+                <li><img src="__IMG__/yanse1111111.png" alt="">
+                    <span>颜色</span></li>
+            </a>
+            <a href="{:U('Product/index')}?id=eight" target="_blank">
+                <li><img src="__IMG__/putao1111111.png" alt="">
+                    <span>葡萄种类</span></li>
+            </a>
+            <a href="{:U('Product/index')}?id=twelve" target="_blank">
+                <li><img src="__IMG__/xiangbing11111111.png" alt="">
+                    <span>香槟·起泡</span></li>
+            </a>
+
+            <a href="{:U('Product/Searchs')}?enhanced=8228" target="_blank">
+                <li><img src="__IMG__/jiaqiang1.png" alt="">
+                    <span>加强型</span></li>
+            </a>
+            <a href="{:U('Product/index')}?id=ten" target="_blank">
+                <li><img src="__IMG__/kougan11111111.png" alt="">
+                    <span>口感</span></li>
+            </a>
+            <a href="{:U('Product/lists?category=tehui')}" target="_blank">
+                <li><img src="__IMG__/tehui.png" alt="">
+                    <span>特惠专区</span></li>
+            </a>
+            <a href="{:U('Product/index')}?id=elev" target="_blank">
+                <li><img src="__IMG__/jiuju-08.png" alt="">
+                    <span>酒具</span></li>
+            </a>
+        </ul>
+    </div>
+    <!--轮播-->
+    <div id="myCarousel" class="carousel slide con">
+        <ol class="carousel-indicators" style="bottom:-4px!important;padding-bottom:4px;">
+            <volist name="prolist" id="prokey">
+            <li data-target="#myCarousel" data-slide-to="{$key}"  <eq name="key" value="0">class="active"</eq> ></li>
+            </volist>
+        </ol>
+        <div class="carousel-inner" style="padding-bottom: 14px;!important;">
+            <volist name="prolist" id="list">
+            <div class="banner-box item <eq name='key' value='0'>active</eq> " onclick="location.href='{:U('Product/detail?id='.$list['id'])}'" style="width: 100%;height: 100%;overflow: hidden;">
+                <div class="lef">
+                    <a href="product_detail.html"><img src="{$list.cover_id|picture}" alt=""></a>
+                    <div class="dat">
+                        <div class="tim">{$list.update_time|time_format='Y-m'}</div>
+                        <div class="times">{$list.update_time|time_format='d'}</div>
+                    </div>
+                </div>
+                <div class="rig">
+                    <h4>{$list.title}</h4>
+                    <p>地区：<a href="javascript:;">{$list.country|get_linkage_value}</a></p>
+                    <p>种类：<a href="javascript:;">{$list.species|get_linkage_value}</a></p>
+                    <p>色泽：<a href="javascript:;">{$list.color|get_linkage_value}</a></p>
+                    <p>年份：<a href="javascript:;">{$list.year}</a></p>
+                    <p>酒精度：<a href="javascript:;">{$list.jiujingdu}</a></p>
+                    <p>酒庄：<a href="javascript:;">{$list.manor}</a></p>
+                    <!--<button><a href="{:U('Product/detail?id='.$list['id'])}">更多</a></button>-->
+                </div>
+            </div>
+            </volist>
+        </div>
+    </div>
+
+    <div class="tt" style="padding-bottom:60px;">
+        <div>
+            <span><button><a href="../Article/little_tips.html">小贴士</a></button></span>
+            <span style="display: none;"><img onclick="collect()" id="colle" src="__IMG__/dhfdhfh_48.png" alt="">22</span>
+        </div>
+        <div class="content" style="padding:0 20px;">
+            {$content}
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    //轮播
+    $("#myCarousel").carousel({
+        interval: 5000
+    });
+        var myElement= document.getElementById('myCarousel');
+        var hm=new Hammer(myElement);
+        hm.on("swipeleft",function(){
+            $('#myCarousel').carousel('next')
+        });
+        hm.on("swiperight",function(){
+            $('#myCarousel').carousel('prev')
+        });
+
+</script>
+</block>

@@ -1,0 +1,127 @@
+<extend name="Base/common" />
+<block name="Comm_top">
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div id="register_top">
+    	<div class="top_regis">
+            <div class="lable"> 欢迎来到99车盟汇！ </div>
+            <div class="sc"><a onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)" title="收藏我们">收藏我们</a></div>
+            <div class="gz"><a  href="{:U('Article/detail?id=572')}" title="关注我们">关注我们</a></div>
+        </div>
+    </div>
+</block>
+
+<block name="body">
+<section>
+	<div id="reg_befor">
+    	<a href="{:U('Home/index/index')}" title="{:C('WEB_SITE_TITLE')}"><img src="__IMG__/logo-reg.png" width="216" height="65"/></a>
+        <div class="back"><a href="{:U('Home/index/index')}" title="返回首页">返回首页</a></div>
+    </div>
+	<div id="registers">
+        <div class="reg_up">
+            <h2>用户注册</h2>
+            <div class="login">
+                已经是会员？马上去<a href="{:U('login')}" class="log_btn" title="登录">登录</a>
+            </div>
+        </div>
+        <div class="reg_down">
+            <form class="login-form" action="__SELF__" method="post" onsubmit="return CkUsers(this);">
+                <table cellpadding="1" cellspacing="1" border="0">
+                    <tr>
+                        <th width="90"><em>*&nbsp;</em>手 机 号</th>
+                        <td width="549">
+                            <input type="text" id="inputPhone"   value="" name="mobile">
+                            <input type="hidden" id="inputUsername"   value="" name="username">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="90"></th>
+                        <td width="549">
+                           <input type="button" id="phone_btn"  value="免费获取验证码">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><em>*&nbsp;</em>验 证 码</th>
+                        <td><input type="text" id="inputVerify"  value="" name="verify">
+                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="90"></th>
+                        <td width="549" class="tip">
+                           <p>请查收手机短信，并填写短信中的验证码</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><em>*&nbsp;</em>密&nbsp;&nbsp;&nbsp;&nbsp;码</th>
+                        <td><input type="password" id="inputPassword"    name="password">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="90"></th>
+                        <td width="549" class="tip">
+                            <p>6-16个字符，区分大小写</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><em>*&nbsp;</em>确认密码</th>
+                        <td><input type="password" id="inputRePassword"   name="repassword">
+                        </td>
+                    </tr>
+                     <tr>
+                        <th width="90"></th>
+                        <td width="549" class="tip">
+                            <p>请再次填写密码</p>
+                        </td>
+                    </tr>
+                </table>
+                <div class="submits">
+                    <span><input type="checkbox" id="agree" checked="checked" />同意<a href="#">“服务条款”</a>、<a href="#">“用户须知”</a>和<a href="#">“隐私权相关政策”</a></span>
+                    <input class="subm" type="submit"  value="立即注册" />
+                </div>
+              </form> 
+          </div> 
+	</div>
+</section>
+
+<script type="text/javascript">
+	function Send(mobile){
+                $.ajax({
+				type:"GET",
+				url:"{:U('smsverify')}?mobile="+mobile,
+				async:false,
+				success:function(msg){
+					alert(msg);
+				},
+				error:function(){
+					alert("发送失败，等待重新发送！");
+				}
+				});
+	}
+    var wait=60;
+	document.getElementById("phone_btn").disabled = false;
+	function time(o) {
+		if (wait == 0) {
+			o.removeAttribute("disabled");          
+			o.value="免费获取验证码";
+			wait = 60;
+		} else {
+			o.setAttribute("disabled", true);
+			o.value="重新发送(" + wait + ")";
+			wait--;
+			setTimeout(function() {
+				time(o);
+			},
+			1000)
+		}
+	}
+	$("#phone_btn").click(function(){
+		var mobile=$("#inputPhone").val();
+		if(CKphone()){
+			Send(mobile);time(this);
+			}
+		});
+				
+</script>
+</block>
+<block name="Comm_Copyright">
+</block>

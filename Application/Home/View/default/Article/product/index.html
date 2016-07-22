@@ -1,0 +1,22 @@
+<extend name="Base/common"/>
+
+<block name="body">
+    <div class="span9">
+        <!-- Contents
+        ================================================== -->
+        <section id="contents">
+        	<!--
+            	article    文章标签库
+                :list      list方法
+                name       输出变量值 可不写 默认为list
+                typeid     栏目ID    可不写 默认当前栏目
+                addon      附加内容  可不写 默认为主表内容 如需查询附加表内容，请开启此项，如需加载封面图片，请开启此项
+                tpl        模板文件  可不写 默认自编   如需调用模板标签库 请在taglib文件下自编
+            -->
+            <article:list name="list" typeid="$category['id']" addon="true" tpl="newslist" >
+            {$list.addon.price}
+            </article:list>
+            
+        </section>
+    </div>
+</block>

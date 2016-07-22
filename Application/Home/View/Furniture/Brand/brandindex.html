@@ -1,0 +1,234 @@
+<extend name="Base/common"/>
+<block name="body">
+<div id="gou">
+ <div class="g_le">
+      <ul>
+        <volist name="plist" id="plist" offset="0" length="12">
+          <li> <a href="{:U('brand/index?id='.$plist['category_id'])}"><img src="{$plist.cover_id|thumb=466,180}" width="466" height="180" /></a>
+            <p>{$plist.title}<span>（报名人数：{$plist.number}人）</span></p>
+            <p class="price">价格：<em>{$plist.price}</em></p>
+            <p class="price">团购价格：<i>报名后通知</i><a href="{:U('brand/index?id='.$plist['category_id'])}" title="查看详情">查看详情&gt;&gt;</a></p>
+          </li>
+        </volist>
+      </ul>
+      <div class="btn_left"><a href="javascript:;"><img src="__PUBLIC__/home/cheewo/images/btn_l.png" /></a></div>
+      <div class="btn_right"><a href="javascript:;"><img src="__PUBLIC__/home/cheewo/images/btn_r.png" /></a></div>
+      <div class="btn"> <a class="btn1 cur" href="javascript:;"></a> <a class="btn2" href="javascript:;"></a> <a class="btn3" href="javascript:;"></a> </div>
+      <script>
+			$(function(){
+				var sliderlenght = 3;
+				var nowindex = 1;
+				$(".g_le .btn_right").click(function(){
+					if(nowindex==sliderlenght){
+						$(".g_le ul").animate({left:"0px"});
+						nowindex = 1;
+					}else{
+						$(".g_le ul").animate({left:"-=964px"});
+						nowindex = nowindex + 1;
+					}
+				});
+				$(".g_le .btn_left").click(function(){
+					if(nowindex == 1){
+						countwidth = 964 * (sliderlenght-1);
+						$(".g_le ul").animate({left:"-="+countwidth+"px"});
+						nowindex = sliderlenght;
+					}else{
+						$(".g_le ul").animate({left:"+=964px"});
+						nowindex = nowindex  - 1;
+					}
+				});
+				
+			$(".g_le .btn .btn1").click(function(){
+					$(".g_le ul").animate({left:"0px"});
+					$(this).attr("class","btn1 cur"); 
+					$(".g_le .btn .btn2").attr("class","btn2");
+					$(".g_le .btn .btn3").attr("class","btn3");
+			});
+			$(".g_le .btn .btn2").click(function(){
+					$(".g_le ul").animate({left:"-964px"});
+					$(this).attr("class","btn2 cur");
+					$(".g_le .btn .btn1").attr("class","btn1");
+					$(".g_le .btn .btn3").attr("class","btn3");
+			});
+			$(".g_le .btn .btn3").click(function(){
+					$(".g_le ul").animate({left:"-1928px"});
+					$(this).attr("class","btn3 cur");
+					$(".g_le .btn .btn1").attr("class","btn1");
+					$(".g_le .btn .btn2").attr("class","btn2");
+			});
+		
+			})
+			</script> 
+    </div>
+    <div class="g_ri">
+      <h3>团购报名</h3>
+      <form name="gou" method="post" id="tuangou">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tr class="brand">
+            <td>品牌</td>
+            <td class="sel_wrap"><label>请选择品牌</label>
+              <select class="select" name="brand" id="brands">
+                <option value="0">请选择品牌</option>
+                <volist name="purcate" id="list">
+                  <option value="{$list.id}">{$list.title}</option>
+                </volist>
+              </select>
+              <script type="text/javascript">
+						$(function(){
+						$("#brands").change(function(){
+						$.post("{:U('Brand/linktwo')}",{id:$(this).val()},function(data){
+							$("#cars").find("option").remove();
+							$("#cars").append('<option value="0">请选择车系</option>');
+						
+							if(data==""){
+								
+							}else{
+								var dataObj=eval(data);
+								for(var i=0;i<dataObj.length;i++){
+									$("#cars").append("<option value='"+dataObj[i].id+"'>"+dataObj[i].title+"</option>");
+								}
+							}
+							});
+						    });
+						})
+					</script></td>
+          </tr>
+          <tr class="chexi">
+            <td>车系</td>
+            <td class="sel_wrap"><label>请选择车系</label>
+              <select class="select" name="cars" id="cars">
+                <option value="0">请选择车系</option>
+              </select>
+              <script type="text/javascript">
+						$(function(){
+						$("#cars").change(function(){
+						$.post("{:U('Brand/linkThree')}",{id:$(this).val()},function(data){
+							$("#deploy").find("option").remove();
+							$("#deploy").append('<option value="0">请选择配置</option>');
+							if(data==""){
+		
+							}else{
+								var dataObj=eval(data);
+								for(var i=0;i<dataObj.length;i++){
+									$("#deploy").append("<option value='"+dataObj[i].id+"'>"+dataObj[i].title+"</option>");
+								}
+							}
+							});
+						    });
+						})
+					</script></td>
+          </tr>
+          <tr class="peizhi">
+            <td>配置</td>
+            <td class="sel_wrap"><label>请选择配置</label>
+              <select class="select" name="deploy" id="deploy">
+                <option value="0">请选择配置</option>
+              </select></td>
+          </tr>
+          <tr class="area">
+            <td>地区</td>
+            <td class="sel_wrap"><label>请选择市</label>
+              <select class="select" name="city">
+                <option value="0">请选择市</option>
+                <option value="成都">成都</option>
+              </select></td>
+            <td class="sel_wrap"><label>请选择区</label>
+              <select class="select" name="area">
+                <option value="0">请选择区</option>
+                <volist name="area" id="list">
+                  <option value="{$list.title}">{$list.title}</option>
+                </volist>
+              </select></td>
+          </tr>
+          <tr class="uname">
+            <td>姓名</td>
+            <td><input class="username" name="username"  size="12" /></td>
+            <td class="s"><input type="radio" name="sex" checked value="0" >
+              男</td>
+            <td class="s"><input type="radio" name="sex"  value="1" >
+              女</td>
+          </tr>
+          <tr class="phone">
+            <td>手机</td>
+            <td><input name="mobile" id="mobile"  size="20"/></td>
+          </tr>
+          <tr class="umort">
+            <td>按揭</td>
+            <td class="m"><input type="radio" name="mortgage" checked value="1" >
+              是</td>
+            <td class="m"><input type="radio" name="mortgage"  value="0" >
+              否</td>
+          </tr>
+          <tr class="tip">
+            <td>备注</td>
+            <td><textarea  rows="5" cols="20" name="tip"></textarea></td>
+          </tr>
+          <tr class="sub">
+            <td><input type="button" id="sub"  value="提交报名" /></td>
+          </tr>
+          <script>
+				  //下拉菜单
+					$(".sel_wrap").on("change", function() {
+					var o;
+					var opt = $(this).find('option');
+					opt.each(function(i) {
+					if (opt[i].selected == true) {
+					o = opt[i].innerHTML;
+					}
+					})
+					$(this).find('label').html(o);
+					var next=$(this).next().find("option[value='0']").text();
+					$(this).next().find('label').html(next);
+					}).trigger('change');
+					 //报名
+					function apply(data,form){
+					$.ajax({
+					type:"POST",
+					data:data,
+					url:"{:U('apply/index')}",
+					success:function(msg){
+						alert(msg);
+						clearForm(form);
+					},
+					error:function(){
+						alert("报名失败！请重新提交！");
+					}
+					});
+					}
+					$("#sub").click(function(){
+					var form = $("#tuangou");
+					var data="";
+					if(CkApply(form[0])){
+						data = form.serialize();
+						
+						apply(data,form[0]);
+						}
+					});
+					</script>
+        </table>
+      </form>
+    </div>
+</div>
+<div id="gou_time">
+    <h3>团购会排期<!--<a href="">03月17日-03月24日</a><a href="">03月09日-03月015日</a><a href="" class="all">全部排期</a>--></h3>
+    <ul>
+      <volist name="purcate" id="list" offset="0" length="10">
+        <li>
+          <div class="car_logo"><img src="{$list.icon|thumb=87,69}" width="87" height="69" /></div>
+          <div class="detail">
+            <p class="bt">{$list.theme}</p>
+            <p class="sj">时间：{$list.time}</p>
+            <p class="dd">地点：<em>{$list.address}</em></p>
+            <p class="cx">车型：<em>{$list.cars}</em></p>
+          </div>
+          <div class="join">
+            <p class="join_num">报名人数：{$list.number}人</p>
+            <p class="bm"><a href="{:U('brand/index?id='.$list['id'])}" title="立即参团">立即参团</a></p>
+          </div>
+        </li>
+      </volist>
+    </ul>
+  </div>
+</block>
+
+

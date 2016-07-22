@@ -1,0 +1,161 @@
+<extend name="Base/common"/>
+
+<block name="body">
+<script>
+$("body").height($(window).height());
+</script>
+<div class="top-head">
+	<h2>确认收货</h2>
+</div>
+
+<style>
+.bg
+{ width:100%; height:100%; background:#000; opacity:0.6; position:absolute; left:0px; top:0px;}
+.bg1
+{ width:100%; height:100%; background:#000; opacity:0.6; position:absolute; left:0px; top:0px; z-index:30;}
+.loading
+{ width:60%; height:50px; background:#fff; position:fixed; left:20%; top:50%; margin-top:-50px; z-index:50; border-radius:10px; line-height:50px; font-size:18px;}
+.loading span
+{ margin-left:15px; font-size:22px; margin-right:10px;}
+.info
+{ width:86%; height:auto; padding-bottom:20px; background:#fafafa; position:absolute; left:7%; top:20px; z-index:10;}
+.info h3
+{ width:100%; height:40px; line-height:40px; padding:0px; margin:0px; font-size:18px; color:#000; border-bottom:1px solid #ccc;}
+.info h3 img
+{ float:left; margin:0px 5px; margin-top:5px; vertical-align:middle;}
+.info .title
+{ text-align:center; margin-top:10px; font-size:14px; color:#333;}
+.info .price
+{ text-align:center; font-size:28px; color:#000;}
+
+.info .yue
+{ width:94%; height:44px; line-height:44px; margin:0px auto; margin-top:10px; border-bottom:1px solid #e2e2e2; border-top:1px solid #e2e2e2; font-size:16px;}
+.info .yue span
+{ font-size:20px; color:#f5df70; margin-right:5px;}
+
+.info .pass
+{ width:94%; height:auto; margin:0px auto; margin-top:10px; border:1px solid #e2e2e2; overflow:hidden;}
+.info .pass ul
+{ width:100%; height:100%; overflow:hidden; list-style:none; margin-left:-1px; background:#fff;}
+.info .pass ul li
+{ width:16.66666%; height:100%; border-left:1px solid #efefef; float:left; background:#fff; text-align:center; font-size:30px;}
+
+.mima
+{ width:100%; height:45%; position:absolute; left:0px; bottom:0px; background:#fff; overflow:hidden;}
+.mima ul
+{ list-style:none; margin-left:-1px;}
+.mima ul li
+{ width:33.33%; height:30%; float:left; border-top:1px solid #e2e2e2; text-align:center; font-size:26px; color:#000; border-left:1px solid #e2e2e2; cursor:pointer;}
+.mima ul li.empty
+{ background:#e0e0e0;}
+.mima ul li.del
+{ background:#e0e0e0; font-size:60px;}
+</style>
+<div class="box">
+	<div class="bg1" style="display:none;"></div>
+    <div class="loading" style="display:none;"><span class="icon-spinner icon-spin"></span>正在为您确认...</div>
+	<div class="bg"></div>
+	<div class="info">
+    	<h3><img src="{$face}" width="30" height="30">请输入支付密码</h3>
+        <div class="title">确认收货</div>
+        <div class="pass">
+        	<ul>
+            	<li></li><li></li><li></li><li></li><li></li><li></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="mima">
+    	<ul>
+        	<li class="k key1">1</li>
+            <li class="k key2">2</li>
+            <li class="k key3">3</li>
+            <li class="k key4">4</li>
+            <li class="k key5">5</li>
+            <li class="k key6">6</li>
+            <li class="k key7">7</li>
+            <li class="k key8">8</li>
+            <li class="k key9">9</li>
+            <li class="empty"></li>
+            <li class="k key0">0</li>
+            <li class="del">←</li>
+        </ul>
+        <input type="hidden" name="password" class="password">
+    </div>
+</div>
+    
+	
+	<div class="Cancel" style="padding:20px; display:none; font-size:16px;">
+    	<p align="center">亲，您已经设置过支付密码了 </p>
+        <p align="center">去<a href="{:U('Shopping/cart')}">购物车</a>继续购物</p>
+    </div>
+    <div class="fail" style="padding:20px; display:none;font-size:16px;">
+    	<p align="center" class="content">亲，您输入的支付密码错误！ </p>
+        <p align="center"><a href="__SELF__" >重新输入</a></p>
+        <p align="center">去<a href="{:U('Shopping/cart')}">重新设置支付密码</a></p>
+        <p align="center">返回<a href="{:U('User/myorder')}">我的订单</a>查看</p>
+    </div>
+    <div class="Ok" style="padding:20px; display:none;font-size:16px;">
+    	<p align="center">恭喜您，设置支付密码成功！</p>
+        <p align="center">去<a href="{:U('Shopping/cart')}">购物车</a>继续购物</p>
+    </div>
+<script>
+$(".password").focus();
+$(function(){
+	var width = $(".pass ul li").width();
+	$(".pass ul li").height(width);
+	$(".info .pass").height(width);
+	$(".pass ul li").css({"line-height":width+8+"px"});
+	
+	var mmh = $(".mima").height();
+	mmh = mmh / 4;
+	$(".mima ul li").height(mmh);
+	$(".mima ul li").css({"line-height":mmh+"px"});
+	$(".mima ul li.del").css({"line-height":mmh-20+"px"});
+	
+	var index = 0;
+	$(".mima ul li.k").click(function(){
+		if(index<6){
+			var num = $(this).html();
+			
+			$(".pass li").eq(index).html("*");
+			var password = $(".password").val();
+			password = password + num;
+			$(".password").val(password);
+			index = index + 1;
+			if(index==6){
+				$(".bg1").show();
+				$(".loading").show();
+				var url = "__SELF__";
+				$.post(url,{
+					password:$(".password").val()
+				},function(data){
+					setTimeout(function(){
+						$(".box").hide();
+						if(data=="passerror"){
+							$(".fail").show();
+						}else if(data=="false"){
+							$(".Cancel").show();
+						}else{
+							window.location.href = "{:U('User/index')}";
+						}
+					},1000);
+				});
+			}
+		}
+	});
+	
+	$(".del").click(function(){
+		if(index>0 && index<=6){
+			index = index - 1;
+			$(".pass li").eq(index).html("");
+			var num = $(".password").val();
+			num = num.substring(0,index);
+			$(".password").val(num);
+		}
+	});
+	
+});
+</script>
+</block>
+<block name="footer"></block>

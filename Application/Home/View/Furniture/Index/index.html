@@ -1,0 +1,524 @@
+<extend name="Base/common"/>
+
+<block name="body">
+<input type="hidden" id="first_in" value="{$first_cookie}" />
+  <div id="adPic">
+    <div class="pic"> <img src="__IMG__/first.jpg" width="590" height="1100" />
+      <div id="close"></div>
+    </div>
+  </div>
+   <script type="text/javascript">
+	$(document).ready(function () {
+			var first_in = $("#first_in").val();
+			if(first_in){
+				$("#adPic").hide();
+			}else{
+				$("#adPic").show();
+			}
+			$("#close").bind("click",function(){
+				$("#adPic").hide();
+				});
+		})
+		
+	</script> 
+  <div id="index_top">
+    <div id="index_swf">
+      <div class="swf"> {:Ad('30','Xslider')} </div>
+    </div>
+    <div id="index_intro">
+      <h3><a href="{:U('Article/detail?id='.$intro['id'])}" title="夺宝说明">夺宝说明</a></h3>
+      <p>{$intro.description}</p>
+    </div>
+    <div id="index_hot">
+      <Product:position pos="1" limit="1" name="list"> <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}"><img src="{$list.cover_id|thumb=186,206}"  width="186" height="206"/></a>
+        <h3>热卖推荐</h3>
+        <span>{$list.title}</span> </Product:position>
+    </div>
+    <div id="index_pro">
+      <div class="box">
+        <ul>
+          <volist name = "record" id = "list">
+            <li>
+              <div class="prod">
+                <h3>({$list.periods}){$list.title}</h3>
+                <div class="info">
+                  <p class="all">总需：{$list.total}人次</p>
+                  <p>获奖者：<em>{:get_nickname($list['awarduser'])}</em></p>
+                  <p>本期参与人次：{$list.join_count}人次</p>
+                  <p>幸运号：{$list.awardnum}</p>
+                  <p>中奖率：{$list.rate}%</p>
+                </div>
+                <a class="im" href="{:U('Product/detail?id='.$list['id'])}" title="({$list.periods}){$list.title}"><img src="{$list.cover_id|thumb=142,151}" width="142" height="151"/></a> </div>
+            </li>
+          </volist>
+          <li>
+        </ul>
+      </div>
+      <div class="switch"> <a class="pro1 cur" href="javascript:;"></a> <a class="pro2" href="javascript:;"></a> <a class="pro3" href="javascript:;"></a> </div>
+    </div>
+    <script>
+		$(function(){
+			$("#index_pro .switch .pro1").click(function(){
+					$("#index_pro .box ul").animate({left:"0px"});
+					$(this).attr("class","pro1 cur"); 
+					$("#index_pro .switch .pro2").attr("class","pro2");
+					$("#index_pro .switch .pro3").attr("class","pro3");
+			});
+			$("#index_pro .switch .pro2").click(function(){
+					$("#index_pro .box ul").animate({left:"-786px"});
+					$(this).attr("class","pro2 cur");
+					$("#index_pro .switch .pro1").attr("class","pro1");
+					$("#index_pro .switch .pro3").attr("class","pro3");
+			});
+			$("#index_pro .switch .pro3").click(function(){
+					$("#index_pro .box ul").animate({left:"-1572px"});
+					$(this).attr("class","pro3 cur");
+					$("#index_pro .switch .pro1").attr("class","pro1");
+					$("#index_pro .switch .pro2").attr("class","pro2");
+			});
+		})
+		</script>
+    <div id="index_new">
+      <Product:position pos="2" limit="1" name="list"> <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}"><img src="{$list.cover_id|thumb=250,206}"  width="250" height="206"/></a>
+        <h3>新品推荐</h3>
+        <span>{$list.title}</span> </Product:position>
+    </div>
+  </div>
+  <div id="ad1"> <a href="{$ad1.url}" title="{$ad1.title}"><img src="{:picture($ad1['picture'])}" width="1220" height="94"/></a> </div>
+  <div id="db">
+    <div class="left">
+      <div class="zhengche">
+        <h3>热门整车夺宝<a href="{:getprocateu(281)}" target="_blank" title="查看更多">更多夺宝车型，查看更多&gt;&gt;</a><img src="__PUBLIC__/home/cheewo/images/box.png" width="37" height="26" /></h3>
+        <div class="bao">
+          <ul>
+            <volist id="list" name="zc">
+              <li> <a href="{:U('Product/detail?id='.$list['id'])}" target="_blank" title="({$list.periods}){$list.title}"><img src="{$list.cover_id|thumb=302,158}" width="302" height="158" /></a> <a href="{:U('Product/detail?id='.$list['id'])}" title="({$list.periods}){$list.title}" class="title">({$list.periods}){$list.title}</a>
+                <div class="need">总需：<span class="n3">{$list.total}</span>人次&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  价值：<span class="n5"></span></div>
+                <div class="bar_bg">
+                  <div class="bar"> <img width="247" height="10" src="__PUBLIC__/home/cheewo/images/bar.png" /> </div>
+                </div>
+                <div class="num"> <span class="le">
+                  <p class="n1">{$list.join}</p>
+                  <p>已参与人次</p>
+                  </span> <span class="ri">
+                  <p class="n2"></p>
+                  <p>剩余人次</p>
+                  </span> </div>
+                <a href="{:U('Product/detail?id='.$list['id'])}" title="立即夺宝" target="_blank" class="btn">立即夺宝</a> </li>
+            </volist>
+            <!--进度条 --> 
+            <script>
+						$(function(){
+						  $(".bao ul li").each(function(){
+							var n3 = $(this).find(".n3").text();
+							var n1 = $(this).find(".n1").text();
+							var n2 = n3*1-n1*1;
+							$(this).find(".n2").html(n2);
+							var n4 = n1/n3*100;
+							$(this).find(".bar").css("width",n4+"%");
+							var n5 = n3*10;
+							n5=Math.round(n5); 
+							$(this).find(".n5").html(n5);
+						  });
+						});
+						</script>
+          </ul>
+        </div>
+      </div>
+      <div class="qita">
+        <h3>其他热门夺宝<a href="{:getprocateu(282)}" target="_blank" title="查看更多">更多热门夺宝，查看更多&gt;&gt;</a><img src="__PUBLIC__/home/cheewo/images/box.png" width="37" height="26" /></h3>
+        <div class="duo">
+          <ul>
+            <volist name = "qt" id = "list">
+              <li> <a href="{:U('Product/detail?id='.$list['id'])}" target="_blank" title="({$list.periods}){$list.title}"><img src="{$list.cover_id|thumb=222,158}" width="222" height="158" /></a> <a href="{:U('Product/detail?id='.$list['id'])}" class="title" title="({$list.periods}){$list.title}">({$list.periods}){$list.title}</a>
+                <div class="need">总需：<span class="n3">{$list.total}</span>人次&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  价值：<span class="n5"></span></div>
+                <div class="bar_bg">
+                  <div class="bar"> <img width="221" height="10" src="__PUBLIC__/home/cheewo/images/bar2.png" /> </div>
+                </div>
+                <div class="num"> <span class="le">
+                  <p class="n1">{$list.join}</p>
+                  <p>已参与人次</p>
+                  </span> <span class="ri">
+                  <p class="n2"></p>
+                  <p>剩余人次</p>
+                  </span> </div>
+                <a href="{:U('Product/detail?id='.$list['id'])}" target="_blank" title="立即夺宝" class="btn">立即夺宝</a> </li>
+            </volist>
+          </ul>
+          <script>
+						$(function(){
+						   $(".duo ul li").each(function(){
+							var n3 = $(this).find(".n3").text();
+							var n1 = $(this).find(".n1").text();
+							var n2 = n3*1-n1*1;
+							$(this).find(".n2").html(n2);
+							var n4 = n1/n3*100;
+							$(this).find(".bar").css("width",n4+"%");
+							var n5 = n3*10;
+							n5=Math.round(n5); 
+							$(this).find(".n5").html(n5);
+						  });
+						});
+						</script> 
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="jilu">
+        <h3>最新参与夺宝记录</h3>
+        <ul>
+        </ul>
+        <script type="text/javascript">
+				function GetRecord(){
+				   $.ajax({
+					type:"GET",
+					url:"{:U('Index/record')}",
+					success:function(data){
+						var dataObj=eval(data);
+						var str = "";
+						for(var i=0;i<dataObj.length;i++){
+							str+='<li><a href="'+dataObj[i].url+'"><img src="'+dataObj[i].picture+'" width="71" height="78"/></a>';
+							str+='<div class="jl"><p><a href="'+dataObj[i].url+'" class="user">'+dataObj[i].nickname+'</a>参与了</p>';
+							str+='<p>'+dataObj[i].length+'人次<a href='+dataObj[i].url+'" class="pro">'+dataObj[i].title+'</a></p></div></li>';
+						}
+						
+						$(".jilu ul").html(str);
+					},
+					error:function(){
+						
+					}
+					});
+				   
+			   }
+				$(function(){
+						GetRecord();
+						//setInterval(GetRecord,1000);
+						
+					});
+			
+				</script> 
+      </div>
+      <div class="saidan">
+        <h3>晒单分享</h3>
+        <ul>
+          <volist name="uPrints" id="list">
+            <li> <img class="prise" src="__PUBLIC__/home/cheewo/images/prise.png" width="38" height="46" /> <a href="{:U('Product/detail?id='.$list['pro_id'])}" title="({$list.periods}){$list.title}"><img  src="{$list.cover_id|thumb=71,78}" width="71" height="78"/></a>
+              <div class="sd">
+                <p class="tit"><a href="{:U('Product/detail?id='.$list['pro_id'])}">{$list.say}</a></p>
+                <p class="time">{$list.create_time|date='Y-m-d H:m:s',###}</p>
+              </div>
+            </li>
+          </volist>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="ad2"> <a href="{$ad2.url}" title="{$ad2.title}"><img src="{:picture($ad2['picture'])}" width="1220" height="94"/></a> </div>
+  <div id="gou">
+    <h3>热门汽车团购 <img class="people" src="__PUBLIC__/home/cheewo/images/people.png"  width="749" height="34" /> </h3>
+    <div class="g_le">
+      <ul>
+        <volist name="plist" id="plist" offset="0" length="12">
+          <li> <a href="{:U('brand/index?id='.$plist['category_id'])}"><img src="{$plist.cover_id|thumb=466,180}" width="466" height="180" /></a>
+            <p>{$plist.title}<span>（报名人数：{$plist.number}人）</span></p>
+            <p class="price">价格：<em>{$plist.price}</em></p>
+            <p class="price">团购价格：<i>报名后通知</i><a href="{:U('brand/index?id='.$plist['category_id'])}" title="查看详情">查看详情&gt;&gt;</a></p>
+          </li>
+        </volist>
+      </ul>
+      <div class="btn_left"><a href="javascript:;"><img src="__PUBLIC__/home/cheewo/images/btn_l.png" /></a></div>
+      <div class="btn_right"><a href="javascript:;"><img src="__PUBLIC__/home/cheewo/images/btn_r.png" /></a></div>
+      <div class="btn"> <a class="btn1 cur" href="javascript:;"></a> <a class="btn2" href="javascript:;"></a> <a class="btn3" href="javascript:;"></a> </div>
+      <script>
+			$(function(){
+				var sliderlenght = 3;
+				var nowindex = 1;
+				$(".g_le .btn_right").click(function(){
+					if(nowindex==sliderlenght){
+						$(".g_le ul").animate({left:"0px"});
+						nowindex = 1;
+					}else{
+						$(".g_le ul").animate({left:"-=964px"});
+						nowindex = nowindex + 1;
+					}
+				});
+				$(".g_le .btn_left").click(function(){
+					if(nowindex == 1){
+						countwidth = 964 * (sliderlenght-1);
+						$(".g_le ul").animate({left:"-="+countwidth+"px"});
+						nowindex = sliderlenght;
+					}else{
+						$(".g_le ul").animate({left:"+=964px"});
+						nowindex = nowindex  - 1;
+					}
+				});
+				
+			$(".g_le .btn .btn1").click(function(){
+					$(".g_le ul").animate({left:"0px"});
+					$(this).attr("class","btn1 cur"); 
+					$(".g_le .btn .btn2").attr("class","btn2");
+					$(".g_le .btn .btn3").attr("class","btn3");
+			});
+			$(".g_le .btn .btn2").click(function(){
+					$(".g_le ul").animate({left:"-964px"});
+					$(this).attr("class","btn2 cur");
+					$(".g_le .btn .btn1").attr("class","btn1");
+					$(".g_le .btn .btn3").attr("class","btn3");
+			});
+			$(".g_le .btn .btn3").click(function(){
+					$(".g_le ul").animate({left:"-1928px"});
+					$(this).attr("class","btn3 cur");
+					$(".g_le .btn .btn1").attr("class","btn1");
+					$(".g_le .btn .btn2").attr("class","btn2");
+			});
+		
+			})
+			</script> 
+    </div>
+    <div class="g_ri">
+      <h3>团购报名</h3>
+      <form name="gou" method="post" id="tuangou">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tr class="brand">
+            <td>品牌</td>
+            <td class="sel_wrap"><label>请选择品牌</label>
+              <select class="select" name="brand" id="brands">
+                <option value="0">请选择品牌</option>
+                <volist name="purcate" id="list">
+                  <option value="{$list.id}">{$list.title}</option>
+                </volist>
+              </select>
+              <script type="text/javascript">
+						$(function(){
+						$("#brands").change(function(){
+						$.post("{:U('Brand/linktwo')}",{id:$(this).val()},function(data){
+							$("#cars").find("option").remove();
+							$("#cars").append('<option value="0">请选择车系</option>');
+						
+							if(data==""){
+								
+							}else{
+								var dataObj=eval(data);
+								for(var i=0;i<dataObj.length;i++){
+									$("#cars").append("<option value='"+dataObj[i].id+"'>"+dataObj[i].title+"</option>");
+								}
+							}
+							});
+						    });
+						})
+					</script></td>
+          </tr>
+          <tr class="chexi">
+            <td>车系</td>
+            <td class="sel_wrap"><label>请选择车系</label>
+              <select class="select" name="cars" id="cars">
+                <option value="0">请选择车系</option>
+              </select>
+              <script type="text/javascript">
+						$(function(){
+						$("#cars").change(function(){
+						$.post("{:U('Brand/linkThree')}",{id:$(this).val()},function(data){
+							$("#deploy").find("option").remove();
+							$("#deploy").append('<option value="0">请选择配置</option>');
+							if(data==""){
+		
+							}else{
+								var dataObj=eval(data);
+								for(var i=0;i<dataObj.length;i++){
+									$("#deploy").append("<option value='"+dataObj[i].id+"'>"+dataObj[i].title+"</option>");
+								}
+							}
+							});
+						    });
+						})
+					</script></td>
+          </tr>
+          <tr class="peizhi">
+            <td>配置</td>
+            <td class="sel_wrap"><label>请选择配置</label>
+              <select class="select" name="deploy" id="deploy">
+                <option value="0">请选择配置</option>
+              </select></td>
+          </tr>
+          <tr class="area">
+            <td>地区</td>
+            <td class="sel_wrap"><label>请选择市</label>
+              <select class="select" name="city">
+                <option value="0">请选择市</option>
+                <option value="成都">成都</option>
+              </select></td>
+            <td class="sel_wrap"><label>请选择区</label>
+              <select class="select" name="area">
+                <option value="0">请选择区</option>
+                <volist name="area" id="list">
+                  <option value="{$list.title}">{$list.title}</option>
+                </volist>
+              </select></td>
+          </tr>
+          <tr class="uname">
+            <td>姓名</td>
+            <td><input class="username" name="username"  size="12" /></td>
+            <td class="s"><input type="radio" name="sex" checked value="0" >
+              男</td>
+            <td class="s"><input type="radio" name="sex"  value="1" >
+              女</td>
+          </tr>
+          <tr class="phone">
+            <td>手机</td>
+            <td><input name="mobile" id="mobile"  size="20"/></td>
+          </tr>
+          <tr class="umort">
+            <td>按揭</td>
+            <td class="m"><input type="radio" name="mortgage" checked value="1" >
+              是</td>
+            <td class="m"><input type="radio" name="mortgage"  value="0" >
+              否</td>
+          </tr>
+          <tr class="tip">
+            <td>备注</td>
+            <td><textarea  rows="5" cols="20" name="tip"></textarea></td>
+          </tr>
+          <tr class="sub">
+            <td><input type="button" id="sub"  value="提交报名" /></td>
+          </tr>
+          <script>
+				  //下拉菜单
+					$(".sel_wrap").on("change", function() {
+					var o;
+					var opt = $(this).find('option');
+					opt.each(function(i) {
+					if (opt[i].selected == true) {
+					o = opt[i].innerHTML;
+					}
+					})
+					$(this).find('label').html(o);
+					var next=$(this).next().find("option[value='0']").text();
+					$(this).next().find('label').html(next);
+					}).trigger('change');
+					 //报名
+					function apply(data,form){
+					$.ajax({
+					type:"POST",
+					data:data,
+					url:"{:U('apply/index')}",
+					success:function(msg){
+						alert(msg);
+						clearForm(form);
+					},
+					error:function(){
+						alert("报名失败！请重新提交！");
+					}
+					});
+					}
+					$("#sub").click(function(){
+					var form = $("#tuangou");
+					var data="";
+					if(CkApply(form[0])){
+						data = form.serialize();
+						
+						apply(data,form[0]);
+						}
+					});
+					</script>
+        </table>
+      </form>
+    </div>
+  </div>
+  <div id="gou_time">
+    <h3>团购会排期<!--<a href="">03月17日-03月24日</a><a href="">03月09日-03月015日</a><a href="" class="all">全部排期</a>--></h3>
+    <ul>
+      <volist name="purcate" id="list" offset="0" length="10">
+        <li>
+          <div class="car_logo"><img src="{$list.icon|thumb=87,69}" width="87" height="69" /></div>
+          <div class="detail">
+            <p class="bt">{$list.theme}</p>
+            <p class="sj">时间：{$list.time}</p>
+            <p class="dd">地点：<em>{$list.address}</em></p>
+            <p class="cx">车型：<em>{$list.cars}</em></p>
+          </div>
+          <div class="join">
+            <p class="join_num">报名人数：{$list.number}人</p>
+            <p class="bm"><a href="{:U('brand/index?id='.$list['id'])}" title="立即参团">立即参团</a></p>
+          </div>
+        </li>
+      </volist>
+    </ul>
+  </div>
+  <div id="news">
+    <h3>新闻中心</h3>
+    <div class="zxzx">
+      <h4>最新资讯<a href="{:getcateu(149)}" title="更多">更多&gt;&gt;</a></h4>
+      <ul>
+        <Article:list typeid="149" row="3" name="list">
+          <li> <a href="{:U('Article/detail?id='.$list['id'])}"><img src="{$list.cover_id|thumb=64,58}" width="64" height="58" /></a>
+            <div class="tit"><a href="{:U('Article/detail?id='.$list['id'])}" title="{$list.title}">{$list.title}</a></div>
+            <div class="descrip"><a href="{:U('Article/detail?id='.$list['id'])}" title="{$list.description}">{$list.description}</a></div>
+          </li>
+        </Article:list>
+      </ul>
+    </div>
+    <div class="csdt">
+      <h4>车商动态<a href="{:getcateu(150)}" title="更多">更多&gt;&gt;</a></h4>
+      <ul>
+        <Article:list typeid="150" row="3" name="list">
+          <li> <a href="{:U('Article/detail?id='.$list['id'])}"><img src="{$list.cover_id|thumb=64,58}" width="64" height="58" /></a>
+            <div class="tit"><a href="{:U('Article/detail?id='.$list['id'])}" title="{$list.title}">{$list.title}</a></div>
+            <div class="descrip"><a href="{:U('Article/detail?id='.$list['id'])}" title="{$list.description}">{$list.description}</a></div>
+          </li>
+        </Article:list>
+      </ul>
+    </div>
+    <div class="zngg">
+      <h4>站内公告<a href="{:getcateu(151)}" title="更多">更多&gt;&gt;</a></h4>
+      <ul>
+        <Article:list typeid="151" row="3" name="list">
+          <li> <a href="{:U('Article/detail?id='.$list['id'])}"><img src="{$list.cover_id|thumb=64,58}" width="64" height="58" /></a>
+            <div class="tit"><a href="{:U('Article/detail?id='.$list['id'])}" title="{$list.title}">{$list.title}</a></div>
+            <div class="descrip"><a href="{:U('Article/detail?id='.$list['id'])}" title="{$list.description}">{$list.description}</a></div>
+          </li>
+        </Article:list>
+      </ul>
+    </div>
+    <div id="FloatDIV" style="position: absolute;top: 0px; border-right: activeborder 1px solid; border-top: activeborder 1px solid; border-left: activeborder 1px solid; border-bottom: activeborder 1px solid; z-index:9999">
+    <img src="__IMG__/ewm.jpg" width="160" height="160" >
+ 	</div>  
+ 	<div id="showservicepeople" class="showservicepeople" onclick="showservicepeople()">
+ 	</div>
+    <script type="text/javascript"> 
+  		var MarginLeft =2;    //浮动层离浏览器右侧的距离
+ 	    var MarginTop = 190;   //浮动层离浏览器顶部的距离
+  		var Width = 160;            //浮动层宽度
+ 	    var Heigth= 160;           //浮动层高度
+  
+  //设置浮动层宽、高
+  function Set()
+  {
+      document.getElementById("FloatDIV").style.width = Width + 'px';
+      document.getElementById("FloatDIV").style.height = Heigth + 'px';
+  }
+  
+  //实时设置浮动层的位置
+  function Move()
+  {
+        var b_top = window.pageYOffset  
+                || document.documentElement.scrollTop  
+                || document.body.scrollTop  
+                || 0;
+        var b_width= document.body.clientWidth;
+      document.getElementById("FloatDIV").style.top = b_top + MarginTop + 'px';
+      document.getElementById("FloatDIV").style.left = b_width - Width - MarginLeft + 'px';
+      setTimeout("Move();",100);
+  }
+  
+  function showservicepeople()
+  {
+        location.href='http://www.99cmh.com/Public/home/cheewo/images/ewm.jpg';
+  } 
+  Set();
+  Move();
+
+</script>
+  	</div>
+</block>

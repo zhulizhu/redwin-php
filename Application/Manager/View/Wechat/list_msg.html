@@ -1,0 +1,146 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<!-- 标题 -->
+	<div class="main-title">
+		<h2>{$meta_title}</h2>
+	</div>
+
+	<!-- 按钮工具栏 -->
+	<div class="cf">
+		<div class="fl">
+            <button class="btn ajax-post confirm" target-form="ids" url="{:U('del?model=wechat_logs')}">删 除</button>
+		</div>
+
+        <!-- 高级搜索 -->
+        <div class="search-form fr cf">
+            <div class="sleft">
+                <input type="text" name="key" class="search-input" value="{:I('key')}" placeholder="请输入OpenID">
+                <a class="sch-btn" href="javascript:;" id="search" url="{:U($act_name)}"><i class="btn-search"></i></a>
+            </div>
+        </div>
+	</div>
+
+
+	<!-- 数据表格 -->
+    <div class="data-table">
+		<table>
+    <thead>
+        <tr>
+		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+		<th width="40">编号</th>
+		<th width="150">用户/粉丝</th>
+		<th>关注的公众号（原始ID）</th>
+		<th>消息类型</th>
+		<th>消息内容</th>
+		<th>发送时间</th>
+		<th>操作</th>
+		</tr>
+    </thead>
+    <tbody>
+		<volist name="list" id="vo">
+		<tr>
+            <td><input class="ids" type="checkbox" name="ids[]" value="{$vo.id}" /></td>
+			<td>{$vo.id} </td>
+            <td class="moreinfo">
+            	<img src="{$vo.headimgurl|default='__PUBLIC__/Admin/images/getheadimg.jpg'}" width="48" align="top" />
+                &nbsp;{$vo.nickname|default='未知'}
+            	<div>
+            		<span>详细资料</span>
+            		<dl class="first"><dt>OpenID：</dt><dd>{$vo.openid|default='未知'}</dd></dl>
+            		<dl><dt>昵称：</dt><dd>{$vo.nickname|default='未知'}</dd></dl>
+            		<dl><dt>性别：</dt><dd><if condition="$vo.sex eq 1">男<elseif condition="$vo.sex eq 2" />女<else />未知</if></dd></dl>
+            		<dl><dt>地区：</dt><dd>{$vo.country|default='未知'}&nbsp;{$vo.province|default='未知'}&nbsp;{$vo.city|default='未知'}</dd></dl>
+            		<dl><dt>语言：</dt><dd>{$vo.language|default='未知'}</dd></dl>
+				</div>
+			</td>
+			<td>{$vo.ToUserName}</td>
+			<td>{$vo.msgType}</td>
+			<td>
+            	<switch name="vo.MsgType" >
+                	<case value="text">{$vo.Content}</case>
+                    <case value="image"><a href="{$vo.PicUrl}" target="_blank"><img src="{$vo.PicUrl}" width="50" /></a></case>
+                    <case value="voice"><neq name="vo.MediaId" value="">下载<else />无</neq></case>
+                    <case value="video">
+                    	<neq name="vo.MediaId" value=""><img src="" /><video src="http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=1qXNVOJirXmgvRnIBSFm5n187hEb7gJi4pTzGAsVoNV0nszNxPNQEZ5PQztPQUAkhMVwhoLaAV2bDdPVvmczDOM1_-9UIIV7mrgXvMtpKVCVhsP6gjnIriP75JltGDdQ2TbG4o_XErLBiwvGCZj3uw&media_id=Ca6xUE7EdGAAJu2JoEH5gZIK7DYhqm6Tz6lPIbAeixwD8A6-WvOOi8M4xANPiV4t" controls="controls">您的浏览器不支持视频标签</video><else />无</neq>
+                    </case>
+                    <case value="location"><neq name="vo.MediaId" value="">下载<else />无</neq></case>
+                    <default />无
+            	</switch>
+            </td>
+			<td>{$vo.addtime|time_format}</td>
+			<td><a href="{:U('WechatUser/send?id='.$vo['userid'])}">发送消息</a>
+            	<a class="confirm ajax-get" title="删除" href="{:U('del?model=wechat_logs&ids='.$vo['id'])}">删除</a></td>
+		</tr>
+		</volist>
+	</tbody>
+    </table> 
+
+        
+	</div>
+
+	<!-- 分页 -->
+    <div class="page">
+        {$_page}
+    </div>
+</div>
+
+</block>
+<block name="script">
+<style type="text/css">
+.moreinfo{position:relative;z-index:1}
+.moreinfo *{float:left;background:#fff}
+.moreinfo div{width:380px;border:1px solid #ccc;display:none;position:absolute;left:100px;bottom:0}
+.moreinfo span{width:360px;padding:5px 10px;border-bottom:1px solid #ccc;font-size:16px;background:#eee}
+.moreinfo dl{width:360px;line-height:30px;margin:0 10px;border-top:1px solid #eee;display:inline}
+.moreinfo dl.first{border:0}
+.moreinfo dt{width:80px;text-align:right}
+.moreinfo dd{width:280px;text-indent:10px}
+td.hover{z-index:2}
+</style>
+    <script type="text/javascript">
+        $(function() {
+			// 更多信息
+			$('td.moreinfo').hoverDelay({over:".find('div').slideDown()",out:".find('div').slideUp()"});
+            //搜索功能
+            $("#search").click(function() {
+                var url = $(this).attr('url');
+                var query = $('.search-form').find('input').serialize();
+                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+                query = query.replace(/^&/g, '');
+                if (url.indexOf('?') > 0) {
+                    url += '&' + query;
+                } else {
+                    url += '?' + query;
+                }
+                window.location.href = url;
+            });
+            //回车搜索
+            $(".search-input").keyup(function(e) {
+                if (e.keyCode === 13) {
+                    $("#search").click();
+                    return false;
+                }
+            });
+            //导航高亮
+            highlight_subnav('{:U('index')}');
+            //点击排序
+        	$('.list_sort').click(function(){
+        		var url = $(this).attr('url');
+        		var ids = $('.ids:checked');
+        		var param = '';
+        		if(ids.length > 0){
+        			var str = new Array();
+        			ids.each(function(){
+        				str.push($(this).val());
+        			});
+        			param = str.join(',');
+        		}
+
+        		if(url != undefined && url != ''){
+        			window.location.href = url + '/ids/' + param;
+        		}
+        	});
+        });
+    </script>
+</block>

@@ -1,0 +1,59 @@
+﻿<extend name="Base/common"/>
+
+
+<block name="body">
+<div class="top-head">
+	<div class="back"><a href="javascript:;" onclick="window.history.go(-1);">返回</a></div>
+	<h2>我的余额</h2>
+</div>
+
+<div class="user-yue">
+	
+    <div class="info">
+    	<div class="money"><lt name="group.id" value="12">￥</lt>{$money}</div>
+        <div class="btns"><a href="{:U('cash')}">提现</a></div>
+    </div>
+    <ul>
+    	<volist name="list" id="list">
+    	<li>
+        	<eq name="list.money_type" value="1">
+        	<div class="price">+{$list.money}</div>
+            <div class="money_type">类型：收入</div>
+            <div class="more">{:get_nickname($list['puid'])}消费</div>
+            <div class="time">{:time_format($list['add_time'])}</div>
+            </eq>
+            <eq name="list.money_type" value="2">
+        	<div class="price" style="color:#ff4c90;">-{$list.money}</div>
+            <div class="money_type">类型：提现</div>
+            <div class="time">{:time_format($list['add_time'])}</div>
+            </eq>
+            <eq name="list.money_type" value="3">
+        	<div class="price" style="color:#ff4c90;">-{$list.money}</div>
+            <div class="money_type">类型：退款回收</div>
+            <div class="more">订单：{$list.order_id}</div>
+            <div class="time">{:time_format($list['add_time'])}</div>
+            </eq>
+            <eq name="list.money_type" value="5">
+        	<div class="price" style="color:#ff4c90;">-{$list.money}</div>
+            <div class="money_type">类型：余额消费</div>
+            <div class="more">订单：{$list.order_id}</div>
+            <div class="time">{:time_format($list['add_time'])}</div>
+            </eq>
+            <eq name="list.money_type" value="6">
+        	<div class="price" style="color:#ff4c90;">-{$list.money}</div>
+            <div class="money_type">类型：追平返点</div>
+            <div class="more">订单：{$list.order_id}</div>
+            <div class="time">{:time_format($list['add_time'])}</div>
+            </eq>
+            <eq name="list.money_type" value="7">
+        	<div class="price" style="color:#ff4c90;">-{$list.money}</div>
+            <div class="money_type">类型：发红包</div>
+            <div class="time">{:time_format($list['add_time'])}</div>
+            </eq>
+        </li>
+        </volist>
+    </ul>
+    
+</div>
+
+</block>

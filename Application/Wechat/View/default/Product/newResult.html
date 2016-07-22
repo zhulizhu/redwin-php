@@ -1,0 +1,160 @@
+<extend name="Base/common"/>
+<block name="header">
+	<header class="announced" id="overview">
+		<div class="newResult">
+			<div class="jp">
+				<ul class="nav navbar-nav">
+				<li><a href="javascript:;" style="text-decoration:none; color:white" onclick="select_menu()">全部奖品 </a>
+                <ul style="position:absolute; top:34px; display:none; width:94px; text-indent:16px;" id="menu_ul">
+                    <li style="background:#B80E0E; background-size:98px 20px; opacity:0.7;"><a href="{:U('Product/all')}" style=" color:#FFF">全部奖品</a></li>
+                    <li style="background:#B80E0E; background-size:98px 20px; opacity:0.7;"><a href="{:U('Product/allList')}" style="color:#FFF">奖品列表</a></li>
+                    
+                </ul>
+               	</ul>
+			</div>
+			<a href="{:U('Product/newResult')}"><div class="new">最新揭晓</div></a>
+		</div>
+	</header>
+</block>
+
+<block name="body">
+
+<div class="result_main">
+	<volist name="product" id="list">
+	<a href="{:U('Product/announced','$id='.$list['id'])}" style="text-decoration:none; color:black;" >
+	<ul>
+    	<li>
+        	<div class="left">
+        		<img src="{$list.cover_id|picture}"/>
+        	</div>
+        	
+        	
+            <div class="right">
+                	<div class="title" title="{$list.title}">({$list.periods}){$list.title}</div>
+                    <div class="buy">市场价:&nbsp;￥&nbsp;{$list[total]*10}
+                    <div class="duo">夺宝币:&nbsp;&nbsp;<span style="font-size:16px; color:#e23500">{$list.price}</span></div>
+                    </div>
+                    <input class="etime" type="hidden" value="{:microtime_format('Y/m/d H:m:s',$list['update_time'])}" />
+                	<input class="pro_id"  type="hidden" value="{$list.id}" />
+                	<input class="timeall" type="hidden" value="{$list.total_time}"/>
+                	<input class="OpenNum" type="hidden" value="{$list.lottery}"/>
+                    <div class="countdown"><img src="__PUBLIC__/Wechat/images/clock.png" /><span>揭晓倒计时&nbsp;<span class="span1" ></span><span class="span2"></span><em style="font-style:normal">:</em><span class="span3"></span><span class="span4"></span><em style="font-style:normal">:</em><span class="span5"></span><span class="span6"></span></span></div>
+            </div>
+        </li>
+        
+    </ul>
+    </a>
+    </volist>
+</div>
+<script type="text/javascript">
+		function select_menu(){
+			$("#menu_ul").slideToggle();
+		}
+
+		function fix(num, length) {
+	  		return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
+		}
+			function select_menu(){
+				$("#menu_ul").slideToggle();
+			}
+			
+			$(function(){
+				$(".result_main .right").each(function(){
+					var obj = this;
+					var timeout = setInterval(GetRTime,1000);
+					//获得3d号码
+					function getNum(){
+						var flag = false;
+		                $.ajax({
+						type:"GET",
+						url:"{:U('getNumber')}",
+						async:false,
+						success:function(msg){
+							$(obj).find(".OpenNum").val(msg);
+							flag = true;
+						},
+						error:function(){
+							getNum();
+						}
+						});
+						return flag;
+					}
+					//计算中奖号码
+					 function openNum(){
+						var result = false;
+						$.ajax({
+						type:"POST",
+						url:"{:U('Product/UpdatePro')}",
+						data:{id:$(obj).find(".pro_id").val(),lottery:$(obj).find(".OpenNum").val(),time_total:$(obj).find(".timeall").val()},
+						async:false,
+						success:function(msg){
+							result = true;
+						},
+						error:function(){
+							openNum();
+						}
+						});
+						return result;
+					 }
+				//倒计时
+					function GetRTime(){
+					   var etime = $(obj).find(".etime").val();
+					   var EndTime= new Date(etime);
+					   var NowTime = new Date();
+					   var t =EndTime.getTime() - NowTime.getTime();
+					     
+					   if(t==0||t<0){
+						 
+						   clearInterval(timeout);
+						   $(obj).find(".span1").html('0');
+					   	   $(obj).find(".span2").html('0');
+					       $(obj).find(".span3").html('0');
+					       $(obj).find(".span4").html('0');
+					       $(obj).find(".span5").html('0');
+					       $(obj).find(".span6").html('0');
+						   openAward(); 
+					   }else{
+						  
+						   var h=Math.floor(t/1000/60/60%24);
+						 
+						   var m=Math.floor(t/1000/60%60);
+						   var s=Math.floor(t/1000%60);
+						   hour = fix(h, 2);
+						   
+						   span1 = hour.substr(0,1);
+						   span2 = hour.substr(1,1);
+						   minute =  fix(m, 2);
+						   span3 = minute.substr(0,1);
+						   span4 = minute.substr(1,1);
+						   second = fix(s, 2);
+						   span5 = second.substr(0,1);
+						   span6 = second.substr(1,1);
+						   $(obj).find(".span1").html(span1);
+						   $(obj).find(".span2").html(span2);
+						   $(obj).find(".span3").html(span3);
+						   $(obj).find(".span4").html(span4);
+						   $(obj).find(".span5").html(span5);
+						   $(obj).find(".span6").html(span6);
+					   }
+				   	 }
+					//开奖
+				   function openAward(){
+					       $(obj).find(".time").html("计算中...");
+						   var flag = getNum();
+						   var exits = setInterval(function(){
+		  						if(flag == true){
+									var result = openNum();
+									if(result == true){
+										exit;
+										clearInterval(exits);
+										location.reload(); 
+									}
+								}
+						   },2000)
+						  
+				   }		
+					 });
+					});		
+</script>
+
+</block>

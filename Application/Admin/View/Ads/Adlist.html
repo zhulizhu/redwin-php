@@ -1,0 +1,81 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<!-- 标题栏 -->
+	<div class="main-title">
+		<h2>{$sort.title} | 广告列表</h2>
+
+	</div>
+    <div class="tools">
+        <a class="btn" href="{:U('Add?pid='.$pid)}">新 增</a>
+        <button class="btn ajax-post confirm" url="{:U('delsort')}" target-form="ids">删 除</button>
+    </div>
+
+	<!-- 数据列表 -->
+	<div class="data-table">
+        <div class="data-table table-striped">
+<table class="">
+    <thead>
+        <tr>
+		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+		<th class="">编号</th>
+		<th class="">标题</th>
+		<th class="">链接</th>
+		<th class="">是否新窗口打开</th>
+		<th class="">上次操作时间</th>
+		<th class="">状态</th>
+		<th class="">操作</th>
+		</tr>
+    </thead>
+    <tbody>
+	<notempty name="_list">
+		<volist name="_list" id="vo">
+		<tr>
+            <td><input class="ids" type="checkbox" name="ids[]" value="{$vo.id}" /></td>
+			<td>{$vo.id} </td>
+			<td>{$vo.title}</td>
+			<td>{$vo.url}</td>
+			<td>{$vo.target} </td>
+			<td>{$vo.update_time|time_format}</td>
+			<td>{$vo.status_text}</td>
+			<td>
+				<a href="{:U('Ads/add?pid='.$vo['pid'].'&id='.$vo['id'])}">编辑</a>
+				<a href="{:U('Ads/del?ids='.$vo['id'])}" class="confirm ajax-get">删除</a>
+            </td>
+		</tr>
+		</volist>
+		<else/>
+		<td colspan="7" class="text-center"> aOh! 暂时还没有内容! </td>
+		</notempty>
+	</tbody>
+    </table>
+
+        </div>
+    </div>
+    <div class="page">
+        {$_page}
+    </div>
+</block>
+
+<block name="script">
+	
+    <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+    <script type="text/javascript">
+  	//导航高亮
+    highlight_subnav('{:U('Ads/index')}');
+    $(function(){
+    	$("#search").click(function(){
+    		var url = $(this).attr('url');
+    		var status = $('select[name=status]').val();
+    		var search = $('input[name=search]').val();
+    		if(status != ''){
+    			url += '/status/' + status;
+    		}
+    		if(search != ''){
+    			url += '/search/' + search;
+    		}
+    		window.location.href = url;
+    	});
+})
+</script>
+</block>

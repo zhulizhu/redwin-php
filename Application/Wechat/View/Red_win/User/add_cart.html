@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/custom.css?v=1.0.2">
+    <link href="../skins/all.css?v=1.0.2" rel="stylesheet">
+    <script rel="script" type="text/javascript" src="../../js/jquery.js"></script>
+    <script rel="script" type="text/javascript" src="../../js/icheck.js?v=1.0.2"></script>
+    <script rel="script" type="text/javascript" src="../../js/custom.min.js?v=1.0.2"></script>
+    <title>加入购物车</title>
+    <style type="text/css">
+        body{
+            font-family: Consolas, '微软雅黑';
+        }
+    </style>
+</head>
+<body class="add">
+<div id="add_cart">
+    <div class="banner"></div>
+    <div class="banner_opc"></div>
+    <div class="cart_bottom">
+        <div class="price">
+            <div class="pri_pic"><img src="../../images/hfjrjrye_02.png"></div>
+            <div class="pri_tex">
+                <a href="#"><img src="../../images/ghsdhh_03.png"></a>
+                <span class="yuan">¥100</span>
+                <span><img src="../../images/sc_kc.png">库存 500</span>
+            </div>
+        </div>
+        <div class="distribution">配送</div>
+        <div class="address">
+            <input type="text" placeholder="至天府新区">
+            <span><div>默认地址</div><a href="#"><img src="../../images/1314.png"></a></span>
+        </div>
+        <div class="much">
+            <span>购买数量</span>
+
+            <div>
+                <div class="jian">-</div>
+                <div class="num">1</div>
+                <div class="jia">+</div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <a href="../Product/product_detail.html">确定</a>
+    </footer>
+</div>
+<script type="text/javascript">
+    $(document).ready(function ($) {
+        $(".jia").click(function () {
+            var numbers = $(this).prev().text();
+            var jianum = parseInt(numbers) + 1;
+            $(this).prev().text(jianum);
+        });
+        $(".jian").click(function () {
+            var numbers = $(this).next().text();
+            if (numbers == 1) {
+                $(this).next().text(1);
+            } else {
+                var jiannum = parseInt(numbers) - 1;
+                $(this).next().text(jiannum);
+            }
+        });
+    });
+</script>
+</body>
+</html>

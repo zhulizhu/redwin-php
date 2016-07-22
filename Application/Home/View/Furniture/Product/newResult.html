@@ -1,0 +1,157 @@
+<extend name="Base/common"/>
+<block name="body">
+<script type="text/javascript" src="__STATIC__/jquery.lazyload.js"></script>
+  <div id="newResult">
+  	<div class="title">最新揭晓</div>
+    <div class="result">
+    <input id="sertime" type="hidden" value="{$sertime|date='Y/m/d H:i:s',###}" />
+    <volist name='product' id='list'>
+    <if condition="$list['state'] eq 1">
+    	<div class="result-bef">
+        	<div class="bef-t">
+            	<a href="{:U('Product/detail?id='.$list['id'])}"><img class="lazy" data-original="{$list.cover_id|thumb=362,167}" width="362" height="167"/></a>
+                <p class="tit">{$list.periods}{$list.title}</p>
+                <p class="total">总需：{$list.total}人次</p>
+            </div>
+        	<div class="bef-b">
+            	<img class="lazy" data-original="__IMG__/time.jpg" width="142" height="39"/>
+                <input class="etime" type="hidden" value="{:microtime_format('Y/m/d H:i:s',$list['update_time'])}" />
+                <input class="pro_id"  type="hidden" value="{$list.id}" />
+                <input class="timeall" type="hidden" value="{$list.time_total}"/>
+                <input class="OpenNum" type="hidden" value="{$list.lottery}"/>
+                <div class="time"><span class="span1" ></span><span class="span2"></span><em>:</em><span class="span3"></span><span class="span4"></span><em>:</em><span class="span5"></span><span class="span6"></span></div>
+            </div>
+        </div>
+        <script type="text/javascript">
+		$(function(){
+		$("#newResult .result .result-bef").each(function(){
+			var obj = this;
+			var ntime = $('#sertime').val();
+			var NowTime = new Date(ntime);
+			var getNowtime = NowTime.getTime();
+			var timeout = setInterval(GetRTime,1000);
+			//获得3d号码
+			function getNum(){
+				var flag = false;
+                $.ajax({
+				type:"GET",
+				url:"{:U('getNumber')}",
+				async:false,
+				success:function(msg){
+					$(obj).find(".OpenNum").val(msg);
+					flag = true;
+				},
+				error:function(){
+					getNum();
+				}
+				});
+				return flag;
+			}
+			//计算中奖号码
+			 function openNum(){
+				var result = false;
+				$.ajax({
+				type:"POST",
+				url:"{:U('Product/UpdatePro')}",
+				data:{id:$(obj).find(".pro_id").val(),lottery:$(obj).find(".OpenNum").val(),time_total:$(obj).find(".timeall").val()},
+				async:false,
+				success:function(msg){
+					result = true;
+				},
+				error:function(){
+					openNum();
+				}
+				});
+				return result;
+			 }
+		//倒计时
+			function GetRTime(){
+			   var etime = $(obj).find(".etime").val();
+			   var EndTime= new Date(etime);
+			   var t =EndTime.getTime() - getNowtime;
+			   if(t==0||t<0){
+				   clearInterval(timeout);
+				   $(obj).find(".span1").html('0');
+			   	   $(obj).find(".span2").html('0');
+			       $(obj).find(".span3").html('0');
+			       $(obj).find(".span4").html('0');
+			       $(obj).find(".span5").html('0');
+			       $(obj).find(".span6").html('0');
+				   openAward(); 
+			   }else{
+				   var h=Math.floor(t/1000/60/60%24);
+				   var m=Math.floor(t/1000/60%60);
+				   var s=Math.floor(t/1000%60);
+				   hour = fix(h, 2);
+				   span1 = hour.substr(0,1);
+				   span2 = hour.substr(1,1);
+				   minute =  fix(m, 2);
+				   span3 = minute.substr(0,1);
+				   span4 = minute.substr(1,1);
+				   second = fix(s, 2);
+				   span5 = second.substr(0,1);
+				   span6 = second.substr(1,1);
+				   $(obj).find(".span1").html(span1);
+				   $(obj).find(".span2").html(span2);
+				   $(obj).find(".span3").html(span3);
+				   $(obj).find(".span4").html(span4);
+				   $(obj).find(".span5").html(span5);
+				   $(obj).find(".span6").html(span6);
+				   getNowtime+=1000;
+			   }
+		   	 }
+			//开奖
+		   function openAward(){
+			       $(obj).find(".time").html("计算中...");
+				   var flag = getNum();
+				   var exits = setInterval(function(){
+  						if(flag == true){
+							var result = openNum();
+							if(result == true){
+								clearInterval(exits);
+								location.reload(); 
+							}
+						}
+				   },2000)
+				  
+		   }		
+			 });
+			});
+		</script>		
+     <else/>
+     <div class="result-aft">
+        	<div class="aft-t">
+            	<a href="{:U('Product/detail?id='.$list['id'])}"><img class="lazy" data-original="{$list.cover_id|thumb=362,167}" width="362" height="167"/></a>
+                <p class="tit">{$list.periods}{$list.title}</p>
+                <p class="total">总需：{$list.total}人次</p>
+            </div>
+            <div class="aft-b">
+            <img class="lazy" data-original="{$list.photo|thumb=60,60}" width="60" height="60"/>
+            <div class="info">
+            	<p>恭喜<span>{$list.nickname}</span>获得该奖品</p>
+                <p>幸运号码：<em>{$list.awardnum}</em></p>
+                <p>本期参与：<em>{$list.join_count}</em>人次</p>
+                <p>揭晓时间：{:microtime_format('Y-m-d H:i:s.x',$list['update_time'])}</p>
+                <p><a href="{:U('Product/detail?id='.$list['id'])}" title="查看详情">查看详情</a></p>
+            </div>
+            </div>
+        </div>
+      </if>
+     </volist>
+    </div>
+  </div>
+  <div id="reco">
+    <div class="tit">
+      <h2>推荐奖品</h2>
+    </div>
+    <div class="pro">
+      <ul>
+        <volist name="reco" id="list" offset="0" length="5">
+          <li> <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}"><img class="lazy" data-original="{$list.cover_id|thumb=227,183}" width="227" height="183"/></a> <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}" class="title">{$list.title}</a>
+            <div class="people">总需:{$list.total}人次<span>仅剩:{$list.diff}人次</span></div>
+          </li>
+        </volist>
+      </ul>
+    </div>
+  </div>
+</block>

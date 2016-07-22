@@ -1,0 +1,27 @@
+<div id="leftNav">
+<h2>
+	<a href="{:U('Article/index?category='.$thisleft['name'])}">
+		<i class="icon-chevron-right"></i>{$thisleft.title}
+	</a>
+</h2>
+	<div class="list">
+		<ul>
+		<volist name="leftnav" id="leftnav">
+			<if condition="$info['id'] eq $leftnav['id']">
+				<li class="focus">
+			<else/>
+				<li>
+			</if>
+				<a href="{$leftnav.linkurl}">{$leftnav.title}</a>
+			</li>
+		    <!--二级菜单 ， 如果需要的话
+		    <ul class="more">
+		    	<volist name="leftnav.list" id="leftlist" >
+		        	<li><a href="{$leftlist.linkurl}">{$leftlist.title}</a></li>
+		        </volist>
+		    </ul>
+		    -->
+		</volist>
+		</ul>
+	</div>
+</div>

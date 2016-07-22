@@ -1,0 +1,82 @@
+<extend name="Base/common"/>
+<block name="body">
+     <div id="Ej_main">
+     	<include file="Public/Address"/>
+        <div id="main_nav">
+        	<ul>
+            	<li><a class="lists1" href="{:U('Product/Search?text_ket=全部奖品')}" title="全部奖品">全部奖品</a></li>
+                <li><a class="lists2" href="{:getprocateu(281)}" title="热门整车">热门整车</a></li>
+                <li><a class="lists3" href="{:getprocateu(282)}" title="汽车用品">汽车用品</a></li>
+                <li><a class="lists4" href="{:getprocateu(283)}" title="美容保养">美容保养</a></li>
+                <li><a class="lists5" href="{:getprocateu(284)}" title="改装专区">改装专区</a></li>
+                <li><a class="lists6" href="{:getprocateu(285)}" title="购物劵">购物劵</a></li>
+            </ul>
+        </div>
+        <div id="order">
+        	<ul>
+            	<li <if condition="$_GET['order'] eq hot">class="focus"</if>><a href="{:U('Product/Screening?order=hot')}" title="人气奖品" >人气奖品</a></li>
+                <li <if condition="$_GET['order'] eq rest">class="focus"</if>><a href="{:U('Product/Screening?order=rest')}" title="浏览数量" >浏览数量</a></li>
+                <li <if condition="$_GET['order'] eq news">class="focus"</if>><a href="{:U('Product/Screening?order=news')}" title="最新奖品" >最新奖品</a></li>
+                <li <if condition="$_GET['order'] eq totala">class="focus"</if>><a href="{:U('Product/Screening?order=totala')}" title="总需人次&#8593;" >总需人次&#8593;</a></li>
+                <li <if condition="$_GET['order'] eq totald">class="focus"</if>><a href="{:U('Product/Screening?order=totald')}" title="总需人次&#8595;" >总需人次&#8595;</a></li> 
+            </ul>
+            <script>
+			$(function(){
+				$("#order ul li").click(function(){
+					$(this).addClass("focus");
+					$(this).siblings('li').removeClass("focus");	
+				});
+			})
+			</script>
+        </div>
+        <div id="products">
+        <volist name="News_list" id="list">
+   			<div class="pro">
+            	<a href="{:U('Product/detail?id='.$list['id'])}" title="({$list.periods}){$list.title}"><img src="{$list.cover_id|thumb=279,161}" width="279" height="161" /></a>
+                <a href="{:U('Product/detail?id='.$list['id'])}" class="title" title="({$list.periods}){$list.title}">({$list.periods}){$list.title}</a>
+                <div class="need">总需：<span class="n3">{$list.total}</span>人次&nbsp;&nbsp;
+                            市场价：￥<span class="n5"></span></div>
+                <div class="bar_bg">
+                <div class="bar">
+                     <img width="221" height="10" src="__PUBLIC__/home/cheewo/images/bar2.png" />
+                </div>
+                </div>
+                <div class="num">
+                <span class="le">
+                <p class="n1">{$list.join}</p>
+                <p>已参与人次</p>
+                </span>
+                <span class="ri">
+                <p class="n2"></p>
+                <p>剩余人次</p>
+                </span>
+                </div>
+                <a href="{:U('Product/detail?id='.$list['id'])}" title="立即夺宝" class="btn">立即夺宝</a>
+            </div>
+           </volist>
+             <!--进度条 -->
+             <script>
+				$(function(){
+					$("#products .pro").each(function(){
+						var n3 = $(this).find(".n3").text();
+						var n1 = $(this).find(".n1").text();
+						var n2 = n3*1-n1*1;
+						$(this).find(".n2").html(n2);
+						var n4 = n1/n3*100;
+						$(this).find(".bar").css("width",n4+"%");
+						var n5 = n3*10;
+						$(this).find(".n5").html(n5);
+						});	
+				});
+			</script>
+            
+        </div>
+        <div class="pages">
+        <if condition="$category['id'] eq null">
+        	<article:page cate="$News_list['id']" listrow="24" child="$Lengths" />
+        <else/>
+        	<article:page cate="$category['id']" listrow="$category['list_row']" child="$Lengths" />
+        </if>
+        </div>
+     </div>
+</block>

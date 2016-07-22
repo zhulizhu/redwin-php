@@ -1,0 +1,404 @@
+<extend name="Public/base" />
+<block name="body">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<!-- 标题 -->
+	<div class="main-title">
+		<h2>{$meta_title}</h2>
+	</div>
+<div class="tab-wrap">
+	<ul class="tab-nav nav">
+		<volist name=":C('msgType')" id="data" offset="0" length="6">
+			<li data-tab="tab{$key}"<eq name="key" value="text"> class="current"</eq>><a href="javascript:;">{$data}</a></li>
+		</volist>
+	</ul>
+	<div class="tab-content">
+	<!-- 表单 -->
+<form id="form" action="__SELF__" method="post" class="form-horizontal">
+	<!-- text -->
+	<div id="tabtext" class="tab-pane in tabtext">
+        <div class="form-item">
+            <label class="item-label">文本内容<span class="check-tips">（文本消息的内容）</span></label>
+            <div class="controls">
+            	<label class="textarea input-large">
+            		<textarea name="content"></textarea>
+            	</label>
+            </div>
+            <div class="material">
+            	<h1>文本素材</h1>
+            </div>
+        </div>
+	</div>
+	<!-- image -->
+	<div id="tabimage" class="tab-pane tabimage">
+        <div class="form-item">
+            <label class="item-label">图片文件<span class="check-tips">（大小限制128KB，只支持JPG格式）</span></label>
+            <div class="controls">
+        		<input type="file" id="upload_picture" />
+            	<input type="hidden" name="media_id" id="image_id" />
+                <div class="upload-img-box"></div>
+            </div>
+            <script type="text/javascript">
+            //上传图片
+            /* 初始化上传插件 */
+            $("#upload_picture").uploadify({
+            	"height"          : 30,
+            	"swf"             : "__STATIC__/uploadify/uploadify.swf",
+            	"fileObjName"     : "download",
+            	"buttonText"      : "上传图片",
+            	"uploader"        : "{:U('WechatFile/upload',array('session_id'=>session_id(),'filetype'=>'image','wechatid'=>$user['wechatid']))}",
+            	"width"           : 120,
+            	'removeTimeout'	  : 1,
+            	'fileTypeExts'	  : '*.jpg',
+				'fileSizeLimit'   : 128,
+            	"onUploadSuccess" : uploadPicture,
+            	'onFallback' : function() {alert('未检测到兼容版本的Flash.')}
+            });
+            function uploadPicture(file, data){
+            	var data = $.parseJSON(data);
+            	var src = '';
+            	if(data.status){
+					var id = '#image_id';
+					$(id).val(data.media_id);
+					$(id).next().html('<div class="upload-pre-item"><img src="' + data.path + '"/></div>');
+            	} else {
+					updateAlert(data.info);
+					setTimeout(function(){
+						$('#top-alert').find('button').click();
+						$(that).removeClass('disabled').prop('disabled',false);
+					},1500);
+            	}
+            }
+            </script>
+        </div>
+	</div>
+	<!-- voice -->
+	<div id="tabvoice" class="tab-pane tabvoice">
+    	<div class="form-item">
+            <label class="item-label">语音文件<span class="check-tips">（大小限制256KB，播放时间不超过60秒，只支持AMR\MP3格式）</span></label>
+            <div class="controls">
+        		<input type="file" id="upload_voice" />
+            	<input type="hidden" name="media_id" id="voice_id" />
+                <div class="upload-box"></div>
+            </div>
+            <script type="text/javascript">
+            //上传图片
+            /* 初始化上传插件 */
+            $("#upload_voice").uploadify({
+            	"height"          : 30,
+            	"swf"             : "__STATIC__/uploadify/uploadify.swf",
+            	"fileObjName"     : "download",
+            	"buttonText"      : "上传语音",
+            	"uploader"        : "{:U('WechatFile/upload',array('session_id'=>session_id(),'filetype'=>'voice','wechatid'=>$user['wechatid']))}",
+            	"width"           : 120,
+            	'removeTimeout'	  : 1,
+            	'fileTypeExts'	  : '*.mp3; *.amr',
+				'fileSizeLimit'   : 256,
+            	"onUploadSuccess" : uploadVoice,
+            	'onFallback' : function() {alert('未检测到兼容版本的Flash.')}
+            });
+            function uploadVoice(file, data){
+            	var data = $.parseJSON(data);
+            	var src = '';
+            	if(data.status){
+					var id = '#voice_id';
+					$(id).val(data.media_id);
+					$(id).next().html('<audio src="' + data.path + '" controls="controls">您的浏览器不支持音频标签</audio>');
+            	} else {
+					updateAlert(data.info);
+					setTimeout(function(){
+						$('#top-alert').find('button').click();
+						$(that).removeClass('disabled').prop('disabled',false);
+					},1500);
+            	}
+            }
+            </script>
+        </div>
+	</div>
+	<!-- video -->
+	<div id="tabvideo" class="tab-pane tabvideo">
+    	<div class="form-item">
+            <label class="item-label">标题<span class="check-tips">（视频消息的标题）</span></label>
+            <div class="controls">
+            	<input type="text" class="text input-large" name="title" />
+            </div>
+    	</div>
+    	<div class="form-item">
+            <label class="item-label">描述<span class="check-tips">（视频消息的描述）</span></label>
+            <div class="controls">
+            	<label class="textarea input-large">
+            		<textarea name="description"></textarea>
+            	</label>
+            </div>
+    	</div>
+    	<div class="form-item">
+            <label class="item-label">视频文件<span class="check-tips">（大小限制1MB，只支持MP4格式）</span></label>
+            <div class="controls">
+        		<input type="file" id="upload_video" />
+            	<input type="hidden" name="media_id" id="video_id" />
+                <div class="upload-box"></div>
+            </div>
+            <script type="text/javascript">
+            //上传图片
+            /* 初始化上传插件 */
+            $("#upload_video").uploadify({
+            	"height"          : 30,
+            	"swf"             : "__STATIC__/uploadify/uploadify.swf",
+            	"fileObjName"     : "download",
+            	"buttonText"      : "上传视频",
+            	"uploader"        : "{:U('WechatFile/upload',array('session_id'=>session_id(),'filetype'=>'video','wechatid'=>$user['wechatid']))}",
+            	"width"           : 120,
+            	'removeTimeout'	  : 1,
+				'fileTypeExts'	  : '*.mp4',
+				'fileSizeLimit'   : 1024,
+            	"onUploadSuccess" : uploadVideo,
+            	'onFallback' : function() {alert('未检测到兼容版本的Flash.')}
+            });
+            function uploadVideo(file, data){
+            	var data = $.parseJSON(data);
+            	var src = '';
+            	if(data.status){
+					var id = '#video_id';
+					$(id).val(data.media_id);
+					$(id).next().html('<video src="' + data.path + '" controls="controls">您的浏览器不支持视频标签</video>');
+            	} else {
+					updateAlert(data.info);
+					setTimeout(function(){
+						$('#top-alert').find('button').click();
+						$(that).removeClass('disabled').prop('disabled',false);
+					},1500);
+            	}
+            }
+            </script>
+        </div>
+	</div>
+	<!-- music -->
+	<div id="tabmusic" class="tab-pane tabmusic">
+        <div class="form-item">
+            <label class="item-label">标题<span class="check-tips">（音乐消息的标题）</span></label>
+            <div class="controls">
+            	<input type="text" class="text input-large" name="title" />
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">描述<span class="check-tips">（音乐消息的描述）</span></label>
+            <div class="controls">
+            	<label class="textarea input-large">
+            		<textarea name="description"></textarea>
+            	</label>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">音乐文件 <span class="check-tips">（只支持WAV/MP3/OGG）</span></label>
+            <div class="controls">
+        		<input type="file" id="upload_music" />
+            	<input type="hidden" name="musicurl" id="music_path" />
+                <div class="upload-box"></div>
+            </div>
+            <script type="text/javascript">
+            //上传图片
+            /* 初始化上传插件 */
+            $("#upload_music").uploadify({
+            	"height"          : 30,
+            	"swf"             : "__STATIC__/uploadify/uploadify.swf",
+            	"fileObjName"     : "download",
+            	"buttonText"      : "上传音乐",
+            	"uploader"        : "{:U('WechatFile/upload',array('session_id'=>session_id(),'filetype'=>'music','wechatid'=>$user['wechatid']))}",
+            	"width"           : 120,
+            	'removeTimeout'	  : 1,
+				'fileTypeExts'	  : '*.wav; *.mp3; *.ogg',
+				'fileSizeLimit'   : 1024,
+            	"onUploadSuccess" : uploadMusic,
+            	'onFallback' : function() {alert('未检测到兼容版本的Flash.')}
+            });
+            function uploadMusic(file, data){
+            	var data = $.parseJSON(data);
+            	var src = '';
+            	if(data.status){
+					var id = '#music_path';
+					$(id).val(data.path);
+					$(id).next().html('<audio src="' + data.path + '" controls="controls">您的浏览器不支持音频标签</audio>');
+            	} else {
+					updateAlert(data.info);
+					setTimeout(function(){
+						$('#top-alert').find('button').click();
+						$(that).removeClass('disabled').prop('disabled',false);
+					},1500);
+            	}
+            }
+            </script>
+        </div>
+        <div class="form-item">
+            <label class="item-label">高品质音乐文件<span class="check-tips">（同上，高品质音乐文件的链接，WIFI环境优先使用该链接播放音乐）</span></label>
+            <div class="controls">
+        		<input type="file" id="upload_hqmusic" />
+            	<input type="hidden" name="hqmusicurl" id="hqmusic_path" />
+                <div class="upload-box"></div>
+            </div>
+            <script type="text/javascript">
+            //上传图片
+            /* 初始化上传插件 */
+            $("#upload_hqmusic").uploadify({
+            	"height"          : 30,
+            	"swf"             : "__STATIC__/uploadify/uploadify.swf",
+            	"fileObjName"     : "download",
+            	"buttonText"      : "上传高品质音乐",
+            	"uploader"        : "{:U('WechatFile/upload',array('session_id'=>session_id(),'filetype'=>'music','wechatid'=>$user['wechatid']))}",
+            	"width"           : 120,
+            	'removeTimeout'	  : 1,
+				'fileTypeExts'	  : '*.wav; *.mp3; *.ogg',
+				'fileSizeLimit'   : 1024,
+            	"onUploadSuccess" : uploadHQmusic,
+            	'onFallback' : function() {alert('未检测到兼容版本的Flash.')}
+            });
+            function uploadHQmusic(file, data){
+            	var data = $.parseJSON(data);
+            	var src = '';
+            	if(data.status){
+					var id = '#hqmusic_path';
+					$(id).val(data.path);
+					$(id).next().html('<audio src="' + data.path + '" controls="controls">您的浏览器不支持音频标签</audio>');
+            	} else {
+					updateAlert(data.info);
+					setTimeout(function(){
+						$('#top-alert').find('button').click();
+						$(that).removeClass('disabled').prop('disabled',false);
+					},1500);
+            	}
+            }
+            </script>
+        </div>
+        <div class="form-item">
+            <label class="item-label">图片文件<span class="check-tips">（大小限制128KB，只支持JPG格式）</span></label>
+            <div class="controls">
+        		<input type="file" id="upload_thumb" />
+            	<input type="hidden" name="thumb_media_id" id="thumb_id" />
+                <div class="upload-img-box"></div>
+            </div>
+            <script type="text/javascript">
+            //上传图片
+            /* 初始化上传插件 */
+            $("#upload_thumb").uploadify({
+            	"height"          : 30,
+            	"swf"             : "__STATIC__/uploadify/uploadify.swf",
+            	"fileObjName"     : "download",
+            	"buttonText"      : "上传图片",
+            	"uploader"        : "{:U('WechatFile/upload',array('session_id'=>session_id(),'filetype'=>'image','wechatid'=>$user['wechatid']))}",
+            	"width"           : 120,
+            	'removeTimeout'	  : 1,
+            	'fileTypeExts'	  : '*.jpg',
+				'fileSizeLimit'   : 128,
+            	"onUploadSuccess" : uploadThumb,
+            	'onFallback' : function() {alert('未检测到兼容版本的Flash.')}
+            });
+            function uploadThumb(file, data){
+            	var data = $.parseJSON(data);
+            	var src = '';
+            	if(data.status){
+					var id = '#thumb_id';
+					$(id).val(data.media_id);
+					$(id).next().html('<div class="upload-pre-item"><img src="' + data.path + '"/></div>');
+            	} else {
+					updateAlert(data.info);
+					setTimeout(function(){
+						$('#top-alert').find('button').click();
+						$(that).removeClass('disabled').prop('disabled',false);
+					},1500);
+            	}
+            }
+            </script>
+        </div>
+	</div>
+	<!-- news -->
+	<div id="tabnews" class="tab-pane tabnews">
+    	<div class="form-item">
+            <label class="item-label">标题<span class="check-tips">（图文消息的标题）</span></label>
+            <div class="controls">
+            	<input type="text" class="text input-large" name="title" />
+            </div>
+    	</div>
+    	<div class="form-item">
+            <label class="item-label">描述<span class="check-tips">（图文消息的描述）</span></label>
+            <div class="controls">
+            	<label class="textarea input-large">
+            		<textarea name="description"></textarea>
+            	</label>
+            </div>
+    	</div>
+    	<div class="form-item">
+            <label class="item-label">跳转链接<span class="check-tips">（点击图文消息后跳转的链接）</span></label>
+            <div class="controls">
+            	<input type="text" class="text input-large" name="url" />
+            </div>
+    	</div>
+        <div class="form-item">
+            <label class="item-label">图片文件<span class="check-tips">（大小限制1MB，支持JPG、PNG格式，较好的效果为大图640*320，小图80*80）</span></label>
+            <div class="controls">
+        		<input type="file" id="upload_picurl" />
+            	<input type="hidden" name="picurl" id="picurl" />
+                <div class="upload-img-box"></div>
+            </div>
+            <script type="text/javascript">
+            //上传图片
+            /* 初始化上传插件 */
+            $("#upload_picurl").uploadify({
+            	"height"          : 30,
+            	"swf"             : "__STATIC__/uploadify/uploadify.swf",
+            	"fileObjName"     : "download",
+            	"buttonText"      : "上传图片",
+            	"uploader"        : "{:U('WechatFile/upload',array('session_id'=>session_id(),'filetype'=>'image','wechatid'=>$user['wechatid']))}",
+            	"width"           : 120,
+            	'removeTimeout'	  : 1,
+            	'fileTypeExts'	  : '*.jpg; *.png',
+				'fileSizeLimit'   : 1024,
+            	"onUploadSuccess" : uploadThumb,
+            	'onFallback' : function() {alert('未检测到兼容版本的Flash.')}
+            });
+            function uploadThumb(file, data){
+            	var data = $.parseJSON(data);
+            	var src = '';
+            	if(data.status){
+					var id = '#picurl';
+					$(id).val(data.path);
+					$(id).next().html('<div class="upload-pre-item"><img src="' + data.path + '"/></div>');
+            	} else {
+					updateAlert(data.info);
+					setTimeout(function(){
+						$('#top-alert').find('button').click();
+						$(that).removeClass('disabled').prop('disabled',false);
+					},1500);
+            	}
+            }
+            </script>
+        </div>
+	</div>
+	<!-- submit -->
+	<div class="form-item">
+    	<input type="hidden" name="wechatid" value="{$user.wechatid}">
+		<input type="hidden" name="openid" value="{$user.openid}">
+        <input type="hidden" name="msgType" value="text" />
+		<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确认并发送</button>
+		<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+	</div>
+</form>
+	</div>
+</div>
+</block>
+<block name="script">
+<style type="text/css">
+.form-item{position:relative}
+.material{width:40%;background:red;position:absolute;top:0;right:0}
+</style>
+	<script type="text/javascript">
+		//发送类型
+		showTab();
+		function start(){
+			var msgType = window.location.hash.substr(1) ? window.location.hash.substr(1) : 'text'; // 获取 url 中的 msgType
+			$("input[name='msgType']").val(msgType); // 修改存放的 msgType 值
+			$('div.tab-pane *').attr('disabled','disabled') // 禁用所有 tab-pane 层下面的所有 标签
+			$('#tab'+msgType+' *').removeAttr('disabled');
+		}
+		$('.tab-nav li').click(function(){start()});start();
+		//导航高亮
+		highlight_subnav("{:U('index')}");
+    </script>
+</block>

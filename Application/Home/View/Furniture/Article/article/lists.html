@@ -1,0 +1,36 @@
+<extend name="Base/common"/>
+<block name="body">
+<div id="Ej_main" class="prolists">
+    	<include file="Public/Address"/>
+        <!--左边-->
+        <include file="Public/left"/>
+        <!--右边-->
+        <div class="right">
+				<div id="Content">
+					<div id="News_list">
+                    <div class="type">{$Cate.title}</div>
+                    	<ul>
+                        <volist name="News_list" id="list">
+                        	<li>
+                            <div class="im"><a href="{:U('Article/detail?id='.$list['id'])}" title="{$list.title}"><img src="{$list.cover_id|thumb=122,93}" width="122" height="93" /></a></div>
+                            <div class="news">
+                            <div class="n-top">
+                                <em><a href="{:U('Article/detail?id='.$list['id'])}" title="{$list.title}">{$list.title}</a></em>
+                                <span>{$list.create_time|date='Y-m-d',###}</span>
+                            </div>
+                            <div class="n-mid">
+                            <a href="{:U('Article/detail?id='.$list['id'])}">{$list.description}</a>
+                            </div>
+                            <div class="n-bot">
+                            <a href="{:U('Article/detail?id='.$list['id'])}" title="查看全文">阅读全文&gt;&gt;</a>
+                            </div>
+                            </div>
+                            </li>
+                        </volist>
+                        </ul>
+                    </div>
+			</div>
+            <include file="Comm/thePageInfo"/>    
+        </div>
+    </div>
+</block>

@@ -1,0 +1,238 @@
+<extend name="Base/common"/>
+<block name="header">
+	<header class="announced" id="overview">
+		<div class="container">
+			<div class="img"><img src="__PUBLIC__/Wechat/images/shizhong.png"></div>
+			<h2>揭晓倒计时</h2>
+					<input class="etime" type="hidden" value="{:microtime_format('Y/m/d H:m:s',$info['update_time'])}" />
+                	<input class="pro_id"  type="hidden" value="{$info.id}" />
+                	<input class="timeall" type="hidden" value="{$info.total_time}"/>
+                	<input class="OpenNum" type="hidden" value="{$info.lottery}"/>
+			<div class="timeout"><span class="span1" ></span><span class="span2"></span><em style="font-style:normal">:</em><span class="span3"></span><span class="span4"></span><em style="font-style:normal">:</em><span class="span5"></span><span class="span6"></span></div>
+		</div>
+	</header>
+</block>
+<block name="body">
+
+<div class="detail">
+    <div class="info">
+        <ul>
+           <li>
+                	<div class="img"><a href="{:U('Product/resultPage?id='.$info['id'])}"><img src="{$info.cover_id|picture}"/></a></div>
+                    <div class="title"><a href="{:U('Product/resultPage?id='.$info['id'])}" style="text-decoration:none; color:black;">{$info.title}</a></div>
+                    <div class="need">
+                    <span>市场价:&nbsp;￥&nbsp;{$info[total]*10}</span>
+                    <div class="duo">夺宝币:&nbsp;￥&nbsp;<span style="font-size:16px; color:#e23500">{$info.price}</span></div>
+                    </div>
+           </li>
+       </ul>
+        
+    </div>
+    
+    <div class="hot">
+    	<a href="{:U('Product/joins','id='.$info['id'])}"><div class="kuaidi"><div class="left">所有参与记录</div><div class="right">></div></div></a>
+    <div class="det">
+    	<div class="tabs">
+        	<ul>
+            	<li class="focus"><a href="javascript:;">奖品详情</a></li>
+                <li><a href="javascript:;">所有参与者记录<span class="icon-spinner icon-spin"></span></a></li>
+                <li><a href="javascript:;">晒单<code>({$info.plcount})</code></a></li>
+            </ul>
+            <div class="line">&nbsp;</div>
+        </div>
+        <div class="lists">
+        	<div class="list shuxing" id="shuxing">{$info.content}</div>
+            <volist name="ordlist" id="list">
+        	<div class="list content" id="content">{$list.nickname}</div>
+        	</volist>
+            <div class="list pingjia" id="pingjia"></div>
+            <script>
+            $(function(){
+				$.get("{:U('get_shuxing','id='.$info['id'])}",function(data){
+					$(".det .lists .shuxing").html(data);
+				});
+				$(".det .tabs ul li").eq(0).click(function(){
+					var info = $(".det .lists .shuxing").html();
+					$(".det .tabs li").removeClass("focus");
+					$(this).addClass("focus");
+					$(".det .list").hide();
+					$("#shuxing").show();
+					var width = $(this).width()*0;
+					$(".det .line").animate({left:width});
+					if(info==""){
+						$(this).find("span").css({"display":"inline-block"});
+						$.get("{:U('get_shuxing','id='.$info['id'])}",function(data){	
+							$(".det .lists .shuxing").html(data);
+							$(".det .tabs").find("span").hide();
+							//$("html,body").animate({scrollTop:$("#content").offset().top},500);
+						})
+					}
+				});
+				$(".det .tabs ul li").eq(1).click(function(){
+					var info = $(".det .lists .content").html();
+					$(".det .tabs li").removeClass("focus");
+					$(this).addClass("focus");
+					$(".det .list").hide();
+					$("#content").show();
+					var width = $(this).width();
+					$(".det .line").animate({left:"+="+width});
+					if(info==""){
+						$(this).find("span").css({"display":"inline-block"});
+						$.get("{:U('get_content','id='.$info['id'])}",function(data){	
+							$(".det .lists .content").html(data);
+							$(".det .tabs").find("span").hide();
+						})
+					}
+				});
+				
+				//收藏
+				$(".shoucang").click(function(){
+					var url = $(this).attr("href");
+					$.get(url,function(info){
+						$(".shoucang").find("p").html(info);
+					});
+					return false;
+				});
+				//添加到购物车按钮点击事件
+				$(".buy .buybtn").click(function(){
+					var url = "{:U('Shopping/UpdateCart?id='.$info[id])}";
+					$.get(url,function(result){
+						if(result == 1){
+							var html = $(".buy .shopcar").html();
+							$(".buy .shopcar").html("+1").addClass("flip");
+							window.setTimeout(function(){
+							$(".buy .shopcar").removeClass("flip");
+							$(".buy .shopcar").html(html);
+							$(".buy .shopcar").addClass("tada");
+							},1200);
+						}else{
+							alert("添加购物车失败，请稍后重试。");
+						}
+					});
+					
+				});
+				
+					$("#info_tan .info").each(function(){
+						var n3 = $(this).find(".n3").text();
+						var n1 = $(this).find(".n1").text();
+						var n4 = n1/n3*100;
+						if(n4>100){
+							$(this).find(".bar2").css("width",100+"%");
+						}else{
+							$(this).find(".bar2").css("width",n4+"%");
+						}
+						var n5 = n3*10;
+						$(this).find(".n5").html(n5);
+						});		
+			})
+			
+	function fix(num, length) {
+  		return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
+	}
+		function select_menu(){
+			$("#menu_ul").slideToggle();
+		}
+		
+		$(function(){
+			$(".container").each(function(){
+				var obj = this;
+				var timeout = setInterval(GetRTime,1000);
+				//获得3d号码
+				function getNum(){
+					var flag = false;
+	                $.ajax({
+					type:"GET",
+					url:"{:U('getNumber')}",
+					async:false,
+					success:function(msg){
+						$(obj).find(".OpenNum").val(msg);
+						flag = true;
+					},
+					error:function(){
+						getNum();
+					}
+					});
+					return flag;
+				}
+				//计算中奖号码
+				 function openNum(){
+					var result = false;
+					$.ajax({
+					type:"POST",
+					url:"{:U('Product/UpdatePro')}",
+					data:{id:$(obj).find(".pro_id").val(),lottery:$(obj).find(".OpenNum").val(),time_total:$(obj).find(".timeall").val()},
+					async:false,
+					success:function(msg){
+						result = true;
+					},
+					error:function(){
+						openNum();
+					}
+					});
+					return result;
+				 }
+			//倒计时
+				function GetRTime(){
+				   var etime = $(obj).find(".etime").val();
+				   var EndTime= new Date(etime);
+				   var NowTime = new Date();
+				   var t =EndTime.getTime() - NowTime.getTime();
+				     
+				   if(t==0||t<0){
+					 
+					   clearInterval(timeout);
+					   $(obj).find(".span1").html('0');
+				   	   $(obj).find(".span2").html('0');
+				       $(obj).find(".span3").html('0');
+				       $(obj).find(".span4").html('0');
+				       $(obj).find(".span5").html('0');
+				       $(obj).find(".span6").html('0');
+					   openAward(); 
+				   }else{
+					  
+					   var h=Math.floor(t/1000/60/60%24);
+					 
+					   var m=Math.floor(t/1000/60%60);
+					   var s=Math.floor(t/1000%60);
+					   hour = fix(h, 2);
+					   
+					   span1 = hour.substr(0,1);
+					   span2 = hour.substr(1,1);
+					   minute =  fix(m, 2);
+					   span3 = minute.substr(0,1);
+					   span4 = minute.substr(1,1);
+					   second = fix(s, 2);
+					   span5 = second.substr(0,1);
+					   span6 = second.substr(1,1);
+					   $(obj).find(".span1").html(span1);
+					   $(obj).find(".span2").html(span2);
+					   $(obj).find(".span3").html(span3);
+					   $(obj).find(".span4").html(span4);
+					   $(obj).find(".span5").html(span5);
+					   $(obj).find(".span6").html(span6);
+				   }
+			   	 }
+				//开奖
+			   function openAward(){
+				       $(obj).find(".time").html("计算中...");
+					   var flag = getNum();
+					   var exits = setInterval(function(){
+	  						if(flag == true){
+								var result = openNum();
+								if(result == true){
+									exit;
+									clearInterval(exits);
+									location.reload(); 
+								}
+							}
+					   },2000)
+					  
+			   }		
+				 });
+				});
+            </script>
+        </div>
+    </div>
+  
+</div>
+</block>

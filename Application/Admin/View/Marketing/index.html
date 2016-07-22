@@ -1,0 +1,277 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>营销规则 </h2>
+    </div>
+
+    <div class="cf">
+        <a class="btn" href="{:U('add')}">新 增</a>
+        <!-- 高级搜索
+        <div class="search-form fr cf">
+            <div class="sleft">
+                <input type="text" name="title" class="search-input" value="{:I('title')}" placeholder="请输入菜单名称">
+                <a class="sch-btn" href="javascript:;" id="search" url="__SELF__"><i class="btn-search"></i></a>
+            </div>
+        </div>
+         -->
+    </div>
+    
+    <div class="data-table table-striped">
+        <form class="ids">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>名称</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>活动产品</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+				<notempty name="list">
+                <volist name="list" id="menu">
+                    <tr>
+                        <td>{$menu.id}</td>
+                        <td>{$menu.title}</td>
+                        <td>{$menu.start_time|time_format='Y-m-d H:i'}</td>
+                        <td>{$menu.end_time|time_format='Y-m-d H:i'}</td>
+                        <td><a href="javascript:;" title="{$menu.id}" class="selprobtn btn">选择</a></td>
+                        <td><a title="编辑" href="{:U('edit?id='.$menu['id'])}">编辑</a>
+                        <a class="confirm ajax-get" title="删除" href="{:U('del?id='.$menu['id'])}">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+				<else/>
+				<td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+				</notempty>
+                </tbody>
+            </table>
+        </form>
+        <!-- 分页 -->
+        <div class="page">
+            {$_page}
+        </div>
+    </div>
+    
+<style>
+.bg
+{ width:100%; height:100%; background:#333; opacity:0.5; position:fixed; left:0px; top:0px; z-index:999; display:none;}
+.selpro
+{ width:800px; height:500px; position:fixed; left:50%; margin-left:-400px; top:50%; margin-top:-300px; background:#fff; z-index:1000; overflow:hidden; display:none;}
+.selpro .tables
+{ height:430px; overflow-y:scroll;}
+.edit_price
+{ width:600px; height:400px; position:fixed; left:50%; margin-left:-300px; top:50%; margin-top:-200px; background:#fff; z-index:1005; overflow:hidden; display:none;}
+.edit_price .con
+{ padding:20px;}
+.edit_price .con tr
+{ height:40px;}
+.edit_price .con .left
+{ text-align:right; padding-right:5px;}
+.edit_price .con .right
+{ padding-left:20px;}
+</style>
+<div class="bg"></div>
+<div class="selpro">
+
+	<div class="data-table table-striped tables">
+    	<table>
+        	<thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名称</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <volist name="prolist" id="list">
+            <tr>
+                <td>{$list.id}</td>
+                <td>{$list.title}</td>
+                <td><a href="javascript:;" class="editpricebtn" title="{$list.id}"  >编辑价格</a></td>
+            </tr>
+            </volist>
+        </table>
+    </div>
+
+
+    
+    <div class="submit" style="text-align:center;">
+        <button class="btn">关闭</button>
+    </div>
+    
+    <input type="hidden" name="gzpid" class="gzpid" value="" />
+	
+</div>
+
+<div class="edit_price">
+<div class="con">
+	<form action="" method="post" class="editform">
+    <table>
+    	<tr>
+        	<th colspan="2">级别供货价</th><th colspan="2">逐级利润比</th>
+        </tr>
+        <tr>
+        	<td class="left">分公司总经理价：</td><td><input type="text" class="text input-small" name="fgs_price" class="fgs_price" value="" /></td>
+            <td class="left right">分公司总经理利润比：</td><td><input type="text" class="text input-small" name="fgs_lirunbi" class="fgs_lirunbi" /></td>
+        </tr>
+        <tr>
+        	<td class="left">总监价：</td><td><input type="text" class="text input-small" name="yxzj_price" class="yxzj_price" /></td>
+            <td class="left right">总监利润比：</td><td><input type="text" class="text input-small" name="yxzj_lirunbi" class="yxzj_lirunbi" /></td>
+        </tr>
+        <tr>
+        	<td class="left">钻石会员价：</td><td><input type="text" class="text input-small" name="yiji_price" class="yiji_price" /></td>
+            <td class="left right">钻石会员利润比：</td><td><input type="text" class="text input-small" name="yiji_lirunbi" class="yiji_lirunbi" /></td>
+        </tr>
+        <tr>
+        	<td class="left">铂金会员价：</td><td><input type="text" class="text input-small" name="erji_price" class="erji_price" /></td>
+            <td class="left right">铂金会员利润比：</td><td><input type="text" class="text input-small" name="erji_lirunbi" class="erji_lirunbi" /></td>
+        </tr>
+        <tr>
+        	<td class="left">黄金会员价：</td><td><input type="text" class="text input-small" name="sanji_price" class="sanji_price" /></td>
+            <td class="left right">黄金会员利润比：</td><td><input type="text" class="text input-small" name="sanji_lirunbi" class="sanji_lirunbi" /></td>
+        </tr>
+        <tr>
+        	<td class="left">会员价：</td><td><input type="text" class="text input-small" name="real_price" class="real_price" /></td>
+            <td class="left right">状态：</td><td><select name="status"><option value="1">启用</option><option value="0">停用</option></select></td>
+        </tr>
+    </table>
+    <input type="hidden" name="pid" class="xxpid" value="" />
+    <input type="hidden" name="proid" class="xxproid" value="" />
+    </form>
+    <div class="sub_price" style="text-align:center; margin-top:20px;">
+    	<button class="btn pricesubmit">确认</button>
+        <button class="btn quxiao">取消</button>
+    </div>
+</div>
+</div>
+
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(function() {
+			$(".selprobtn").click(function(){
+				var id = $(this).attr("title");
+				$(".gzpid").val(id);
+				$(".bg").show();
+				$(".selpro").show();
+			});
+			
+			$(".editpricebtn").click(function(){
+				var pro = $(this).attr("title");
+				var gzpid = $(".gzpid").val();
+				var url = "{:U('get_new_price')}?pid="+gzpid+"&proid="+pro;
+				
+				$.get(url,function(data){
+					if(data=="0"){
+						$(".con .text").each(function() {
+							$(this).val("");
+						});
+					}else{
+						Think.setValue("fgs_price",data.fgs_price);
+						Think.setValue("fgs_lirunbi",data.fgs_lirunbi);
+						Think.setValue("yxzj_price",data.yxzj_price);
+						Think.setValue("yxzj_lirunbi",data.yxzj_lirunbi);
+						Think.setValue("yiji_price",data.yiji_price);
+						Think.setValue("erji_price",data.erji_price);
+						Think.setValue("sanji_price",data.sanji_price);
+						Think.setValue("yiji_lirunbi",data.yiji_lirunbi);
+						Think.setValue("erji_lirunbi",data.erji_lirunbi);
+						Think.setValue("sanji_lirunbi",data.sanji_lirunbi);
+						Think.setValue("real_price",data.real_price);
+						Think.setValue("status",data.status);
+					}
+					
+				});
+				
+				
+				$(".bg").css({"z-index":"1001"});
+				$(".edit_price").show();
+				
+				$(".xxpid").val(gzpid);
+				$(".xxproid").val(pro);
+				
+				
+
+			});
+			
+			$(".submit button").click(function(){
+				$(".bg").hide();
+				$(".selpro").hide();
+			});
+			
+			$(".pricesubmit").click(function(){
+				var data = $(".editform").serialize();
+				var url = "{:U('update_list')}";
+				$.post(url,data).success(function(info){
+					if(info=="1"){
+						updateAlert("添加成功！",'alert-success');
+					}else if(info=="2"){
+						updateAlert("修改成功！",'alert-success');
+					}else if(info=="-2"){
+						updateAlert("修改失败！");
+					}else if(info=="0"){
+						updateAlert("添加失败！");
+					}
+					setTimeout(function(){
+						$(".bg").css({"z-index":"999"});
+						$(".edit_price").hide();
+						$('#top-alert').find('button').click();
+						$(that).removeClass('disabled').prop('disabled',false);
+						
+					},1500);
+				});
+			});
+
+            $(".quxiao").click(function(){
+                $(".bg").css({"z-index":"999"});
+                $(".edit_price").hide();
+                $('#top-alert').find('button').click();
+                $(that).removeClass('disabled').prop('disabled',false);
+            });
+			
+            //搜索功能
+            $("#search").click(function() {
+                var url = $(this).attr('url');
+                var query = $('.search-form').find('input').serialize();
+                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+                query = query.replace(/^&/g, '');
+                if (url.indexOf('?') > 0) {
+                    url += '&' + query;
+                } else {
+                    url += '?' + query;
+                }
+                window.location.href = url;
+            });
+            //回车搜索
+            $(".search-input").keyup(function(e) {
+                if (e.keyCode === 13) {
+                    $("#search").click();
+                    return false;
+                }
+            });
+            //导航高亮
+            highlight_subnav('{:U('index')}');
+            //点击排序
+        	$('.list_sort').click(function(){
+        		var url = $(this).attr('url');
+        		var ids = $('.ids:checked');
+        		var param = '';
+        		if(ids.length > 0){
+        			var str = new Array();
+        			ids.each(function(){
+        				str.push($(this).val());
+        			});
+        			param = str.join(',');
+        		}
+
+        		if(url != undefined && url != ''){
+        			window.location.href = url + '/ids/' + param;
+        		}
+        	});
+        });
+    </script>
+</block>

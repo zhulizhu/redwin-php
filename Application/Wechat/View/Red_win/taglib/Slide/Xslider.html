@@ -1,0 +1,33 @@
+<script src="__PUBLIC__/Home/Cheewo/js/jquery.Xslider.js"></script>
+<style>
+/*幻灯*/
+.Xslide
+{ width:100%; height:100%; position:relative;}
+.Xslide .conbox/*图片盒子*/
+{ width:9999em; position:absolute;/*必要元素*/ }
+.Xslide .switcher/*数字盒子*/
+{ position:absolute; bottom:5px; right:5px; float:right; z-index:99;}
+.Xslide .switcher a/*数字按钮样式*/
+{ width:16px; height:16px; border:1px solid #333; float:left; cursor:pointer; margin:2px;
+ text-align:center; color:#333; font-size:12px; background:#fff; line-height:16px; }
+.Xslide .switcher a.cur,.switcher a:hover/*数字按钮焦点*/
+{ width:16px; height:16px;border:1px solid #D00000; line-height:16px; text-decoration:none;
+margin:2px; color:#fff;  background:#FF0000;}
+</style>
+<div class="Xslide">
+	<div class="conbox">
+		<volist name="Adlist" id="vo">
+    		<div><a href="{$vo.url}" <eq name="vo.target" value="1"> target="_blank" </eq> ><img width="{$AdSort.width}" height="{$AdSort.height}" src="{$vo.picture|thumb=$AdSort[width],$AdSort[height]}" /></a></div>
+    	</volist>
+    </div>
+    <div class="switcher">
+    	<volist name="Adlist" id="vo">
+    		<a href="#" <eq name="key" value="0"> class="cur"</eq> >{$key+1}</a>
+    	</volist>
+    </div>
+</div>
+<script>
+$(function(){
+	$(".Xslide").Xslider();
+})
+</script>

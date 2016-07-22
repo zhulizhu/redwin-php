@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <script src="../../js/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <script src="../../js/bootstrap.min.js"></script>
+    <title>购买</title>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            font-family: Consolas, '微软雅黑';
+        }
+    </style>
+</head>
+<body>
+<div id="pay_submit">
+    <img src="../../images/jkfdhf_02.png" alt="">
+
+    <div class="addes_name">
+        收货人:
+        <a href="" style="margin-left: 10px">王宇</a><span style="float: right;margin-right: 20px">12345678945</span>
+
+        <p><img style="margin: 0px 20px 0 20px; " src="../../images/1.png" alt="">收货地址：<a href="">四川省成都时候都是国家的闪光点</a></p>
+        <div class="default">
+            <span class="icon"></span><span class="def_tex">默认<a href="addres_defaul.html"><img src="../../images/1314.png"></a></span>
+        </div>
+    </div>
+    <div class="much">
+        <span>购买数量</span>
+
+        <div>
+            <div class="jian">-</div>
+            <div class="num">1</div>
+            <div class="jia">+</div>
+        </div>
+    </div>
+    <div class="lang">卖家留言：<input type="text" placeholder="请输入留言"></div>
+    <div class="pro">
+			<span>共<a href="">3</a>件商品
+			合计：<a href="" style="color:red;">￥1000</a></span>
+    </div>
+    <div class="red_packet">
+        红包余额支付 <input type="checkbox" name="sex" value="male"/>
+    </div>
+    <div class="red_packet">
+        优惠券 <input type="checkbox" name="sex" value="male"/>
+    </div>
+    <div class="red_packet">
+        包邮卡 <input type="checkbox" name="sex" value="male"/>
+    </div>
+    <footer><span>合计:<a href="">￥523.00</a></span><span><a href="">提交订单</a></span></footer>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function ($) {
+        $(".jia").click(function () {
+            var numbers = $(this).prev().text();
+            var jianum = parseInt(numbers) + 1;
+            $(this).prev().text(jianum);
+        });
+        $(".jian").click(function () {
+            var numbers = $(this).next().text();
+            if (numbers == 1) {
+                $(this).next().text(1);
+            } else {
+                var jiannum = parseInt(numbers) - 1;
+                $(this).next().text(jiannum);
+            }
+        });
+    });
+</script>
+</html>

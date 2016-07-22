@@ -1,0 +1,26 @@
+<div id="leftNav">
+<h2>	
+   <span>
+		{$thisleft.title}
+	</span>
+</h2>
+	<if condition="$leftnav|count !=0">
+	<div class="list">
+		<ul>
+		<volist name="leftnav" id="leftnav">
+			<if condition="$info['id'] eq $leftnav['id']">
+				<li class="focus">
+			<else/>
+				<li>
+			</if>
+            <if condition="get_list_count($leftnav['id']) eq 0">
+				<a href="{:U('Article/detail?id='.$leftnav['id'])}" title="{$leftnav.title}">>&nbsp;{$leftnav.title}</a>
+            <else/>
+            	<a href="{:U('Article/lists?category='.$leftnav['name'])}" title="{$leftnav.title}">>&nbsp;{$leftnav.title}</a>
+            </if>
+			</li>
+		</volist>
+		</ul>
+	</div>
+    </if>
+</div>

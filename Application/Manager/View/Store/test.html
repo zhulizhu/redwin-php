@@ -1,0 +1,65 @@
+<extend name="Public/base"/>
+
+<block name="body">
+<style>
+.tab-content
+{ display:none;}
+</style>
+	<div class="main-title">
+		<h2>动态配置</h2>
+	</div>
+    <div class="tab-wrap">
+        
+    	<div class="tab-content" style="display:block;">
+    		<form action="__SELF__" method="post" class="form-horizontal">
+                <div class="form-item">
+    				<label class="item-label">主题设置<span class="check-tips"></span> </label>
+					<div class="controls">
+        				<input type="text" class="text" name="DEFAULT_THEME" value="3212">
+        			</div>
+    			</div>
+                <div class="form-item">
+					<label class="item-label"></label>
+					<div class="controls">
+						<button type="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+						<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+					</div>
+				</div>
+            </form>
+    	</div>
+        
+        <div class="tab-content">
+    			<div class="form-item">
+    				<label class="item-label">允许上传的文件MiMe类型<span class="check-tips"></span> </label>
+					<div class="controls">
+        				<input type="text" class="text" name="DOWNLOAD_UPLOAD[mimes]" value="">
+        			</div>
+    			</div>
+    			<div class="form-item">
+    				<label class="item-label">上传的文件大小限制 (0-不做限制)<span class="check-tips"></span> </label>
+					<div class="controls">
+        				<input type="text" class="text" name="DOWNLOAD_UPLOAD[maxSize]" value="5*1024*1024">
+        			</div>
+    			</div>
+                <div class="form-item">
+    				<label class="item-label">允许上传的文件后缀<span class="check-tips"></span> </label>
+					<div class="controls">
+        				<input type="text" class="text" name="DOWNLOAD_UPLOAD[exts]" value="jpg,gif,png,jpeg,zip,rar,tar,gz,7z,doc,docx,txt,xml">
+        			</div>
+    			</div>
+                <div class="form-item">
+    				<label class="item-label">自动子目录保存文件<span class="check-tips"></span> </label>
+					<div class="controls">
+        				<input type="text" class="text" name="DOWNLOAD_UPLOAD[autoSub]" value="true">
+        			</div>
+    			</div>
+                <div class="form-item">
+    				<label class="item-label">自动子目录保存文件<span class="check-tips"></span> </label>
+					<div class="controls">
+        				<input type="text" class="text" name="DOWNLOAD_UPLOAD[autoSub]" value="true">
+        			</div>
+    			</div>
+    	</div>
+        </form>
+    </div>
+</block>

@@ -1,0 +1,117 @@
+<block name="Comm_top">
+  <!--通用顶部-->
+  <div id="Comm_top" style="filter:progid:dximagetransform.microsoft.alphaimageloader(src='__PUBLIC__/home/cheewo/images/bgn1.jpg',sizingmethod='scale');">
+    <div id="globle_top">
+      <div class="top_top">
+        <div class="lable"> 欢迎来到99车盟汇！ </div>
+        <div class="sc"><a onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)" title="收藏我们">收藏我们</a></div>
+        <div class="gz"><a  href="{:U('Article/detail?id=572')}" title="关注我们">关注我们</a></div>
+        <if condition="get_nickname() eq null">
+        <div class="log"><a href="{:U('User/login')}" title="请登录">请登录</a></div>
+        <div class="reg"><a href="{:U('User/register')}" title="免费注册">免费注册</a></div>
+        <else/>
+        <div class="log"><a href="{:U('User/index')}" title="{:get_nickname()}">{:get_nickname()}</a></div>
+        <div class="reg"><a href="{:U('User/logout')}" title="退出">【退出】</a></div>
+        </if>
+        <div class="get"><a href="{:U('User/index')}" title="我的夺宝">我的夺宝&nbsp;<span class="icon-chevron-down"></span></a>
+            <div class="get_li">
+                <ul>
+                    <li><a href="{:U('User/index')}" title="夺宝记录">夺宝记录</a></li>
+                    <li><a href="{:U('User/index')}" title="中奖记录">中奖记录</a></li>
+                    <li><a href="{:U('User/index')}" title="个人设置">个人设置</a></li>
+                    <li><a href="{:U('User/index')}" title="个人晒单">个人晒单</a></li>
+                </ul>
+            </div>
+        </div>
+        <script type="text/javascript">
+         $(function(){
+			$("#globle_top .top_top .get").hover(function(){
+				$(this).find(".get_li").show();
+			},function(){
+				$(this).find(".get_li").hide();
+			})
+		})
+        </script>
+      </div>
+      <div class="top_bot">
+          <div class="logo"><a href="{:U('Index/index')}"><img src="__PUBLIC__/home/cheewo/images/logo.png" width="219" height="69" title="{:C('WEB_SITE_TITLE')}"/></a></div>
+          <!--搜索框-->
+          <div class="top_Search">
+            <form action="{:U('Product/Search')}" method="post" name="from" onsubmit="return ckThKey(this);">
+              <input type="text" class="text_ket" name="title" id="text_ket" value="请输入搜索的奖品" onfocus="if(this.value=='请输入搜索的奖品'){this.value=''}"
+                         onblur="if(this.value==''){this.value='请输入搜索的奖品'}" style="color:#8A8A8A;"/>
+              <input type="submit"  id="but1" value="" class="but1" />
+            </form>
+            <div class="list"> <em>热门搜索：</em>
+              <ul>
+                <li><a href="{:U('Product/Search?text_ket=奥迪')}" title="奥迪">奥迪</a></li>
+                <li><a href="{:U('Product/Search?text_ket=大众')}" title="大众">大众</a></li>
+                <li><a href="{:U('Product/Search?text_ket=保时捷')}" title="保时捷">保时捷</a></li>
+                <li><a href="{:U('Product/Search?text_ket=最新奖品')}" title="最新奖品">最新奖品</a></li>
+                <li><a href="{:U('Product/Search?text_ket=进口')}" title="进口">进口</a></li>
+                <li><a href="{:U('Product/Search?text_ket=自动')}" title="自动">自动</a></li>
+                <li><a href="{:U('Product/Search?text_ket=全部奖品')}" title="全部奖品">全部奖品</a></li>
+              </ul>
+            </div>
+          </div>
+          <!--参与清单--> 
+          {:dingdan()}
+      </div> 
+    </div>
+    <div id="Comm_Nav" class="focus">
+      <div class="comm_main">
+      	<div class="Product"><img src="__PUBLIC__/home/cheewo/images/lists.png" width="22" height="22"/><span>奖品分类</span><div class="all" 
+          <neq name="CONTROLLER_NAME" value="Index"> style="display:none;" </neq>
+          >
+        <div class="lists">
+        	<ul>
+            <li><a class="lists1" href="{:U('Product/Search?text_ket=全部奖品')}" target="_blank" title="全部奖品">全部奖品</a></li>
+            <li><a class="lists2" href="{:getprocateu(281)}" target="_blank" title="热门整车">热门整车</a></li>
+            <li><a class="lists3" href="{:getprocateu(282)}" target="_blank" title="汽车用品">汽车用品</a></li>
+            <li><a class="lists4" href="{:getprocateu(283)}" target="_blank" title="美容保养">美容保养</a></li>
+            <li><a class="lists5" href="{:getprocateu(284)}" target="_blank" title="改装专区">改装专区</a></li>
+            <li><a class="lists6" href="{:getprocateu(285)}" target="_blank" title="购物劵">购物劵</a></li>
+            </ul>
+        </div>
+        </div>
+         <neq name="CONTROLLER_NAME" value="Index"> 
+          <script type="text/javascript">
+                $(function(){
+					$("#Comm_Nav .Product").hover(function(){
+						$(this).find(".all").show();
+					},function(){
+						$(this).find(".all").hide();
+					})
+				})
+                </script> 
+        </neq>
+      </div>
+      	<div class="Nav">
+        <ul>
+          <li><a href="{:U('Index/index')}" title="首页">首页</a></li>
+          <li><a href="{:U('Brand/brandindex')}" title="团购专区">团购专区</a></li>
+          <li><a href="{:U('Product/newResult')}" title="最新揭晓">最新揭晓</a></li>
+          <li><a href="{:U('User/userPrints')}" title="晒单分享">晒单分享</a></li>
+          <li><a href="{:getcateu(149)}" title="新闻中心">新闻中心</a></li>
+        </ul>
+      </div>
+      <div class="join">
+      <input type="hidden" value="{:getCounts()}" id="counts" />
+     累计<span id="num1"></span><span id="num2"></span>；<span id="num3"></span><span id="num4"></span><span id="num5"></span>；<span id="num6"></span><span id="num7"></span><span id="num8"></span>人次为车盟基金做出贡献
+     <script type="text/javascript">
+	  var counts = $("#counts").val();
+	  counts = fix(counts, 8);
+      $("#num1").html(counts.substr(0,1)); 
+	  $("#num2").html(counts.substr(1,1)); 
+	  $("#num3").html(counts.substr(2,1)); 
+	  $("#num4").html(counts.substr(3,1)); 
+	  $("#num5").html(counts.substr(4,1)); 
+	  $("#num6").html(counts.substr(5,1)); 
+	  $("#num7").html(counts.substr(6,1)); 
+	  $("#num8").html(counts.substr(7,1)); 
+      </script>
+      </div>
+      </div>
+    </div>
+  </div>
+</block>

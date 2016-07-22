@@ -1,0 +1,100 @@
+<script src="/Public/static/jquery-1.10.2.min.js"></script>
+<script src="/php/core-min.js"></script>
+<script src="/php/sha1-min.js"></script>
+<script>
+        function getappid() {
+            return "{:get_wechat_appid()}"; //换成自已的appid
+        }
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+        function getTimeStamp() {
+            var timestamp = new Date().getTime();
+            var timestampstring = timestamp.toString();//一定要转换字符串
+            oldTimeStamp = timestampstring;
+            return timestampstring;
+        }
+
+        //得到随机字符串
+        function getNonceStr() {
+            var $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var maxPos = $chars.length;
+            var noceStr = "";
+            for (i = 0; i < 32; i++) {
+                noceStr += $chars.charAt(Math.floor(Math.random() * maxPos));
+            }
+            oldNonceStr = noceStr;
+            return noceStr;
+        }
+        //获取CODE
+        var getcodeobj = {
+            appid: getappid(),
+            redirect_uri: "",
+            response_type: "code",
+            scope: "snsapi_base",
+            state: "1"
+        };
+
+        //拼接url传参字符串
+        function perapara(objvalues, isencode) {
+            var parastring = "";
+            for (var key in objvalues) {
+                isencode = isencode || false;
+                if (isencode) {
+                    parastring += (key + "=" + encodeURIComponent(objvalues[key]) + "&");
+                }
+                else {
+                    parastring += (key + "=" + objvalues[key] + "&");
+                }
+            }
+            parastring = parastring.substr(0, parastring.length - 1);
+            return parastring;
+        }
+        //得到用户code
+        function getcode() {
+            var code = getQueryString("code");
+            if (!code) {
+                var getcodeparas = $.extend(getcodeobj, {
+                    redirect_uri: window.location.href
+                });
+                window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?" + perapara(getcodeparas) + "#wechat_redirect";
+            }
+            else {
+                return code;
+            }
+        }
+        //得到用户accesstoken
+        function getaccesstoken(code) {
+            var url = "{:U('shopping/get_token')}";
+            $.ajax({
+                type: "POST",  //默认是GET
+                dataType: "text",
+                url: url,
+                data: "code=" + code,
+                async: false,  //异步
+                cache: false, //不加载缓存
+                success: function (obj) {
+                    access_tokenstring = obj;
+                    isaccget = true;
+                },
+                error: function (req, msg, ex) {
+                }
+            });
+
+        }
+        function getSign(beforesingstring) {
+            sign = CryptoJS.SHA1(beforesingstring).toString();
+			
+            return sign;
+        }
+
+        var signparasobj = {
+            "accesstoken": "",
+            "appid": getappid(),
+            "noncestr": "",
+            "timestamp": "",
+            "url": ""
+        };
+</script>

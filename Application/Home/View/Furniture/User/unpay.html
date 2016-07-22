@@ -1,0 +1,56 @@
+<extend name="Base/common"/>
+
+<block name="Comm_top">
+  <div id="settle">
+    <div id="settle_globle_top">
+      <div class="top_top">
+        <div class="lable"> 欢迎来到99车盟汇！ </div>
+        <div class="sc"><a onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)" title="收藏我们">收藏我们</a></div>
+        <div class="gz"><a  href="{:U('Article/detail?id=572')}" title="关注我们">关注我们</a></div>
+        <if condition="get_nickname() eq null">
+          <div class="log"><a href="{:U('User/login')}" title="请登录">请登录</a></div>
+          <div class="reg"><a href="{:U('User/register')}" title="免费注册">免费注册</a></div>
+          <else/>
+          <div class="log"><a href="{:U('User/index')}" title="{:get_nickname()}">{:get_nickname()}</a></div>
+          <div class="reg"><a href="{:U('User/logout')}" title="退出">【退出】</a></div>
+        </if>
+      <div class="get"><a href="{:U('User/index')}" title="我的夺宝">我的夺宝&nbsp;<span class="icon-chevron-down"></span></a>
+            <div class="get_li">
+                <ul>
+                    <li><a href="{:U('User/index')}" title="夺宝记录">夺宝记录</a></li>
+                    <li><a href="{:U('User/index')}" title="中奖记录">中奖记录</a></li>
+                    <li><a href="{:U('User/index')}" title="个人设置">个人设置</a></li>
+                    <li><a href="{:U('User/index')}" title="个人晒单">个人晒单</a></li>
+                </ul>
+            </div>
+        </div>
+        <script type="text/javascript">
+             $(function(){
+                $("#settle_globle_top .top_top .get").hover(function(){
+                    $(this).find(".get_li").show();
+                },function(){
+                    $(this).find(".get_li").hide();
+                })
+            })
+            </script> 
+      </div>
+    </div>
+    <div id="settle_globle_bot">
+      <div class="logo"> <a href="{:U('Index/index')}" title="{:C('WEB_SITE_TITLE')}"> <img src="__IMG__/logo-reg.png" width="246" height="74" title="{:C('WEB_SITE_TITLE')}"/> </a> </div>
+      <div class="step3"></div>
+    </div>
+  </div>
+</block>
+
+<block name="body">
+<div id="EjMain">
+	<div class="success">
+        <div class="info">您的订单支付失败！请您重新操作！</div>
+    </div>
+    <div class="path">
+    	<div class="left"><a href="{:U('User/index')}" title="查看订单">&lt;&lt;查看订单</a></div>
+        <div class="right"><a href="{:U('Index/index')}" title="继续购物">继续购物&gt;&gt;</a></div>
+    </div>
+</div>
+
+</block>

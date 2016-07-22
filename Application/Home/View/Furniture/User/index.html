@@ -1,0 +1,510 @@
+<extend name="Base/common"/>
+
+<block name="body">
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(function(){
+   $('.time-picker').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",
+	    minView:2,
+	    autoclose:true
+    });
+    
+})
+</script>
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="__STATIC__/jquery.lazyload.js"></script>
+  <div id="user">
+    <div class="addr">首页&nbsp;<em>&gt;</em>&nbsp;<span>个人中心</span></div>
+    <div class="user-t">
+      <div class="uphoto">
+		<input type="hidden" name="cover_id" id="cover_id_cover_id"/>
+	    <div class="upload-img-box">
+         <if condition="$info['picture']!=0">	
+         	<img width="153" height="153" src="{$info['picture']| thumb = 153,153}">
+         <else />
+         	<img src="__IMG__/photo.png" width="153" height="153" />
+         </if>
+        </div>
+        <input type="file" id="upload_picture_cover_id">
+        <div class="sure" id="sure">确认上传</div>
+	 </div>
+	 <script type="text/javascript">
+		//上传图片
+		/* 初始化上传插件 */
+	   $("#upload_picture_cover_id").uploadify({
+	     "height"          : 30,
+		 "swf"             : "__STATIC__/uploadify/uploadify.swf",
+		 "fileObjName"     : "download",
+		 "buttonText"      : "上传图片",
+		 "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+		 "width"           : 64,
+		 'removeTimeout'	  : 1,
+		 'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+		 "onUploadSuccess" : uploadPicturecover_id,
+	     'onFallback' : function() {
+				alert('未检测到兼容版本的Flash.');
+				}
+		});
+		function uploadPicturecover_id(file, data){
+			var data = $.parseJSON(data);
+			var src = '';
+			if(data.status){
+				$("#cover_id_cover_id").val(data.id);
+				src =  data.url || '__ROOT__' + data.path
+				$("#cover_id_cover_id").parent().find('.upload-img-box').html(
+					'<img width="153" height="153" src="' + src + '"/>'
+					);
+			} else {
+				updateAlert(data.info);
+				setTimeout(function(){
+				$('#top-alert').find('button').click();
+				$(that).removeClass('disabled').prop('disabled',false);
+				},1500);
+			}
+	}
+	function photo(picture){
+                $.ajax({
+				type:"GET",
+				url:"{:U('photo')}?picture="+picture,
+				async:false,
+				success:function(msg){
+					alert(msg);
+				},
+				error:function(){
+					alert("上传照片失败！");
+				}
+				});
+	}
+	$("#sure").click(function(){
+		var picture = $("#cover_id_cover_id").val();
+		photo(picture);
+		});
+	
+	</script>                   
+      <div class="uinfo">
+        <p>昵称：
+          <span class="nickname">{$info.nickname}</span><input type="text" id="nickname" value="{$info.nickname}" style="display:none"/>
+          &nbsp;&nbsp;<span id="edit1">[修改]</span><span id="save1" style="display:none">[保存]</span>
+        </p>
+        <p>ID：{$info.id}</p>
+        <p>姓名：{$info.username}</p>
+        <p>性别：<if condition="$info['sex']==0">男<else/>女</if></p>
+        <p>手机号码：{$info.mobile}</p>
+        <p>QQ号码：
+          <span class="qq" >{$info.qq}</span><input type="text" id="qq" value="{$info.qq}" style="display:none" />
+          &nbsp;&nbsp;<span id="edit2">[修改]</span><span id="save2" style="display:none">[保存]</span>
+        </p>
+        <p>收货地址：
+          <span class="address" >{$info.address}</span><input type="text" id="address" value="{$info.address}" style="display:none" />
+          &nbsp;&nbsp;<span id="edit3">[修改]</span><span id="save3" style="display:none">[保存]</span>
+        </p>
+      </div>
+      <div class="uad"><a href="{$ad3.url}" title="{$ad3.title}"><img src="{:picture($ad3['picture'])}" width="347" height="206"/></a></div>
+      <script type="text/javascript">
+	  function nickname(name){
+                $.ajax({
+				type:"GET",
+				url:"{:U('nickname')}?nickname="+name,
+				async:false,
+				success:function(msg){
+					//alert(msg);
+				},
+				error:function(){
+					alert("保存失败！");
+				}
+				});
+	 }
+	 function qq(qqnum){
+                $.ajax({
+				type:"GET",
+				url:"{:U('qq')}?qqnum="+qqnum,
+				async:false,
+				success:function(msg){
+					//alert(msg);
+				},
+				error:function(){
+					alert("保存失败！");
+				}
+				});
+	 }
+	 function address(addr){
+                $.ajax({
+				type:"GET",
+				url:"{:U('address')}?addr="+addr,
+				async:false,
+				success:function(msg){
+					//alert(msg);
+				},
+				error:function(){
+					alert("保存失败！");
+				}
+				});
+	 }
+	 /*昵称修改*/
+	  $("#edit1").click(function(){
+		$(".uinfo .nickname").hide();
+		 $("#edit1").hide();
+		$("#nickname").show();
+		$("#save1").show();
+		});
+		$("#save1").click(function(){
+		 $("#save1").hide();
+		$("#nickname").hide();
+		$("#edit1").show();
+		var name = $("#nickname").val();
+		nickname(name);
+		$(".uinfo .nickname").html(name);
+		$(".uinfo .nickname").show();
+		});
+	/*qq修改*/
+	$("#edit2").click(function(){
+		$(".uinfo .qq").hide();
+		 $("#edit2").hide();
+		$("#qq").show();
+		$("#save2").show();
+		});
+		$("#save2").click(function(){
+		 $("#save2").hide();
+		$("#qq").hide();
+		$("#edit2").show();
+		var qqnum = $("#qq").val();
+		qq(qqnum);
+		$(".uinfo .qq").html(qqnum);
+		$(".uinfo .qq").show();
+		});
+	/*地址修改*/
+	$("#edit3").click(function(){
+		$(".uinfo .address").hide();
+		 $("#edit3").hide();
+		$("#address").show();
+		$("#save3").show();
+		});
+		$("#save3").click(function(){
+		 $("#save3").hide();
+		$("#address").hide();
+		$("#edit3").show();
+		var addr = $("#address").val();
+		address(addr);
+		$(".uinfo .address").html(addr);
+		$(".uinfo .address").show();
+		});
+      </script>
+    </div>
+    <div class="user-b">
+      <div class="head">
+        <h3 class="active">夺宝记录</h3>
+        <h3>中奖记录</h3>
+        <h3>晒单</h3>
+      </div>
+      <div class="content">
+        <div class="box1" style="display:block;">
+        	<div class="time">
+            	<a href="{:U('index?box1=all')}" title="全部" <if condition="$_GET['box1'] eq all">class="focus"</if><if condition="$_GET['box1'] eq null">class="focus"</if>>全部</a>
+            	<a href="{:U('index?box1=today')}" title="今天" <if condition="$_GET['box1'] eq today">class="focus"</if>>今天</a>
+            	<a href="{:U('index?box1=week')}" title="本周" <if condition="$_GET['box1'] eq week">class="focus"</if>>本周</a>
+            	<a href="{:U('index?box1=month')}" title="本月" <if condition="$_GET['box1'] eq month">class="focus"</if>>本月</a>
+            	<a href="{:U('index?box1=last')}" title="最近三个月" <if condition="$_GET['box1'] eq last">class="focus"</if>>最近三个月</a>
+            	<a href="{:U('index?box1=before')}" title="三个月以前" <if condition="$_GET['box1'] eq before">class="focus"</if>>三个月以前</a>
+                <form name="timeform1" method="post" action="{:U('index?box1=search')}">
+            	<div class="row">
+                	<label>选择时间段：</label>
+                	<input type="text"  name="time-start" class="text input-2x time-picker" value="" placeholder="起始时间" /> -                		
+                    <input type="text"  name="time-end" class="text input-2x time-picker" value="" placeholder="结束时间" />
+                    <button type="submit">搜索</button>
+               </div>
+               </form>
+            </div>
+            <div class="joinPro">
+            <table cellpadding="0" cellspacing="0">
+            	<tr class="tr1">
+                	<td width="168" class="td1">奖品图片</td>
+                    <td width="311">奖品名称</td>
+                    <td width="105">创建时间</td>
+                    <td width="66">夺宝状态</td>
+                    <td width="139">参与人次</td>
+                    <td width="183">夺宝号码</td>
+                    <td width="124">详情</td>
+                    <td width="66" class="td7">操作</td>
+                </tr>
+                <input id="sertime" type="hidden" value="{$sertime|date='Y/m/d H:i:s',###}" />
+                <volist name="ord" id="list">
+                <if condition="$list['status'] eq 1">
+                 <script type="text/javascript">
+				 $(function(){
+                      $(".content .box1 .joinPro tr.list").each(function(){
+						  var obj = this;
+						  var ntime = $('#sertime').val();
+						  var NowTime = new Date(ntime);
+						  var getNowtime = NowTime.getTime();
+						  var timeout = setInterval(GetRTime,1000);
+						  //删除订单
+						 function deleteOrd(){
+							$.ajax({
+							type:"POST",
+							url:"{:U('User/delOrd')}",
+							data:{id:$(obj).find(".order_id").val(),orderlist_id:$(obj).find(".orderlist_id").val()},
+							async:false,
+							success:function(msg){
+								location.reload();
+								return true; 
+							},
+							error:function(){
+								deleteOrd();
+							}
+							});
+						 }
+						 //倒计时
+						function GetRTime(){
+						   var etime = $(obj).find(".endtime").val();
+						   var EndTime= new Date(etime);
+						   var t =EndTime.getTime() - getNowtime;
+						   if(t==0||t<0){
+							   clearInterval(timeout);
+							   $(obj).find(".zfm").html('0');
+							   $(obj).find(".zfs").html('0');
+							   deleteOrd(); 
+						   }else{
+							   var m=Math.floor(t/1000/60%60);
+							   var s=Math.floor(t/1000%60);
+							   $(obj).find(".zfm").html(m);
+							   $(obj).find(".zfs").html(s);
+							   getNowtime+=1000;
+						   }
+						 }
+						  });
+				 });
+                 </script>
+                <volist name="list['suborder']" id="li">
+                <tr class="list">
+                <input class="endtime" type="hidden" value="{$list.buy_time}" />
+                <input class="order_id" type="hidden" value="{$list.id}" />
+                <input class="orderlist_id" type="hidden" value="{$li.id}" />
+                	<td width="168"><a href="{:U('Product/detail?id='.$li['pro_id'])}"><img class="lazy" data-original="{$li.picture|thumb=149,128}" width="149" height="128"/></a></td>
+                    <td width="311">
+                    	<p class="tit">{$li.periods} {$li.title}</p>
+                        <p>总需：{$li.total}人次</p>
+                        <p>获奖者：待定</p>
+                        <p>幸运号码：待定</p>
+                        <p>揭晓时间：待定</p>
+                    </td>
+                    <td width="105">{:microtime_format('Y-m-d H:i:s',$list['create_time'])}</td>
+                    <td width="66">
+                    <span class="state">
+                    待开奖
+                    </span>
+                    </td>
+                    <td width="139" class="join">
+                    {$li.length}
+                    </td>
+                    <td width="123" class="number" style="position:relative;">
+                    未知
+                    </td>
+                    <td width="66">
+                    <a class="detail" href="{:U('Product/detail?id='.$li['pro_id'])}" title="详情">详情</a>
+                    </td>
+                    <td width="184">
+                    	<a class="zf" href="{:U('Pay/doalipay?id='.$list['id'])}" title="支付">支付（<span class="zfm"></span>:<span class="zfs"></span>后订单自动取消）</a>
+                    </td>
+                </tr>      
+                </volist>
+                <else/>
+                <volist name="list['suborder']" id="li">
+                <tr>
+                	<td width="168"><a href="{:U('Product/detail?id='.$li['pro_id'])}"><img class="lazy" data-original="{$li.picture|thumb=149,128}" width="149" height="128"/></a></td>
+                    <td width="311">
+                    	<p class="tit">{$li.periods} {$li.title}</p>
+                        <p>总需：{$li.total}人次</p>
+                        <if condition="$li['state'] eq 2">
+                        <p>获奖者：<span class="user">{$li.awarduser}</span>（本期共参与{$li.awardcount}人次）</p>
+                        <p>幸运号码：<span class="lukynum"><if condition="$list['status'] eq 1">未知<else/>{$li.awardnum}</if></span></p>
+                        <p>揭晓时间：{:microtime_format('Y-m-d H:i:s.x',$li['update_time'])}</p>
+                        <else/>
+                        <p>获奖者：待定</p>
+                        <p>幸运号码：待定</p>
+                        <p>揭晓时间：待定</p>
+                        </if>
+                    </td>
+                    <td width="105">{:microtime_format('Y-m-d H:i:s',$list['create_time'])}</td>
+                    <td width="66">
+                    <span class="state">
+                    <if condition="$li['state'] eq 2">已揭晓
+                    <elseif condition="$li['state'] eq 1"/>待揭晓
+                    <else/>待开奖</if>
+                    </span>
+                    </td>
+                    <td width="139" class="join">
+                    {$li.length}
+                    </td>
+                    <td width="123" class="number" style="position:relative;">
+                    {$li.mynum}
+                    </td>
+                    <td width="66">
+                    <a class="detail" href="{:U('Product/detail?id='.$li['pro_id'])}" title="详情">详情</a>
+                    </td>
+                    <td width="184">
+                    <a class="sd" href="{:U('prints?id='.$li['pro_id'])}" title="晒单">晒单</a>&nbsp;|&nbsp;
+                    <a class="sd" href="{:U('hideOrd?id='.$li['id'])}" title="删除">删除</a>
+                    </td>
+                </tr>
+                </volist>
+                </if>
+                </volist>
+            </table>
+            </div>
+        </div>
+        <div class="box2">
+        	<div class="time">
+           <a href="{:U('index?box2=all')}" title="全部" <if condition="$_GET['box2'] eq all">class="focus"</if><if condition="$_GET['box2'] eq null">class="focus"</if>>全部</a>
+            <a href="{:U('index?box2=today')}" title="今天" <if condition="$_GET['box2'] eq today">class="focus"</if>>今天</a>
+            <a href="{:U('index?box2=week')}" title="本周" <if condition="$_GET['box2'] eq week">class="focus"</if>>本周</a>
+            <a href="{:U('index?box2=month')}" title="本月" <if condition="$_GET['box2'] eq month">class="focus"</if>>本月</a>
+            <a href="{:U('index?box2=last')}" title="最近三个月" <if condition="$_GET['box2'] eq last">class="focus"</if>>最近三个月</a>
+            <a href="{:U('index?box2=before')}" title="三个月以前" <if condition="$_GET['box2'] eq before">class="focus"</if>>三个月以前</a>
+             <form name="timeform2" method="post" action="{:U('index?box2=search')}">
+            	<div class="row">
+                	<label>选择时间段：</label>
+                	<input type="text"  name="time-start" class="text input-2x time-picker" value="" placeholder="起始时间" /> -                		
+                    <input type="text"  name="time-end" class="text input-2x time-picker" value="" placeholder="结束时间" />
+                    <button type="submit">搜索</button>
+               </div>
+               </form>
+            </div>
+            <div class="joinPro">
+            <table cellpadding="0" cellspacing="0">
+            	<tr class="tr1">
+                	<td width="168" class="td1">奖品图片</td>
+                    <td width="311">奖品名称</td>
+                    <td width="105">开奖时间</td>
+                    <td width="66">夺宝状态</td>
+                    <td width="139">参与人次</td>
+                    <td width="183">夺宝号码</td>
+                    <td width="124">操作</td>
+                    <td width="66" class="td7">晒单</td>
+                </tr>
+                <volist name="record" id="list">
+                <tr>
+                	<td width="168"><a href="{:U('Product/detail?id='.$list['id'])}"><img src="{$list.cover_id|thumb=149,128}" width="149" height="128"/></a></td>
+                    <td width="311">
+                    	<p class="tit">{$list.periods} {$list.title}</p>
+                        <p>总需：{$list.total}人次</p>
+                        <p>获奖者：<span class="user">{:get_nickname($list['awarduser'])}</span>（本期共参与{$list.join_count}人次）</p>
+                        <p>幸运号码：<span class="lukynum">{$list.awardnum}</span></p>
+                        <p>揭晓时间：{:microtime_format("Y-m-d  H:i:s.x",$list['update_time'])}</p>
+                    </td>
+                    <td width="105">{:microtime_format('Y-m-d H:i:s',$list['update_time'])}</td>
+                    <td>
+                    <span width="66" class="state">已揭晓</span>
+                    </td>
+                    <td width="139" class="join">
+                    {$list.join_count}
+                    </td>
+                    <td width="183" class="number">
+                    {$list.awardnum}
+                    </td>
+                    <td width="124">
+                    <a class="detail" href="{:U('Product/detail?id='.$list['id'])}" title="详情">详情</a>
+                    </td>
+                    <td width="66"><a class="sd" href="{:U('prints?id='.$list['id'])}" title="晒单">晒单</a></td>
+                </tr>
+                </volist>
+            </table>
+            </div>
+        </div>
+        <div class="box3">
+        	<div class="time">
+            <a href="{:U('index?box3=all')}" title="全部" <if condition="$_GET['box3'] eq all">class="focus"</if><if condition="$_GET['box3'] eq null">class="focus"</if>>全部</a>
+            <a href="{:U('index?box3=today')}" title="今天" <if condition="$_GET['box3'] eq today">class="focus"</if>>今天</a>
+            <a href="{:U('index?box3=week')}" title="本周" <if condition="$_GET['box3'] eq week">class="focus"</if>>本周</a>
+            <a href="{:U('index?box3=month')}" title="本月" <if condition="$_GET['box3'] eq month">class="focus"</if>>本月</a>
+            <a href="{:U('index?box3=last')}" title="最近三个月" <if condition="$_GET['box3'] eq last">class="focus"</if>>最近三个月</a>
+            <a href="{:U('index?box3=before')}" title="三个月以前" <if condition="$_GET['box3'] eq before">class="focus"</if>>三个月以前</a>
+             <form name="timeform3" method="post" action="{:U('index?box3=search')}">
+            	<div class="row">
+                	<label>选择时间段：</label>
+                	<input type="text"  name="time-start" class="text input-2x time-picker" value="" placeholder="起始时间" /> -                		
+                    <input type="text"  name="time-end" class="text input-2x time-picker" value="" placeholder="结束时间" />
+                    <button type="submit">搜索</button>
+               </div>
+               </form>
+            </div>
+			<div class="sai">
+                        	<ul>
+                            <volist name="uPrints" id="list">
+                            	<li>
+                                    <div class="cont">
+                                    	<div class="cont-t">
+                                        	<h2><span>{$list.periods}&nbsp;&nbsp;</span>{$list.title}</h2>
+                                            <h4>{$list.create_time|date="Y-m-d",###}</h4>
+                                        </div>
+                                        <div class="cont-m">{$list.say}</div>
+                                        <div class="cont-b">
+                                        <volist name="list['pic']" id = "li">
+                                        	<img src="{$li|thumb=138,135}" width="138" height="135" />
+                                        </volist>
+                                        </div> 
+                                    </div>
+                                </li>
+                             </volist>  
+                            </ul>
+                        </div>
+        	</div>
+      </div>
+    </div>
+    <SCRIPT type=text/javascript>
+	$(function(){
+	  var url = window.location.pathname;
+　　	  var box1=new RegExp('box1');
+      var box2=new RegExp('box2');
+      var box3=new RegExp('box3');
+　　   if(box3.test(url))
+	  {	 
+	  	  $(".user-b .head>h3").eq(2).addClass("active").siblings().removeClass("active");
+		  $(".box3").show();
+		  $(".box1").hide();
+		  $(".box2").hide();
+	  }else if(box2.test(url)){
+		  $(".user-b .head>h3").eq(1).addClass("active").siblings().removeClass("active");
+		  $(".box2").show();
+		  $(".box1").hide();
+		  $(".box3").hide();
+	  }else{
+		  
+		  $(".user-b .head>h3").eq(0).addClass("active").siblings().removeClass("active"); 
+		  $(".box1").show();
+		  $(".box2").hide();
+		  $(".box3").hide();
+	  }
+	 			
+	  var menu = $(".user-b .head h3"); 
+	  menu.click(function(){
+		   $(this).addClass("active") 
+		   .siblings().removeClass("active"); 
+			var index = menu.index( $(this) ); //找到h3子节点的索引
+			$(".user-b .content > div").eq(index).show() 
+			.siblings().hide();   
+		});
+		 				
+	})
+	</SCRIPT>
+    <div id="reco">
+      <div class="tit">
+        <h2>推荐奖品</h2>
+      </div>
+      <div class="pro">
+        <ul>
+          <volist name="reco" id="list" offset="0" length="5">
+            <li> <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}"><img src="{$list.cover_id|thumb=227,183}" width="227" height="183"/></a> <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}" class="title">{$list.title}</a>
+              <div class="people">总需:{$list.total}人次<span>仅剩:{$list.diff}人次</span></div>
+            </li>
+          </volist>
+        </ul>
+      </div>
+    </div>
+  </div>
+</block>

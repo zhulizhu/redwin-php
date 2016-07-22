@@ -1,0 +1,123 @@
+<extend name="Base/common"/>
+
+
+<block name="body">
+<style>
+.addpj
+{ padding:20px;}
+.addpj .pingfen
+{}
+.addpj .pingfen em
+{ font-style:normal; font-size:18px;}
+.addpj .pingfen span
+{ font-size:24px; margin-right:10px; color:#ccc;}
+.addpj .pingfen span.icon-star
+{ color:#ff0026;}
+.addpj .pingfen p
+{ margin-top:5px; color:#afa69e;}
+.addpj .content
+{ margin-top:10px;}
+.addpj .content .contxt
+{ width:90%; border:1px solid #a2a2a2; min-height:120px; padding:5px; font-size:14px;}
+.addpj .post
+{ width:100px; height:30px; background:#ff0026; border-radius:4px; text-align:center; line-height:30px; margin-top:10px;}
+.addpj .post a
+{ color:#fff; text-decoration:none;}
+
+.proinfo .img
+{ width:25%; height:auto; overflow:hidden; float:left;}
+.proinfo .img img
+{ max-width:100%; border-radius:8px;}
+.proinfo .right
+{ width:60%; float:left; margin-left:10px; margin-top:3px; margin-right:10px;}
+.proinfo .right .price
+{ clear:both; margin-top:5px; font-size:14px;}
+</style>
+<div class="top-head">
+	<div class="back"><a href="javascript:;" onclick="window.history.go(-1);">返回</a></div>
+	<h2>评价商品</h2>
+</div>
+<div class="user-page">
+	<volist name="orderlist" id="list">
+	<div class="addpj">
+    	<div class="proinfo">
+        	<div class="img"><img src="{$list.picture}" /></div>
+            <div class="right">
+            	<div class="title">{$list.title}</div>
+                <div class="price">购买数量：{$list.length}</div>
+                <div class="price">买入价格：￥{$list.price}</div>
+            </div>
+        </div>
+        <div style="clear:both; height:10px;"></div>
+        <eq name="list.pj" value="1">
+        已发表评价
+        <else/>
+    	<form action="__SELF__" method="post" class="frm">
+    	<div class="pingfen">
+        	<em>评分：</em><span class="icon-star"></span><span class="icon-star"></span><span class="icon-star"></span><span class="icon-star"></span><span class="icon-star"></span>
+            <input type="hidden" name="xing" class="xing" value="5" />
+            <p>1-2星=差评 3-4星=中评 5星=好评</p>
+        </div>
+        <div class="content">
+        	<textarea class="contxt" name="content" ></textarea>
+        </div>
+        <div class="post"><a href="javascript:;" class="postbtn"><span class="icon-ok"></span>发表评价</a></div>
+        <input type="hidden" name="pro_id" class="pro_id" value="{$list.pro_id}" />
+        <input type="hidden" name="order_id" class="order_id" value="{$list.id}" />
+        <input type="hidden" name="order_id" class="id" value="{$list.order_id}" />
+        </eq>
+        </form>
+    </div>
+    </volist>
+</div>
+
+<script>
+$(function(){
+	var content = "长度在5-150个字之间。例如该商品或某功能为您带来的帮助，或使用过程中遇到的问题。"
+	$(".contxt").html(content);
+	$(".pingfen span").click(function(){
+		var index = $(this).index();
+		
+		$(this).parent().find(".xing").val(index);
+		//前面
+		$(this).parent().find("span:lt("+index+")").removeClass("icon-star-empty").addClass("icon-star");
+		index = index - 1;
+		//后面
+		$(this).parent().find("span:gt("+index+")").removeClass("icon-star").addClass("icon-star-empty");
+	});
+	$(".contxt").focus(function(){
+		if($(this).html()==content){
+			$(this).html('');
+		}
+	});
+	$(".contxt").blur(function(){
+		if($(this).html()==""){
+			$(this).html(content);
+		}
+	});
+	$(".postbtn").click(function(){
+		var html = $(this).html();
+		if(html!="已发表评价"){
+			var obj = $(this).parent().parent();
+			var xing = obj.find(".xing").val();
+			var contxt = obj.find(".contxt").val();
+			if(contxt!=content){
+				var pro_id = obj.find(".pro_id").val();
+				var order_id = obj.find(".order_id").val();
+				$.post("__SELF__",{
+					xing:xing,
+					content:contxt,
+					pro_id:pro_id,
+					order_id:order_id,
+				},function(data){
+				});
+				obj.html("已发表评价");
+			}else{
+				obj.find(".contxt").focus();
+			}
+		}		
+	});	
+})
+</script>
+
+</block>

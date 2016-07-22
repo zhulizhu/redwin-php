@@ -1,0 +1,44 @@
+<extend name="Base/common"/>
+<block name="header">
+<header class="announced" id="overview">
+		<div class="list_head">
+			<div class="jp">
+				<ul class="nav navbar-nav">
+				<li><a href="javascript:;" style="text-decoration:none; color:red" onclick="select_menu()">全部奖品 </a>
+                <ul style="position:absolute; top:34px; display:none; width:94px; text-indent:16px;" id="menu_ul">
+                    <li style="background:#B80E0E; background-size:98px 20px; opacity:0.7;"><a href="{:U('Product/all')}" style=" color:#FFF">全部奖品</a></li>
+                    <li style="background:#B80E0E; background-size:98px 20px; opacity:0.7;"><a href="{:U('Product/allList')}" style="color:#FFF">奖品列表</a></li>
+
+                </ul>
+               	</ul>
+			</div>
+			<a href="{:U('Product/newResult')}"><div class="new">最新揭晓</div></a>
+			<p class="lead"></p>
+		</div>
+	</header>
+</block>
+
+<block name="body">
+	<div class="all_list">
+                <ul>
+                <li><a href="/Wechat/Product/all"><img src="__PUBLIC__/Wechat/images/alllist.png" /><span>全部商品</span></a></li>
+            </ul>
+    	<volist name="list" id="alllist">    
+            <ul>
+                <li><a href="/Wechat/Product/{$alllist.name}"><img src="__PUBLIC__/Wechat/images/{$alllist[name]}.png" /><span>{$alllist[title]}</span></a></li>
+            </ul>
+		</volist>
+    </div>
+	
+	<script type="text/javascript">
+		function select_menu(){
+			$("#menu_ul").slideToggle();	
+			
+		}
+	
+	
+	</script>
+
+
+</block>
+

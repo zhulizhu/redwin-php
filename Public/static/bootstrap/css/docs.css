@@ -1,0 +1,160 @@
+.jumbotron {
+	height:400px;
+  position: relative;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
+  background: #020031; /* Old browsers */
+  background: -moz-linear-gradient(45deg,  #020031 0%, #6d3353 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#020031), color-stop(100%,#6d3353)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(45deg,  #020031 0%,#6d3353 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(45deg,  #020031 0%,#6d3353 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(45deg,  #020031 0%,#6d3353 100%); /* IE10+ */
+  background: linear-gradient(45deg,  #020031 0%,#6d3353 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  -webkit-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
+     -moz-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
+          box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
+}
+.jumbotron h1 {
+  font-size: 44px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1; margin-top:40px; margin-bottom:20px;
+}
+.jumbotron p {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.8;
+}
+.jumbotron .more
+{ margin:30px auto;}
+
+/* Link styles (used on .masthead-links as well) */
+.jumbotron a {
+  color: #fff;
+  color: rgba(255,255,255,.5);
+  -webkit-transition: all .2s ease-in-out;
+     -moz-transition: all .2s ease-in-out;
+          transition: all .2s ease-in-out;
+}
+.jumbotron a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255,255,255,.25);
+}
+
+
+/* Pattern overlay
+------------------------- */
+.jumbotron .container {
+  position: relative;
+  z-index: 2;
+}
+.jumbotron:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url(../img/bs-docs-masthead-pattern.png) repeat center center;
+  opacity: .4;
+}
+
+
+/* Social proof buttons from GitHub & Twitter */
+.bs-docs-social {
+  padding: 15px 0;
+  text-align: center;
+  background-color: #f5f5f5;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Quick links on Home */
+.bs-docs-social-buttons {
+  margin-left: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+.bs-docs-social-buttons li {
+  display: inline-block;
+  padding: 5px 8px;
+  line-height: 1;
+  *display: inline;
+  *zoom: 1;
+}
+.my-tools
+{ background:#fff;}
+.my-tools .badge
+{ float:right; padding:3px 7px;}
+.my-tools li a
+{ padding-top:10px; padding-bottom:10px;}
+
+.user-topinfo
+{ height:90px;}
+.user-topinfo .left
+{ float:left;}
+.user-topinfo .right
+{ float:left; margin-left:15px;}
+
+.dl-horizontal.user dt
+{ width:80px; font-weight:normal; margin-bottom:15px;}
+.dl-horizontal.user dd
+{ margin:0px;  margin-bottom:15px;}
+
+.inline.user
+{ margin-left:3px;}
+.inline.user li
+{ padding-left:0px;}
+
+.panls
+{
+	background-color: #ffffff;
+	padding-left:20px;
+  border: solid 1px #e7e7e7;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+	}
+
+@media only screen and (max-width: 479px) {
+.jumbotron
+{ height:250px; overflow:hidden;}
+.jumbotron h1
+{ font-size:24px; margin-top:20px;}
+.jumbotron p
+{ font-size:14px; line-height:1.6;}
+.jumbotron p span
+{ display:none;}
+.jumbotron .more
+{ margin:15px auto;}
+.masthead-links .disk
+{ display:none;}
+
+.user-topinfo .unstyled
+{ float:left; }
+
+.jumbotron h3
+{ font-size:24px; margin-top:20px;}
+
+}
+
+
+.masthead-links {
+  list-style: none; margin:10px auto;
+}
+.masthead-links li {
+  display: inline;
+  padding: 0 10px;
+  color: rgba(255,255,255,.65);
+}

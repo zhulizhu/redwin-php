@@ -1,0 +1,160 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*企业用户中心*/
+#company
+{ width:100%; height:auto!important;height:500px;min-height:500px; overflow:hidden; background:#f5f5f5;}
+#company a
+{ color:#333333;}
+#company a:hover
+{ color:#e4393c;}
+#company .mian
+{ width:1211px; margin:0px auto;}
+#company .head
+{ font-size:20px; padding:15px 0px; color:#333;}
+#company .left
+{ width:150px; background:#fff; float:left;margin-right:10px;}
+#company .rightbox
+{ width:1036px; float:left; margin-left:15px;}
+#company .right
+{ width:807px; float:left;}
+
+#company .mian .left dl
+{ margin:20px 0px 20px 25px;}
+#company .mian .left dl dt
+{ font-size:14px; margin:5px 0px;}
+#company .mian .left dl dd
+{ margin:10px 15px;}
+
+#company .right .user-info
+{ width:100%; height:110px; padding:25px 10px; overflow:hidden; background:#fff; position:relative;}
+#company .right .user-info .face
+{ width:104px; height:104px; overflow:hidden; position:relative; margin:5px 10px 0px 0px; z-index:0; float:left; margin-left:10px;}
+#company .right .user-info .face img
+{ position:absolute; left:0px; top:0px; z-index:1;}
+#company .right .user-info .face .mask
+{ width:104px; height:104px; position:absolute; left:0px; top:0px; z-index:2; background:url(../Images/myjd-bg.png) no-repeat;}
+
+#company .right .user-info .info-m 
+{ float:left;}
+#company .right .user-info .info-m  .u-name
+{font-size:18px; line-height:28px; margin-bottom:5px;}
+#company .right .company-info .info-m  .u-signature
+{ color:#999; margin-bottom:15px;}
+
+#company .right .user-info .info-money
+{ width:400px; height:100%; border:1px solid #ddd;float:left; margin-left:30px; background:#fafafa;}
+#company .right .user-info .info-money table
+{ margin-top:10px;}
+#company .right .user-info .info-money tr
+{ height:30px; line-height:30px;}
+#company .right .user-info .info-money th
+{ text-align:right;}
+
+#company .right .order-list
+{ width:100%; height:auto; overflow:hidden; margin-top:10px; background:#fff; padding:10px;}
+#company .right .order-list .mt
+{ padding:10px;}
+#company .right .order-list .mt h3
+{ float:left; font-size:16px; line-height:20px;}
+#company .right .order-list .mt ul
+{ float:left; list-style:none; line-height:20px;}
+#company .right .order-list .mt ul li
+{ float:left; padding-left:20px;}
+#company .right .order-list .mt .all-order
+{ float:right; line-height:20px;}
+#company .right .order-list .mc
+{ clear:both;}
+#company .right .order-list .mc .tb-order
+{ height:278px; text-align:center;}
+#company .right .order-list .mc .tb-order td
+{ padding:5px; height:85px; border-bottom:1px dotted #e6e6e6; text-align:center;}
+#company .right .order-list .mc .tb-order .img-list
+{ text-align:left;}
+#company .right .order-list .mc .tb-order .img-list a
+{ text-decoration:none;} 
+#company .right .order-list .mc .tb-order .img-list img
+{ margin-right:5px;}
+/*最近发布*/
+#company .attention
+{ width:174px; height:477px; overflow:hidden; float:right; background:#fff; padding:10px 10px;}
+#company .attention h3
+{ font-size:16px; line-height:20px;}
+#company .attention .topbtn
+{ width:100%; height:11px; text-align:center; margin:5px 0px;}
+#company .attention .bottombtn
+{ width:100%; height:11px; text-align:center; margin:5px 0px;}
+#company .attention .list
+{ width:120px; height:415px; overflow:hidden; margin:0px auto;}
+#company .attention .list ul
+{ margin:0px; padding:0px; list-style:none;}
+#company .attention .list ul li
+{ width:110px; height:140px; overflow:hidden; float:left;}
+#company .attention .list ul li .price
+{ width:100%; line-height:20px; overflow:hidden; text-align:center;}
+#company .attention .list ul li .price span
+{ color:#e4393c;}
+
+
+/*企业用户信息*/
+#company .right .profile
+{ width:100%; height:auto; overflow:hidden; background:#fff;}
+#company .right .profile .mt
+{ padding:10px; margin-bottom:10px;}
+#company .right .profile .mt ul
+{ list-style:none;}
+#company .right .profile .mt ul li
+{ float:left; padding-left:20px;}
+#company .right .profile .mt ul li a
+{ padding-bottom:2px; display:inline-block;}
+#company .right .profile .mt ul li a.cur
+{ padding-bottom:0px; color:#e4393c; border-bottom:2px solid #e4393c; font-weight:700; cursor:default; text-decoration:none;}
+#company .right .profile .mc
+{ clear:both; padding:10px; margin-top:20px;}
+#company .right .profile .mc tr
+{ height:40px; line-height:40px;}
+#company .right .profile .mc th
+{ width:80px; text-align:right; padding-right:5px; font-size:14px; font-weight:normal;}
+#company .right .profile .mc th span
+{ color:#e4393c; margin-right:5px;}
+#company .right .profile .mc td .txt
+{ height:25px; line-height:25px; border:1px solid #ccc; text-indent:5px; margin-right:5px; margin-left:5px;}
+#company .right .profile .mc td .radio
+{ margin-right:5px;}
+#company .right .profile .mc td label
+{ margin-right:10px;}
+#company .right .profile .mc td input
+{ border:1px solid #CCCCCC; margin:0px; padding:0px; height:25px; line-height:25px; text-indent:5px; cursor:pointer;}
+.sub1
+{width:145px; height:30px; overflow:hidden; margin:0px; padding:0px; border:0px; background:#eb4d20;font-weight:bolder; color:#FFFFFF;}
+/*订单样式*/
+#order_list
+{width: 774px;height: auto;overflow: hidden;margin: 0px auto;}
+#order_list table.table1
+{width: 774px;height: auto;overflow: hidden;background: none;}
+#order_list table.table1 tr 
+{width: 774px;height: 25px;overflow: hidden;}
+#order_list table 
+{width: 774px;height: auto;overflow: hidden;background:#CCC; margin-bottom:5px;}
+#order_list table tr 
+{width: 774px;height: 25px;overflow: hidden; background:#fff;}
+#order_list table tr.tr1 
+{font-weight: bold;background:#eb4d20;font-size: 14px; color:#FFF;}
+#order_list table tr td 
+{text-align: center;}
+#order_list table tr td.td1 
+{text-align: left;text-indent: 10px;}
+#order_list table tr td.td1 a
+{ display:block; float:right; width:45px; height:22px; background:#F33; color:#FFF; margin-right:10px;}
+#order_list table tr td.td1 a:hover
+{text-decoration:none; background:#F93;}
+#order_list .search_order
+{border:1px solid #CCC; width:200px; height:25px; text-indent:10px;overflow: hidden;}
+#order_list #search
+{float:right; margin-bottom:10px;overflow: hidden;}
+#order_list #order_time
+{ margin-right:30px; float:right;overflow: hidden;}
+
+/*头像样式*/
+#upload_picture-button
+{ color:#F33;}

@@ -1,0 +1,226 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <script src="../../js/jquery-1.10.2.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <title>特惠专区分类</title>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            color: #393939;
+            font-family: Consolas, '微软雅黑';
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+<body ondblclick="return false;">
+<div id="sort">
+    <header>
+        <input type="text" placeholder="搜索关键字、商店名称">
+        <a href="each_result.html"><img  src="../../images/hdhfdhh_03.png" alt=""></a>
+    </header>
+    <div id="myCarousel" class="carousel slide">
+        <!-- 轮播（Carousel）指标 -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <!-- 轮播（Carousel）项目 -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="../../images/hfhfh_02.png" alt="First slide">
+                <!--  <div class="carousel-caption">标题 1</div> -->
+            </div>
+            <div class="item">
+                <img src="../../images/hfhfh_02.png" alt="Second slide">
+                <!-- <div class="carousel-caption">标题 2</div> -->
+            </div>
+            <div class="item">
+                <img src="../../images/hfhfh_02.png" alt="Third slide">
+                <!-- <div class="carousel-caption">标题 3</div> -->
+            </div>
+        </div>
+    </div>
+    <nav id="mynav">
+        <ul id="top_ul">
+            <a href="javascript:void(0)">
+                <li class="public_li" id="zong">综合排序</li>
+            </a>
+            <a href="javascript:void(0)">
+                <li>剩余库存</li>
+            </a>
+
+            <a href="javascript:void(0)">
+                <li id="sai"><img src="../../images/32.png" alt="" style="width:20px;height:20px;margin:3px;">筛选</li>
+            </a>
+        </ul>
+    </nav>
+    <div class="pro">
+        <div class="top_tu"><img src="../../images/hfhfh_05.png" alt=""></div>
+        <div class="name">拉菲</div>
+        <div class="money">￥500</div>
+    </div>
+    <div class="pro">
+        <div class="top_tu"><a href="product_detail.html"><img src="../../images/hfhfh_05.png" alt=""></a></div>
+        <div class="name"><a href="product_detail.html">拉菲</a></div>
+        <div class="money"><a href="product_detail.html">￥500</a></div>
+    </div>
+    <div class="pro">
+        <div class="top_tu"><a href="product_detail.html"><img src="../../images/hfhfh_05.png" alt=""></a></div>
+        <div class="name"><a href="product_detail.html">拉菲</a></div>
+        <div class="money"><a href="product_detail.html">￥500</a></div>
+    </div>
+    <div class="pro">
+        <div class="top_tu"><a href="product_detail.html"><img src="../../images/hfhfh_05.png" alt=""></a></div>
+        <div class="name"><a href="product_detail.html">拉菲</a></div>
+        <div class="money"><a href="product_detail.html">￥500</a></div>
+    </div>
+    <div class="pro">
+        <div class="top_tu"><a href="product_detail.html"><img src="../../images/hfhfh_05.png" alt=""></a></div>
+        <div class="name"><a href="product_detail.html">拉菲</a></div>
+        <div class="money"><a href="product_detail.html">￥500</a></div>
+    </div>
+    <!--弹出div的效果-->
+    <div class="pop_div">
+        <div id="composite">
+            <a href="">综合排序</a>
+        </div>
+        <div class="public_li">
+            <a href="">价格从高到低</a>
+        </div>
+        <div>
+            <a href="">价格从低到高</a>
+        </div>
+    </div>
+    <div class="pop_time" id="pop_time">
+        <div id="much"><a href="">按销量</a></div>
+        <div><a href="">按发布时间</a></div>
+    </div>
+    <div style="height:300px"></div>
+    <div class="fot">
+        <ul class="fot_ul">
+            <a href="index.html">
+                <li class="unbindClick" id="home" value=1>
+                    <img src="../../images/hdshsdh_03.png" id="img_a" alt="">
+                    首页
+                </li>
+            </a><a href="javascript:void(0)">
+            <li id="feng" class="public_fot unbindClick" value=1>
+                <img src="../../images/gdhd.png" id="img_b" alt="">
+                分类
+            </li>
+        </a><a href="buy_cart.html">
+            <li id="cart" class="unbindClick" value=1>
+                <img src="../../images/hfhfh_15.png" id="img_c" alt="">
+                购物车
+            </li>
+        </a><a href="../User/myself.html">
+            <li id="mymy" class="unbindClick" value=1>
+                <img src="../../images/hfhfh_17.png" id="img_d" alt="">
+                个人中心
+            </li>
+        </a>
+        </ul>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    /*轮播图的js*/
+    $("#myCarousel").carousel({
+        interval: 2000
+    });
+    //导航栏的js
+    $("#top_ul a>li").click(function () {
+        $(this).addClass('public_li').parent().siblings().children().removeClass('public_li');
+        $(".pop_time").hide(500);
+        $(".pop_div").hide(500);
+    });
+    $("#zong").click(function () {
+        $(this).addClass('public_li').parent().siblings().children().removeClass('public_li');
+        /*	$(".pop_div").show(300);*/
+        $(".pop_div").slideToggle(500);
+    });
+    $("#sai").click(function () {
+        $(this).addClass('public_li').parent().siblings().children().removeClass('public_li');
+        $(".pop_time").slideToggle(500);
+    });
+
+    /*$("#img_a").attr("src","img/hfhfh_15.png");*/
+    /* $(".fot_ul a>li").click(function() {
+     $(this).addClass('public_fot').parent().siblings().children().removeClass('public_fot');
+
+     });*/
+    /*$(".unbindClick").click(function(){
+     var src = $(this).children().attr("src");
+     var number = $(this).attr("values");
+     if(number==1){
+     if(src=="img/SHOUYE.png"||src=="img/hdshsdh_03.png"){
+     getImage();
+     $(this).attr("values",2);
+     $(this).children().attr("src","img/hdshsdh_03.png");
+     }else if(src=="img/khkh_03.png"||src=="img/gdhd.png"){
+     getImage();
+     $(this).attr("values",2);
+     $(this).children().attr("src","img/gdhd.png");
+     }else if(src=="img/hfhfh_15.png"||src=="img/gouwuche.png"){
+     getImage();
+     $(this).attr("values",2);
+     $(this).children().attr("src","img/gouwuche.png");
+     }else if(src=="img/hfhfh_17.png"||src=="img/gerenzhongxin.png"){
+     getImage();
+     $(this).attr("values",2);
+     $(this).children().attr("src","img/gerenzhongxin.png");
+     }
+     }
+     });*/
+
+    /* $("#mymy").click(function(event) {
+     $("#img_d").attr('src',$("#img_d").attr('src')=='img/hfhfh_17.png'?'img/gerenzhongxin.png':'img/hfhfh_17.png');
+     $("#img_a").attr('src','img/hdshsdh_03.png');
+     $("#img_c").attr('src','img/hfhfh_15.png');
+     $("#img_b").attr('src','img/khkh_03.png');
+     });
+     $("#home").click(function(event) {
+     $("#img_a").attr('src',$("#img_a").attr('src')=='img/SHOUYE.png'?'img/hdshsdh_03.png':'img/SHOUYE.png');
+     $("#img_d").attr('src','img/hfhfh_17.png');
+     $("#img_c").attr('src','img/hfhfh_15.png');
+     $("#img_b").attr('src','img/khkh_03.png');
+     });
+     $("#feng").click(function(event) {
+     $("#img_b").attr('src',$("#img_b").attr('src')=='img/khkh_03.png'?'img/gdhd.png':'img/khkh_03.png');
+
+     $("#img_d").attr('src','img/hfhfh_17.png');
+     $("#img_c").attr('src','img/hfhfh_15.png');
+     $("#img_a").attr('src','img/hdshsdh_03.png');
+
+     });
+     $("#cart").click(function(event) {
+     $("#img_c").attr('src',$("#img_c").attr('src')=='img/hfhfh_15.png'?'img/gouwuche.png':'img/hfhfh_15.png');
+     $("#img_d").attr('src','img/hfhfh_17.png');
+     $("#img_b").attr('src','img/khkh_03.png');
+     $("#img_a").attr('src',"img/hdshsdh_03.png");
+
+     });*/
+    /* $(".pop_div>div").click(function(event) {
+     $(this).addClass('public_li').parent().siblings().children().removeClass('public_li');
+     });*/
+    /*function getImage(){
+     $(".unbindClick").attr("values",1);
+
+     $("#img_a").attr('src','img/hdshsdh_03.png');
+     $("#img_c").attr('src','img/hfhfh_15.png');
+     $("#img_b").attr('src','img/khkh_03.png');
+     $("#img_d").attr('src','img/gerenzhongxin.png');
+     }*/
+</script>
+</html>

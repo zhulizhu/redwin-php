@@ -1,0 +1,18 @@
+<div id="Address_top">
+	<em>
+		<if condition="$info.title !=''">
+			{$info.title}
+		<else/>
+			{$category.title}
+		</if>
+	</em>
+	<span>当前位置：
+    <a href="index.php">首页</a>&nbsp;&gt;&nbsp;
+    <volist name="NowAddress" id="address">
+    	<eq name="key" value="1">
+			&nbsp;&gt;&nbsp;	
+    	</eq>
+    	<a href="{$address.url}">{$address.title}</a>
+    </volist>
+    </span>
+</div>

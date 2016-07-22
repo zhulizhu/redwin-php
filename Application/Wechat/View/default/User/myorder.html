@@ -1,0 +1,103 @@
+<extend name="Base/common"/>
+
+
+<block name="body">
+<div class="top-head">
+	<div class="back"><a href="javascript:;" onclick="window.history.go(-1);">返回</a></div>
+	<h2>我的订单</h2>
+</div>
+<style>
+.user-page .order .list ul li.listli
+{ width:100%; height:auto; background:#fbfbfb; overflow:hidden; border-bottom:1px solid #bcbcbc; box-shadow:0px 0px 5px #c0c0c0; border-top:1px solid #bcbcbc; margin:0px 0px 10px 0px;}
+.user-page .order .list ul li.listli .prolist
+{ width:100%; height:auto; overflow:hidden; border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding-bottom:10px;}
+.user-page .order .list ul li.listli .prolist ul
+{ list-style:none; padding:10px;}
+.user-page .order .list ul li.listli .prolist ul li
+{ width:80px; height:120px; background:#fff; float:left; text-align:center; line-height:18px; margin-right:10px; margin-top:0px; font-size:12px;}
+.user-page .order .list ul li.listli .prolist ul li p
+{ line-height:18px; margin:0px; padding:0px; text-align:left; text-indent:3px;}
+.user-page .order .list ul li.listli .prolist ul li a
+{ margin-top:5px;}
+.user-page .order .list ul li.listli .prolist ul li img
+{ margin-top:5px;}
+.user-page .order .list ul li.listli .status
+{ height:auto; line-height:30px;}
+</style>
+<div class="user-page">
+	<div class="order">
+    	<div class="list">
+        	<ul class="listul">
+            	<empty name="list"><div style="text-align:center; margin-top:30px;">空空如也...</div></empty>
+            	<volist name="list" id="list">
+            	<li class="listli">
+                	<div class="info">
+                    	<p>订单号：<span>{$list.id}</span></p>
+                        <p>订单金额：<span class="price">￥{$list.price}</span></p>
+						<p>优惠信息：<span><if condition="$list['hb_type'] eq 0 AND $list['hb_id'] eq 0">
+							无
+							<else/>
+							<eq name="list.hb_type" value="0">系统红包<else/>用户红包</eq>
+							￥<?php echo get_hb_money($list['hb_type'],$list['hb_id']); ?>
+						</if></span></p>
+                        <p>下单时间：<span>{$list.create_time|time_format="Y-m-d H:i:s"}</span></p>
+                        <p>支付方式：<span><eq name="list.payment" value="wechat">微信支付<else/>余额支付</eq></span></p>
+                        <p>快递方式：<span>{$list.express|get_express}</span></p>
+                        <p>收&nbsp;&nbsp;件&nbsp;&nbsp;人：<span>{$list.username}</span></p>
+                        <p>联系电话：<span>{$list.tel}</span></p>
+                        <p>收货地址：<span>{$list.address}</span></p>
+                        <if condition="$list[status] gt 0 and $list[status] lt 2">
+                        <neq name="list.express_time" value="0">
+                        <a href="{:U('track?id='.$list['id'])}" class="genzhong">订单跟踪</a>
+                        </neq>
+                        </if>
+                        
+                    </div>
+                    <div class="prolist">
+                    	<ul>
+                        	<volist name="list.lists" id="lists">
+                        	<li><a href="{:U('Product/detail?id='.$lists[pro_id])}"><img src="{$lists.picture}" width="70" height="70"></a><p>价格:{$lists.price}</p><p>数量:{$lists.length}</p></li>                            </volist>
+                        </ul>
+                    </div>
+                    <div style="clear:both"></div>
+                    <div class="status">订单状态：
+                    <span>
+                    	<eq name="list.status" value="-1">已取消</eq>
+	                    <eq name="list.status" value="0">待付款</eq>
+                        <eq name="list.status" value="1"><neq name="list.express_time" value="0">待收货<else/>待发货</neq></eq>
+                        <eq name="list.status" value="2">待评价</eq>
+                        <eq name="list.status" value="3">已完成</eq>
+                        <eq name="list.status" value="5">已退货</eq>
+                        <eq name="list.status" value="6">已退邮费</eq>
+                    </span>
+                    	<gt name="list.status" value="0"><lt name="list.status" value="5"><a href="{:U('tuihuo?order_id='.$list['id'])}?type=0">退货</a>&nbsp;<a href="{:U('tuihuo?order_id='.$list['id'])}?type=1">换货</a></lt></gt>
+                    	<eq name="list.status" value="0"><a href="<eq name="list.payment" value="wechat">{:U('Order/Wxpay?order_id='.$list['id'])}?self=1<else/>{:U('Order/Yepay?order_id='.$list['id'])}</eq>">去付款</a>&nbsp;&nbsp;&nbsp;<a href="javascript:;" url="{:U('changeStatus?id='.$list['id'])}" class="quxiao">取消订单</a></eq>
+                    	<eq name="list.status" value="1">
+                        	<br />
+                    		<neq name="list.express_time" value="0">
+                        		<a href="javascript:;" class="queren" title="{$list.id}">确认收货</a>&nbsp;{$list.sy_d}天后自动确认
+                        	</neq>
+                    	</eq>
+                    	<eq name="list.status" value="2"><a href="{:U('addpj?id='.$list['id'])}">去评价</a></eq>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+$(function(){
+	$(".quxiao").click(function(){
+		if(confirm("是否取消该订单？")){
+			window.location.href = $(this).attr("url");
+		}
+	});
+	$(".queren").click(function(){
+		var id = $(this).attr("title");
+		if(confirm("未签收前确认收货可能会给您带来损失，确认收货？")){
+			window.location.href = "{:U('queren')}?id="+id;
+		}
+	});
+});
+</script>
+</block>

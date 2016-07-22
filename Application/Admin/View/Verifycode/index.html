@@ -1,0 +1,90 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<!-- 标题栏 -->
+	<div class="main-title">
+		<h2>验证码列表</h2>
+	</div>
+    <form action="{:U('Verifycode/index')}" method="post" id="myform">
+	<div class="cf">
+		<div class="fl">
+            <button class="btn ajax-post confirm" url="{:U('Verifycode/changeStatus',array('method'=>'deleteverify'))}" target-form="ids">删 除</button>
+        </div>
+
+        <!-- 高级搜索 -->
+		<div class="search-form fr cf">
+			<div class="sleft">
+                <input type="text" name="search_order" class="search-input" value="{:I('search_order')}" placeholder="请输入要查询的验证码编号">
+				<a class="sch-btn" href="javascript:;" id="search" url="{:U('Verifycode/index')}"><i class="btn-search"></i></a>
+			</div>
+		</div>
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table table-striped">
+	<table class="">
+    <thead>
+        <tr>
+		<th class="row-selected row-selected" width="20"><input class="check-all" type="checkbox"/></th>
+        <th>验证码编号</th>
+		<th>验证码</th>
+        <th>用户编号</th>
+		<th>手机号码</th>
+        <th>操作</th>
+		<th>状态</th>
+        <th >
+        <select name="order_time" id="order_time" onChange="submitForm()">
+        	<option value="1">发送时间</option>
+            <option value="2">最近三个月</option>
+            <option value="3">三个月以前</option>
+        </select></th>
+		</tr>
+    </thead>
+    <tbody>
+    <volist name="verifycode" id="list">
+		<tr>
+        <td><input  class="ids" type="checkbox" name="id[]" value="{$list.id}" /></td>
+        <td>{$list.id}</td>
+        <td>{$list.number}</td>
+        <td>{$list.uid}</td>
+        <td>{$list.mobile}</td>
+        <td><a href="{:U('?action=delete&id='.$list['id'])}" title="删除">删除</a></td>
+        <td><if condition="($list['status'] eq 0)">已验证<else/>{$list.status}次未验证</if></td>
+        <td>{$list.create_time|date='Y-m-d',###}</td>
+        </tr>
+    </volist>
+	</tbody>
+    </table>
+	</div>
+    </form>
+    <div class="page">
+        {$_page}
+    </div>
+</block>
+
+<block name="script">
+	<script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+	<script type="text/javascript">
+	//搜索功能
+	$("#search").click(function(){
+		var url = $(this).attr('url');
+        var query  = $('.search-form').find('input').serialize();
+       	query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+        query = query.replace(/^&/g,'');
+        if( url.indexOf('?')>0 ){
+            url += '&' + query;
+        }else{
+            url += '?' + query;
+        }
+		window.location.href = url;
+	});
+	//回车搜索
+	$(".search-input").keyup(function(e){
+		if(e.keyCode === 13){
+			$("#search").click();
+			return false;
+		}
+	});
+    //导航高亮
+    highlight_subnav('{:U('Verifycode/index')}');
+	</script>
+</block>

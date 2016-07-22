@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+/*设置个项默认值*/
+body
+{margin:0px; padding:0px; background-color:#fff; font-size:12px; font-family:"微软雅黑"; border:0px;}
+ul{ list-style:none;}
+table
+{margin:0px;}
+th,td
+{line-height:180%; text-align:left;}
+img
+{border:0px;}
+dl,dt,dd,p,ul,form
+{margin:0px; padding:0px;}
+h1,h2,h3,h4,h5,h6,h7,em,span,*
+{margin:0px; padding:0px;}
+
+/*通用链接默认值*/
+a:link{color:#0033FF;text-decoration: none;}
+a:visited{color:#0033FF;text-decoration: none;}
+a:hover,a:active{color:#0033FF;text-decoration:underline;}
+/*分页样式*/
+.pages{ width:670px; text-align:center; margin:0px auto; padding:10px 0; clear:both; margin-top:30px; font-size:14px;}
+.pages span,.pages a,.pages b{ font-size:14px; font-family:Arial, Helvetica, sans-serif; margin:0 2px; color:#999999;}
+.pages a,.pages b{ border:1px solid #e8e8e8; background:#fff; padding:2px 6px; text-decoration:none}
+.pages span { border:1px solid #e8e8e8; background:#fff; padding:2px 6px; padding-right:8px; background:#c30100; color:#fff; }
+.pages b,.pages a:hover{ background:#c30100; color:#fff;}
+

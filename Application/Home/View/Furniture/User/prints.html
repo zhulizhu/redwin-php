@@ -1,0 +1,145 @@
+<extend name="Base/common"/>
+<block name="Comm_top">
+<script type="text/javascript" src="__PUBLIC__/Home/cheewo/js/Comm.js"></script>
+<div id="cart">
+	<div id="cart_globle_top">
+    	<div class="top_top">
+            <div class="lable"> 欢迎来到99车盟汇！ </div>
+            <div class="sc"><a onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)" title="收藏我们">收藏我们</a></div>
+            <div class="gz"><a  href="{:U('Article/detail?id=572')}" title="关注我们">关注我们</a></div>
+            <if condition="get_nickname() eq null">
+            <div class="log"><a href="{:U('User/login')}" title="请登录">请登录</a></div>
+            <div class="reg"><a href="{:U('User/register')}" title="免费注册">免费注册</a></div>
+            <else/>
+            <div class="log"><a href="{:U('User/index')}" title="{:get_nickname()}">{:get_nickname()}</a></div>
+            <div class="reg"><a href="{:U('User/logout')}" title="退出">【退出】</a></div>
+            </if>
+            <div class="get"><a href="{:U('User/order')}" title="我的夺宝">我的夺宝&nbsp;<span class="icon-chevron-down"></span></a>
+                <div class="get_li">
+                    <ul>
+                        <li><a href="" title="夺宝记录">夺宝记录</a></li>
+                        <li><a href="" title="中奖记录">中奖记录</a></li>
+                        <li><a href="" title="个人设置">个人设置</a></li>
+                    </ul>
+                </div>
+            </div>
+            <script type="text/javascript">
+             $(function(){
+                $("#cart_globle_top .top_top .get").hover(function(){
+                    $(this).find(".get_li").show();
+                },function(){
+                    $(this).find(".get_li").hide();
+                })
+            })
+            </script>
+      </div>
+    </div>
+    <div id="cart_globle_bot">
+        <div class="logo">
+                <a href="{:U('Index/index')}" title="{:C('WEB_SITE_TITLE')}">
+                <img src="__IMG__/logo-reg.png" width="246" height="74" title="{:C('WEB_SITE_TITLE')}"/>	
+                </a>
+        </div>
+    </div>
+</div>
+</block>
+
+<block name="body">
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+<div id="prints">
+<form name="form1" method="post" action="{:U('addPrints')}" onsubmit="return CkPrints(this);">
+	<h2>奖品名称</h2>
+    <div class="award">
+    <input type="hidden" value="{$pro.id}" name="pro_id"/>
+    	<div class="image"><img src="{$pro.cover_id|thumb=140,89}" width="140" height="89" /></div>
+        <div class="info">
+        	<p class="tit">{$pro.periods} {$pro.title}</p>
+            <p id="values" class="val"></p>
+            <input type="hidden" value="{$pro.total}" id="total" />
+            <script type="text/javascript">
+			var t = $("#total").val();
+			var v = t*9.9;
+			v=Math.round(v); 
+			$("#values").html("价值：￥"+v);
+            </script>
+        </div>
+    </div>
+    <div class="say">
+    	<textarea name="say"  placeholder="夺到的宝贝喜欢吗？马上拍美照炫耀一下！"></textarea>
+    </div>
+    <div class="upload">
+		<input type="file" id="upload_picture_pic">
+		<input type="hidden" name="pic" id="cover_id_pic"/>
+		<div class="upload-img-box">
+		</div>
+								<script type="text/javascript">
+								//上传图片
+							    /* 初始化上传插件 */
+								$("#upload_picture_pic").uploadify({
+							        "height"          : 123,
+							        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+							        "fileObjName"     : "download",
+							        "buttonText"      : "",
+							        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+							        "width"           : 123,
+							        'removeTimeout'	  : 1,
+							        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+							        "onUploadSuccess" : uploadPicturepic,
+							        'onFallback' : function() {
+							            alert('未检测到兼容版本的Flash.');
+							        }
+							    });
+								function uploadPicturepic(file, data){
+							    	var data = $.parseJSON(data);
+							    	var src = '';
+							        if(data.status){
+										var oldid = $("#cover_id_pic").val();
+										if(oldid==""){
+											$("#cover_id_pic").val(data.id);
+										}else{
+											$("#cover_id_pic").val(data.id + "," + oldid);
+										}
+							        	src = data.url || '__ROOT__' + data.path
+										var oldhtml = $("#cover_id_pic").parent().find('.upload-img-box').html();
+							        	$("#cover_id_pic").parent().find('.upload-img-box').html(
+							        		oldhtml + '<div class="upload-pre-item"><img src="' + src + '" onclick="tanchu(this);"/><div class="close" id="'+data.id+'" onclick="del(this);"></div></div>'
+							        	);
+							        } else {
+							        	updateAlert(data.info);
+							        	setTimeout(function(){
+							                $('#top-alert').find('button').click();
+							                $(that).removeClass('disabled').prop('disabled',false);
+							            },1500);
+							        }
+							    }
+								function del(obj){
+									var newid = $("#cover_id_pic").val()+',';
+									var delid = obj.id+',';
+									if(newid==delid){
+										$("#cover_id_pic").val("");
+										}else{
+											$(obj).parent().css("display","none");
+											newid = newid.replace(delid, "");
+											leng = newid.length-1;
+											newid=newid.substring(0,leng);
+											$("#cover_id_pic").val(newid);
+										}
+								}
+								
+								function goback(){
+									$("#cover_id_pic").val();
+									history.go(-1);
+								}
+								
+								
+								</script>
+			
+    </div>
+    <div class="btn">
+    <input type="button" id="back" value="返  回" onclick="goback();" />
+    <input type="submit" id="fb" value="发  布" />
+    </div>
+</form>
+</div>
+</block>
+

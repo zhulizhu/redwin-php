@@ -1,0 +1,383 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/video-js/video-js.min.css" />
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/video-js/video.js"></script>
+	<script type="text/javascript">videojs.options.flash.swf = "__STATIC__/video-js/video-js.swf"</script>
+	<!-- 标题 -->
+	<div class="main-title">
+		<h2>{$meta_title}</h2>
+	</div>
+    <div class="tab-wrap">
+	<ul class="tab-nav nav">
+		<volist name=":C('materialType')" id="data">
+			<li data-tab="tab{$key}"<eq name="type" value="$key"> class="current"</eq>><a href="{:U('?type='.$key)}">{$data}</a></li>
+		</volist>
+	</ul>
+    
+<switch name="type">
+	<case value="text">
+	<!--__________________________________________________________________________________________________________ 文本素材 -->
+    
+	<!-- 按钮工具栏 -->
+	<div class="cf">
+		<div class="fl">
+            <a class="btn" href="{:U('WechatAdd/'.$act_name.'?type=text')}">新 增</a>
+            <button class="btn ajax-post confirm" target-form="ids" url="{:U('del?model='.$model)}">删 除</button>
+		</div>
+
+        <!-- 高级搜索 -->
+        <div class="search-form fr cf">
+            <div class="sleft">
+                <input type="text" name="key" class="search-input" value="{:I('key')}" placeholder="请输入关键字">
+                <a class="sch-btn" href="javascript:;" id="search" url="{:U($act_name)}"><i class="btn-search"></i></a>
+            </div>
+        </div>
+	</div>
+    <!-- 数据表格 -->
+    <div class="data-table">
+		<table>
+    <thead>
+        <tr>
+		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+		<th width="40">编号</th>
+		<th>内容</th>
+		<th width="100">操作</th>
+		</tr>
+    </thead>
+    <tbody>
+		<volist name="list" id="vo">
+		<tr>
+            <td><input class="ids" type="checkbox" name="ids[]" value="{$vo.id}" /></td>
+			<td>{$vo.id}</td>
+			<td>{$vo.content}</td>
+			<td>
+            	<a title="编辑" href="{:U('WechatEdit/'.$act_name.'?id='.$vo['id'])}">编辑</a>
+            	<a class="confirm ajax-get" title="删除" href="{:U('del?model='.$model.'&ids='.$vo['id'])}">删除</a></td>
+		</tr>
+		</volist>
+	</tbody>
+    </table>
+	</div>
+    
+    </case>
+	<case value="image">
+	<!--__________________________________________________________________________________________________________ 图片素材 -->
+    
+	<!-- 按钮工具栏 -->
+	<div class="cf">
+		<div class="fl">
+        	<input type="file" id="upload_picture" /><span class="check-tips">（大小限制128KB，只支持JPG格式）</span>
+            <input type="hidden" name="fileid" id="image_id" value="{$info.fileid}" />
+            <div class="upload-img-box">
+            	<notempty name="info.path"><div class="upload-pre-item"><img src="{$info.path}"/></div></notempty>
+            </div>
+            <script type="text/javascript">
+            //上传图片
+            /* 初始化上传插件 */
+            $("#upload_picture").uploadify({
+            	"height"          : 30,
+            	"swf"             : "__STATIC__/uploadify/uploadify.swf",
+            	"fileObjName"     : "download",
+            	"buttonText"      : "上传图片",
+            	"uploader"        : "{:U('WechatFile/upload',array('session_id'=>session_id(),'filetype'=>$type))}",
+            	"width"           : 120,
+            	'removeTimeout'	  : 1,
+            	'fileTypeExts'	  : '*.jpg',
+				'fileSizeLimit'   : 128,
+            	"onUploadSuccess" : uploadPicture,
+            	'onFallback' : function() {alert('未检测到兼容版本的Flash.')}
+            });
+            function uploadPicture(file, data){
+				//alert(data)
+            	var data = $.parseJSON(data);
+            	var src = '';
+            	if(data.status){
+					setTimeout('window.location=window.location',1500);
+					//$('.data-table tbody').prepend('<tr><td><input class="ids" type="checkbox" name="ids[]" value="'+data.id+'" /></td><td>'+data.id+'</td><td>'+data.name+'</td><td><a href="'+data.path+'" target="_blank"><img src="'+data.path+'" style="max-width:100px;max-height:100px;" /></a></td><td><a href="'+data.path+'" target="_blank">下载</a><a class="confirm ajax-get" title="删除" href="{:U(\'del?model=\'.$model.\'&ids='+data.id+'\')}">删除</a></td></tr>');
+            	} else {
+					updateAlert(data.info);
+					setTimeout(function(){
+						$('#top-alert').find('button').click();
+						$(that).removeClass('disabled').prop('disabled',false);
+					},1500);
+            	}
+            }
+            </script>   
+		</div>
+	</div>
+    <!-- 数据表格 -->
+    <div class="data-table">
+		<table>
+    <thead>
+        <tr>
+		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+		<th width="40">编号</th>
+		<th width="100">文件名</th>
+		<th>预览</th>
+		<th width="100">操作</th>
+		</tr>
+    </thead>
+    <tbody>
+		<volist name="list" id="vo">
+		<tr>
+            <td><input class="ids" type="checkbox" name="ids[]" value="{$vo.id}" /></td>
+			<td>{$vo.id}</td>
+			<td>{$vo.name}</td>
+			<td><img src="{$vo.path}" style="max-width:100px;max-height:100px;" /></td>
+			<td><a href="{$vo.path}" target="_blank">下载</a>
+            	<a class="confirm ajax-get" title="删除" href="{:U('del?model=wechat_file&ids='.$vo['id'])}">删除</a></td>
+		</tr>
+		</volist>
+	</tbody>
+    </table>
+	</div>
+    
+    </case>
+    <case value="voice">
+	<!--__________________________________________________________________________________________________________ 语音素材 -->
+    
+    <!-- 按钮工具栏 -->
+	<div class="cf">
+		<div class="fl">
+        	<input type="file" id="upload_picture" /><span class="check-tips">（大小限制256KB，播放时间不超过60秒，只支持AMR\MP3格式）</span>
+            <input type="hidden" name="fileid" id="image_id" value="{$info.fileid}" />
+            <div class="upload-img-box">
+            	<notempty name="info.path"><div class="upload-pre-item"><img src="{$info.path}"/></div></notempty>
+            </div>
+            <script type="text/javascript">
+            //上传图片
+            /* 初始化上传插件 */
+            $("#upload_picture").uploadify({
+            	"height"          : 30,
+            	"swf"             : "__STATIC__/uploadify/uploadify.swf",
+            	"fileObjName"     : "download",
+            	"buttonText"      : "上传语音",
+            	"uploader"        : "{:U('WechatFile/upload',array('session_id'=>session_id(),'filetype'=>$type))}",
+            	"width"           : 120,
+            	'removeTimeout'	  : 1,
+            	'fileTypeExts'	  : '*.mp3; *.amr',
+				'fileSizeLimit'   : 256,
+            	"onUploadSuccess" : uploadPicture,
+            	'onFallback' : function() {alert('未检测到兼容版本的Flash.')}
+            });
+            function uploadPicture(file, data){
+				//alert(data)
+            	var data = $.parseJSON(data);
+            	var src = '';
+            	if(data.status){
+					setTimeout('window.location=window.location',1500);
+					//$('.data-table tbody').prepend('<tr><td><input class="ids" type="checkbox" name="ids[]" value="'+data.id+'" /></td><td>'+data.id+'</td><td>'+data.name+'</td><td><a href="'+data.path+'" target="_blank"><img src="'+data.path+'" style="max-width:100px;max-height:100px;" /></a></td><td><a href="'+data.path+'" target="_blank">下载</a><a class="confirm ajax-get" title="删除" href="{:U(\'del?model=\'.$model.\'&ids='+data.id+'\')}">删除</a></td></tr>');
+            	} else {
+					updateAlert(data.info);
+					setTimeout(function(){
+						$('#top-alert').find('button').click();
+						$(that).removeClass('disabled').prop('disabled',false);
+					},1500);
+            	}
+            }
+            </script>   
+		</div>
+	</div>
+    <!-- 数据表格 -->
+    <div class="data-table">
+		<table>
+    <thead>
+        <tr>
+		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+		<th width="40">编号</th>
+		<th width="100">文件名</th>
+		<th>预览</th>
+		<th width="100">操作</th>
+		</tr>
+    </thead>
+    <tbody>
+		<volist name="list" id="vo">
+		<tr>
+            <td><input class="ids" type="checkbox" name="ids[]" value="{$vo.id}" /></td>
+			<td>{$vo.id}</td>
+			<td>{$vo.name}</td>
+			<td><audio src="{$vo.path}" controls="controls">您的浏览器不支持音频标签</audio></td>
+			<td><a href="{$vo.path}" target="_blank">下载</a>
+            	<a class="confirm ajax-get" title="删除" href="{:U('del?model=wechat_file&ids='.$vo['id'])}">删除</a></td>
+		</tr>
+		</volist>
+	</tbody>
+    </table>
+	</div>
+    
+    </case>
+    <case value="video|music">
+	<!--__________________________________________________________________________________________________________ 视频素材、音乐素材 -->
+    <volist name=":C('materialCols')" id="cols">
+		<div class="wechat_item <eq name='key' value='1'>wechat_item_middle</eq>">
+			<lt name="key" value="1"><span class="wechat_button"><a href="{:U('WechatAdd/'.$act_name.'?type='.$type)}"></a></span></lt>
+			<volist name="list" id="vo">
+	        <if condition="($key+$cols)%3 eq 0">
+	        	<div class="appmsg">
+	            	<div class="appmsg_content">
+	            		<h4 class="appmsg_title"><a target="_blank" href="#123" title="{$vo.content.Title}">{$vo.content.Title}</a></h4>
+	                    <div class="appmsg_info"><em class="appmsg_date">{$vo.addtime|time_format}</em></div>
+	                <eq name="type" value="video">
+	                    <div class="appmsg_thumb_wrp">
+                        	<video id="example_video_1" class="video-js vjs-default-skin" src="{$vo.path}" width="100%" height="100%" controls="controls" data-setup="{}"></video>
+	                    </div>
+	                <else />
+	                    <div class="appmsg_thumb_wrp">
+                        	<img class="appmsg_thumb" src="{$vo.path}" />
+	                    </div>
+						<audio src="{$vo.content.MusicURL}" controls="controls">您的浏览器不支持 audio 标签。</audio>
+						<audio src="{$vo.content.HQMusicUrl}" controls="controls">您的浏览器不支持 audio 标签。</audio> 
+	                </eq>
+	            	</div>
+	            	<div class="wechat_opr">
+                    	<ul class="grid_line">
+                        	<li class="richvideo_opr_item grid_item size1of3"><a href="{:U('WechatEdit/'.$act_name.'?id='.$vo['id'])}"><i class="icon18_common edit_gray">编辑</i></a></li>
+                            <li class="richvideo_opr_item grid_item size1of3"><a href="{$vo.path}" target="_blank"><i class="icon18_common download_gray_v1">下载</i></a></li>
+                            <li class="richvideo_opr_item grid_item size1of3 no_extra"><a class="confirm ajax-get" title="删除" href="{:U('del?model='.$model.'&ids='.$vo['id'])}"><i class="icon18_common del_gray">删除</i></a></li>
+                    	</ul>
+					</div>
+				</div>
+	        </if>
+			</volist>
+		</div>
+	</volist>
+    </case>
+	<case value="news">
+	<!--__________________________________________________________________________________________________________ 图文素材 -->
+<div class="appmsg_list">
+	<volist name=":C('materialCols')" id="cols">
+		<div class="wechat_item <eq name='key' value='1'>wechat_item_middle</eq>">
+			<lt name="key" value="1"><span class="wechat_button"><a href="{:U('WechatAdd/'.$act_name.'?type='.$type)}"></a></span></lt>
+			<volist name="list" id="vo">
+	        <if condition="($key+$cols)%3 eq 0">
+	        	<div class="appmsg">
+	            	<div class="appmsg_content <gt name='vo.contentCount' value='1'>appmsg_content_multi</gt>">
+	                <gt name="vo.contentCount" value="1">
+	                	<div class="cover_appmsg_item">
+	                    	<h4 class="appmsg_title"><a target="_blank" href="#">123</a></h4>
+	                        <div class="appmsg_thumb_wrp"><img class="appmsg_thumb" alt="" src="{$vo.content.0.PicUrl}"></div>
+	                	</div>
+	                	<volist name="vo.content" id="vv" offset="1">
+	                    	<div class="appmsg_item">
+	                        	<img class="appmsg_thumb" alt="" src="{$vv.PicUrl}" />
+	                            <h4 class="appmsg_title"><a target="_blank" href="#">456</a></h4>
+	                    	</div>
+	                    </volist>
+	                <else />
+	                	<h4 class="appmsg_title"><a target="_blank" href="#123" title="{$vo.content.0.Title}">{$vo.content.0.Title}</a></h4>
+	                    <div class="appmsg_info"><em class="appmsg_date">{$vo.addtime|time_format}</em></div>
+	                    <div class="appmsg_thumb_wrp"><img class="appmsg_thumb" alt="{$vo.content.0.Title}" src="{$vo.content.0.PicUrl}"></div>
+	                    <p class="appmsg_desc">{$vo.content.0.Description}</p>   
+	                </gt>
+	            	</div>
+	            	<div class="wechat_opr">
+	                	<ul>
+	                    	<li class="appmsg_opr_item grid_item size1of2"><a href="{:U('WechatEdit/'.$act_name.'?id='.$vo['id'])}"><i class="icon18_common edit_gray">编辑</i></a></li>
+    	                    <li class="appmsg_opr_item grid_item size1of2 no_extra"><a class="confirm ajax-get" title="删除" href="{:U('del?model='.$model.'&ids='.$vo['id'])}"><i class="icon18_common del_gray">删除</i></a></li>
+	                	</ul>
+					</div>
+				</div>
+	        </if>
+			</volist>
+		</div>
+	</volist>
+</div>
+    </case>
+</switch>
+
+	<!-- 分页 -->
+    <div class="page">
+        {$_page}
+    </div>
+</div>
+
+</block>
+<block name="script">
+<style type="text/css">
+.appmsg_list{font-size:0}
+.wechat_item{width:32%;font-size:14px;vertical-align:top;display:inline-block;#display:inline;#zoom:1;}
+.wechat_item_middle{padding:0 2%;}
+.wechat_button{line-height:150px;margin-bottom:20px;border:3px dashed #B8B8B8;border-radius:5px;text-align:center;display:block;}
+.wechat_button a{width:42px;height:42px;vertical-align:middle;display:inline-block;background:url("__PUBLIC__/Admin/images/base_z.png") no-repeat 0 -3137px;}
+.appmsg_list * a:hover{border:0}
+
+.appmsg{margin-bottom:20px;border:1px solid #D3D3D3;border-radius:5px;box-shadow:0 1px 0 rgba(0,0,0,0.1);background:#FFFFFF;overflow:hidden;position:relative;}
+.appmsg_content{padding:0 14px;border-bottom:1px solid #D3D3D3;position:relative;}
+.appmsg_content_multi{padding:0}
+.appmsg_title{line-height:28px;max-height:56px;padding-top:6px;font-size:16px;font-style:normal;font-weight:400;overflow:hidden;white-space:pre-wrap;word-break:normal;word-wrap:normal;}
+.appmsg_info{font-size:13px;line-height:20px;padding-bottom:6px;}
+.appmsg_thumb_wrp{height:160px;overflow:hidden;}
+.appmsg_thumb{width:100%;}
+.appmsg_desc{padding:5px 0 10px;white-space:pre-wrap;word-break:normal;word-wrap:normal;}
+.appmsg_opr{padding:0 14px;border-bottom:1px solid #D3D3D3;position:relative;}
+
+.appmsg_opr_item{float:left;height:44px;line-height:44px;background:#f4f4f4;}
+.size1of2{width:50%;}
+.appmsg_opr_item a{border-right:1px solid #D3D3D3;box-shadow:1px 0 0 0 #FFFFFF;display:block;line-height:20px;margin-top:12px;text-align:center;}
+.appmsg_opr_item a:hover{text-decoration:none;}
+.icon18_common{display:inline-block;height:18px;line-height:100px;overflow:hidden;vertical-align:middle;width:18px;background:url("__PUBLIC__/Admin/images/base_z.png");}
+.icon18_common.edit_gray{background-position:0 -2656px;}
+.icon18_common.download_gray_v1{background-position:0 -2516px;}
+.icon18_common.del_gray{background-position:0 -2264px;}
+
+.cover_appmsg_item{margin:0 14px 14px;position:relative;}
+.cover_appmsg_item .appmsg_title{background:rgba(0,0,0,0.6);bottom:0;left:0;position:absolute;width:100%;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);}
+.multi .appmsg_title{font-size:14px;padding-top:0;}
+.appmsg_title{font-size:16px;font-style:normal;font-weight:400;line-height:28px;max-height:56px;overflow:hidden;padding-top:6px;white-space:pre-wrap;word-break:normal;word-wrap:normal;}
+.appmsg_thumb_wrp{height:160px;overflow:hidden;}
+.appmsg_item:after{clear:both;content:"​";display:block;height:0;}
+.appmsg_item{border-top:1px solid #D3D3D3;padding:12px 14px;position:relative;}
+.appmsg_item .appmsg_thumb{float:right;height:78px;margin-left:14px;width:78px;}
+.multi .appmsg_title{font-size:14px;padding-top:0;}
+.appmsg_item .appmsg_title{line-height:24px;margin-top:14px;max-height:48px;overflow:hidden;}
+
+.richvideo_opr {background-color: #F4F4F4;border-top: 1px solid #D3D3D3;}
+.richvideo_opr_item {height: 44px;line-height: 44px;width: 33.33%;float:left}
+.grid_item.no_extra {float: none;overflow: hidden;width: auto;}
+</style>
+    <script type="text/javascript">
+        $(function() {
+            //搜索功能
+            $("#search").click(function() {
+                var url = $(this).attr('url');
+                var query = $('.search-form').find('input').serialize();
+                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+                query = query.replace(/^&/g, '');
+                if (url.indexOf('?') > 0) {
+                    url += '&' + query;
+                } else {
+                    url += '?' + query;
+                }
+                window.location.href = url;
+            });
+            //回车搜索
+            $(".search-input").keyup(function(e) {
+                if (e.keyCode === 13) {
+                    $("#search").click();
+                    return false;
+                }
+            });
+            //导航高亮
+            highlight_subnav("{:U()}");
+            //点击排序
+        	$('.list_sort').click(function(){
+        		var url = $(this).attr('url');
+        		var ids = $('.ids:checked');
+        		var param = '';
+        		if(ids.length > 0){
+        			var str = new Array();
+        			ids.each(function(){
+        				str.push($(this).val());
+        			});
+        			param = str.join(',');
+        		}
+
+        		if(url != undefined && url != ''){
+        			window.location.href = url + '/ids/' + param;
+        		}
+        	});
+        });
+    </script>
+</block>

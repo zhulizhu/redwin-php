@@ -1,0 +1,253 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<div class="main-title">
+		<h2>{:isset($info['id'])?'编辑':'新增'}自动回复</h2>
+	</div>
+	<!-- /表格列表 -->
+  	<form action="__SELF__" method="post" class="form-horizontal" >
+    	<if condition=" $pid neq 0 ">
+        	<div class="form-item">
+            	<label class="item-label">上级菜单<span class="check-tips">（上级菜单）</span></label>
+            	<div class="controls">
+                	<input type="text" class="text input-large" disabled="disabled" value="{$topname}" />
+            	</div>
+        	</div>
+        </if>
+      	<div class="form-item">
+            <label class="item-label">标题<span class="check-tips">（菜单标题）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="name" value="{$info.name}" />
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">接收用户操作事件</label>
+            <div class="controls">
+            	<select name="type" class="seltype">
+                	<option value="text">文本消息</option>
+                    <option value="image">图片消息</option>
+                    <option value="voice">语音消息</option>
+                    <option value="video">视频消息</option>
+                    <option value="location">地理位置消息</option>
+                    <option value="link">链接消息</option>
+                    <option value="click">点击自定义菜单事件</option>
+                    <option value="subscribe">首次关注事件</option>
+                    <option value="subscribeback">再次关注事件</option>
+                    <option value="auto">未匹配任何事件</option>
+                </select>
+                <script type="text/javascript">
+                $(".seltype").val("{$info.type}");
+                </script>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">参数<span class="check-tips">（用户发送的内容或关键词）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="keyword" value="{$info.keyword}" />
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">回复操作</label>
+            <div class="controls">
+            	<label class="inline radio"><input type="radio" name="material" value="0" checked="checked" />文本消息</label>
+                <label class="inline radio"><input type="radio" name="material" value="1" />素材消息</label>
+                <label class="inline radio"><input type="radio" name="material" value="2" />地理位置消息</label>
+                <label class="inline radio"><input type="radio" name="material" value="3" />链接消息</label>
+                <label class="inline radio"><input type="radio" name="material" value="4" />人工接入</label>
+                <label class="inline radio"><input type="radio" name="material" value="5" />文章消息</label>
+                <label class="inline radio"><input type="radio" name="material" value="6" />产品消息</label>
+            </div>
+        </div>
+        <div class="box">
+        	<div class="form-item">
+            	<label class="item-label">消息内容</label>
+            	<div class="controls">
+                	<label class="textarea">
+                		<textarea name="text">{$info.text}</textarea>
+                	</label>
+            	</div>
+        	</div>
+            <!--
+            <div class="form-item" style="display:none;">
+            	<label class="item-label">请选择素材</label>
+                <input type="hidden" name="content[]"  />
+            	<div class="controls">
+					<ul class="nav1 nav1-tabs" id="myTab">
+  						<li class="active"><a href="#home" data-toggle="tab">图片</a></li>
+  						<li><a href="#profile" data-toggle="tab">语音</a></li>
+  						<li><a href="#messages" data-toggle="tab">视频</a></li>
+  						<li><a href="#settings" data-toggle="tab">图文消息</a></li>
+                        <input type="hidden" name="sc_type" class="sc_type" value="0" />
+					</ul>
+					<div class="tab-content">
+  						<div class="tab-pane active image" id="home">
+                            <volist name="sclist" id="vo">
+                            <eq name="vo.filetype" value="image">
+                            <div class="list">
+                            	<label><input type="radio" name="sc_id[0]" value="{$vo.id}"  />
+                            	<img src="/Uploads/download/{$vo.savepath}{$vo.savename}" width="200" height="200" />
+                                </label>
+                            </div>
+                            </eq>
+                            </volist>
+<style>
+.image
+{ width:98%; margin:0px auto; margin-top:10px;}
+.image .list
+{ width:200px; height:200px; float:left; border:1px solid #ccc; margin-right:10px; margin-bottom:10px; position:relative;}
+.image .list input
+{ position:absolute; left:5px; top:5px; z-index:10;}
+</style>
+                        </div>
+  						<div class="tab-pane" id="profile">
+                        	语音
+                        </div>
+  						<div class="tab-pane" id="messages">
+                       		视频
+                       	</div>
+  						<div class="tab-pane" id="settings">
+                        	图文消息
+                        </div>
+					</div>
+
+					<script>
+  						$(function () {
+    						$('#myTab a:first').tab('show')
+							$("#myTab li").click(function(){
+								$(".sc_type").val($(this).index());
+							});
+  						})
+					</script>
+            	</div>
+        	</div>
+            <div class="form-item" style="display:none;">
+            	<label class="item-label">地理位置</label>
+            	<div class="controls">
+                	<label class="textarea">
+                		<textarea name="content[]">{$info.content}</textarea>
+                	</label>
+            	</div>
+        	</div>
+            <div class="form-item" style="display:none;">
+            	<label class="item-label">链接</label>
+            	<div class="controls">
+                	<label class="textarea">
+                		<textarea name="content[]">{$info.content}</textarea>
+                	</label>
+            	</div>
+        	</div>
+            <div class="form-item" style="display:none;">
+            	<label class="item-label">接入分组</label>
+            	<div class="controls">
+                	<select name="content[]">
+                    	<volist name="DkhGroup" id="DkhGroup">
+                    		<option value="{$DkhGroup.id}">{$DkhGroup.title}</option>
+                        </volist>
+                    </select>
+            	</div>
+        	</div>
+            <div class="form-item" style="display:none;">
+            	<label class="item-label">规则参数</label>
+            	<div class="controls">
+                	<label>分类：
+                    <select name="wenzhang[category]">
+                    	<volist name="tree" id="tree">
+                    	<if condition="count($tree['_']) gt 0">
+                        <optgroup label="{$tree.title}" style="font-style:normal;">
+                        	<volist name="tree._" id="treesun">
+                            <option value="{$treesun.id}">{$treesun.title}</option>
+                            </volist>
+                        </optgroup>
+                        <else/>
+                        <option value="{$tree.id}">{$tree.title}</option>
+                        </if>
+                        </volist>
+                    </select>
+                    </label>
+                </div>
+                <div class="controls">
+                    <label>条数：<input type="text" name="wenzhang[limit]" value="10" class="text input-small" />不能大于10条</label>
+            	</div>
+                <div class="controls">
+                    <label class="inline">排序：
+                    	<select name="wenzhang[orderby]">
+                        	<option value="id">默认</option>
+                            <option value="create_time">添加时间</option>
+                            <option value="update_time">修改时间</option>
+                            <option value="view">浏览数</option>
+                        </select>
+                    </label>
+                    <label class="inline">
+                        <select name="wenzhang[paixu]">
+                        	<option value="asc">正序</option>
+                            <option value="desc">倒序</option>
+                        </select>
+                    </label>
+            	</div>
+        	</div>
+            <div class="form-item" style="display:none;">
+            	<label class="item-label">规则参数</label>
+            	<div class="controls">
+                	<label>分类：
+                    <select name="product[category]">
+                    	<volist name="tree" id="tree">
+                    	<if condition="count($tree['_']) gt 0">
+                        <optgroup label="{$tree.title}" style="font-style:normal;">
+                        	<volist name="tree._" id="treesun">
+                            <option value="{$treesun.id}">{$treesun.title}</option>
+                            </volist>
+                        </optgroup>
+                        <else/>
+                        <option value="{$tree.id}">{$tree.title}</option>
+                        </if>
+                        </volist>
+                    </select>
+                    </label>
+                </div>
+                <div class="controls">
+                    <label>条数：<input type="text" name="wenzhang[limit]" value="10" class="text input-small" />不能大于10条</label>
+            	</div>
+                <div class="controls">
+                    <label class="inline">排序：
+                    	<select name="wenzhang[orderby]">
+                        	<option value="id">默认</option>
+                            <option value="create_time">添加时间</option>
+                            <option value="update_time">修改时间</option>
+                            <option value="view">浏览数</option>
+                        </select>
+                    </label>
+                    <label class="inline">
+                        <select name="wenzhang[paixu]">
+                        	<option value="asc">正序</option>
+                            <option value="desc">倒序</option>
+                        </select>
+                    </label>
+            	</div>
+        	</div>
+            -->
+            </div>
+        <br /><br /><br />
+
+        <div class="form-item">
+            <input type="hidden" name="id" value="{$info.id|default=''}">
+            <button class="btn submit-btn" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/bootstrap/css/modal.css">
+<script src="__PUBLIC__/Admin/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+	
+	$(function(){
+		$(".radio").click(function(){
+				$(".box .form-item").hide();
+				$(".box .form-item").eq($(this).index()).show();
+			});
+	})
+        //导航高亮
+        highlight_subnav('{:U('Wechat/reply')}');
+    </script>
+</block>

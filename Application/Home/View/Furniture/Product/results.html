@@ -1,0 +1,350 @@
+<extend name="Base/common"/>
+<block name="body">
+  <div id="Results">
+  	<div class="re-left">
+    	<div class="left-t">最新揭晓&nbsp;&gt;&nbsp;奖品详情</div>
+        <if condition="$info['state'] eq 2">
+        <div class="left-m">
+        	<img src="{$info.cover_id|thumb=275,235}" width="275" height="235" />
+            <h2>({$info.periods}){$info.title}</h2>
+            <div class="lucknum"><div class="num">{$info.awardnum}</div></div>
+        </div>
+        <div class="left-b">
+        	<div class="top">
+                <img src="{$userdata.picture|thumb=78,78}" width="78" height="78" />
+                <div class="info">
+                    <p>恭喜<span>{$userdata.nickname}</span>获得了本期奖品</p>
+                    <p>用户ID：<span>{$userdata.uid}</span>（ID为用户唯一不变标识符）</p>
+                    <p>揭晓时间：{:microtime_format('Y-m-d H:i:s.x',$info['update_time'])}</p>
+                    <p>夺宝时间：{:microtime_format('Y-m-d H:i:s.x',$userdata['join_time'])}</p>
+                </div>
+                <div class="join">
+                    <p>奖品获得者本期总共参与了{$userdata.join_count}人次</p>
+                    <p>Ta的中奖号码：<em>{$info.awardnum}</em></p>
+                </div>
+            </div>
+            <div class="result">
+            	<div class="num1">
+                <p>{$info.awardnum}</p>
+                <p>本期幸运号码</p>
+                </div>
+                <div class="num2">
+                <p>{$info.time_total}</p>
+                <p>50个时间求和</p>
+                </div>
+                <div class="num3">
+                <p id="num3d">{$info.lottery}</p>
+                <p>3D开奖号码</p>
+                </div>
+                <div class="num4">
+                <p>{$info.total}</p>
+                <p>该奖品总需人次</p></div>
+                <div class="num5">
+                <p>10000001</p>
+                <p>原始数</p></div>
+            </div>
+            <script type="text/javascript">
+			var num = $("#num3d").text()*1;
+			num = fix(num,3);
+			$("#num3d").html(num);
+            </script>
+        </div>
+        <else/>
+        	<div class="left-m">
+        	<img src="{$info.cover_id|thumb=275,235}" width="275" height="235" />
+            <h2>({$info.periods}){$info.title}</h2>
+            <input id="sertime" type="hidden" value="{$sertime|date='Y/m/d H:i:s',###}" />
+            <input type="hidden" value="{$info.id}" id="pro_id" />
+            <input class="etime" type="hidden" value="{:microtime_format('Y/m/d H:i:s',$info['update_time'])}" />
+            <div class="timeout"><div class="time"><span id="span1"></span><span id="span2"></span><em>:</em><span id="span3"></span><span id="span4"></span><em>:</em><span id="span5"></span><span id="span6"></span></div></div>
+        </div>
+        <div class="left-b">
+        	<div class="top">
+            <div class="lottery">
+            <p class="p1">关于福彩3D：</p>
+            <p>1.福彩"3D"是由中国福彩中心发行的一种彩票，99夺宝仅取其结果作为抗干扰数据源，以示公平公正公开，和福彩"3D"本身没有任何关系；</p>
+			<p>2.福彩"3D"全国统一开奖，开奖节目通过中央人民广播电台一套在每晚20:30——20:35向全国直播，停开时间以福彩中心公布信息为准；</p>
+			<p>3.了解更多福彩"3D"信息，可自行至彩点<a href="http://caipiao.163.com/award/3d/">查询</a>。</p> 
+            </div>
+            </div>
+            <div class="result">
+            	<div class="num1">
+                <p>?</p>
+                <p>本期幸运号码</p>
+                </div>
+                <div class="num2">
+                <p id="timeall">{$timeall}</p>
+                <p>50个时间求和</p>
+                </div>
+                <div class="num3">
+                <p id="OpenNum">?</p>
+                <p>3D开奖号码</p>
+                </div>
+                <div class="num4">
+                <p>{$info.total}</p>
+                <p>该奖品总需人次</p></div>
+                <div class="num5">
+                <p>10000001</p>
+                <p>原始数</p></div>
+            </div>
+            <script type="text/javascript">
+			$(function(){
+			var ntime = $('#sertime').val();
+			var NowTime = new Date(ntime);
+			var getNowtime = NowTime.getTime();
+			var time = setInterval(GetRTime,1000);
+			//获得3d号码
+			function getNum(){
+				var flag = false;
+                $.ajax({
+				type:"GET",
+				url:"{:U('getNumber')}",
+				async:false,
+				success:function(msg){
+					$("#OpenNum").html(msg);
+					flag = true;
+				},
+				error:function(){
+					getNum();
+				}
+				});
+				return flag;
+			}
+			//计算中奖号码
+			 function openNum(){
+				var result = false;
+				$.ajax({
+				type:"POST",
+				url:"{:U('Product/UpdatePro')}",
+				data:{id:$("#pro_id").val(),lottery:$("#OpenNum").text(),time_total:$("#timeall").text()},
+				async:false,
+				success:function(msg){
+					result = true;
+				},
+				error:function(){
+					openNum();
+				}
+				});
+				return result;
+			 }
+										
+		//倒计时
+			function GetRTime(){
+			   var etime = $(".etime").val();
+			   var EndTime= new Date(etime);
+			   var t =EndTime.getTime() - getNowtime;
+			   if(t==0||t<0){
+				   clearInterval(time);
+				   openAward();   
+			   }else{
+			   var h=Math.floor(t/1000/60/60%24);
+			   var m=Math.floor(t/1000/60%60);
+			   var s=Math.floor(t/1000%60);
+			   hour = fix(h, 2);
+			   span1 = hour.substr(0,1);
+			   span2 = hour.substr(1,1);
+			   minute =  fix(m, 2);
+			   span3 = minute.substr(0,1);
+			   span4 = minute.substr(1,1);
+			   second = fix(s, 2);
+			   span5 = second.substr(0,1);
+			   span6 = second.substr(1,1);
+			   $("#span1").html(span1);
+			   $("#span2").html(span2);
+			   $("#span3").html(span3);
+			   $("#span4").html(span4);
+			   $("#span5").html(span5);
+			   $("#span6").html(span6);
+			    getNowtime+=1000;
+			   }
+				
+		   }  
+		   //开奖
+		   function openAward(){
+			       $("#Results .left-m .timeout .time").html("计算中...");
+				   var flag = getNum();
+				   var exits = setInterval(function(){
+  						if(flag == true){
+							var result = openNum();
+							if(result == true){
+								clearInterval(exits);
+								location.reload(); 
+							}
+						}
+				   },2000)
+				  
+		   }		
+					
+					 
+				});
+		</script>	
+        </div>
+        </if>
+    </div>
+    <form name="form1" action="{:U('Shopping/UpdateCart')}" method="post">
+    <input type="hidden" name="id" value="{$newPer.id}">
+    <div class="re-right">
+    	<h2>最新一期</h2>
+        <div class="produ">
+        <p class="tit">最新一期正在进行，赶紧参加吧！</p>
+        <a href="{:U('Product/detail?id='.$newPer['id'])}" title="({$newPer.periods}){$newPer.title}"><img class="pic" src="{$newPer.cover_id|thumb=163,160}" width="163" height="160" /></a>
+        <p class="title"><a href="{:U('Product/detail?id='.$newPer['id'])}" title="({$newPer.periods}){$newPer.title}">({$newPer.periods}){$newPer.title}</a></p>
+        <div class="bar_bg">
+            <div class="bar">
+                <img width="221" height="10" src="__PUBLIC__/home/cheewo/images/bar3.png" />
+            </div>
+        </div>
+        <div class="num">
+        <input type="hidden" class="n3" value="{$newPer.total}" />
+            <span class="le">
+            <p class="n1">{$newPer.join}</p>
+            <p>已参与人次</p>
+            </span>
+            <span class="ri">
+            <p class="n2"></p>
+            <p>剩余人次</p>
+            </span>
+             <!--进度条 -->
+                        <script>
+						$(function(){
+							var n3 = $(".produ").find(".n3").val();
+							var n1 = $(".produ").find(".n1").text();
+							var n2 = n3*1-n1*1;
+							$(".produ").find(".n2").html(n2);
+							var n4 = n1/n3*100;
+							$(".produ").find(".bar").css("width",n4+"%");
+						
+						});
+						</script>
+         </div>
+          </div>
+         <div class="bott">
+         	 <label>参与人次：</label>
+                 <div class="length">
+                     <a href="javascript:lengthUpdate('jian')" class="reduce" title="减少">-</a>
+                     <input type="text" id="shopnum" name="shopnum" class="shopnum" value="1" onchange="Cknum()" />
+                     <a href="javascript:lengthUpdate('jia')" class="add" title="增加">+</a>
+                 </div>
+                 <script type="text/javascript">
+                    function lengthUpdate(kind){
+						var c = $("#shopnum").val();
+						var rest = $("#Results .re-right .produ .num").find(".n2").text()*1;
+                    	if(kind == "jia"){
+                         	if(c<rest){
+								c++;
+							}else{
+								$("#shopnum").val(rest); 
+							}
+                    	}else if(kind == "jian"){
+                    	if(c > 1){
+							 c--;
+							 }else{
+							 c=1;
+							}
+                     	}
+                   		 $("#shopnum").val(c);
+                  }
+                 </script>
+             <a charset="btn" href="javascript:form1.submit();" title="立即夺宝" class="btn">立即夺宝</a>
+         </div>
+    </div>
+    </form>
+    <div style="clear:both;"></div>
+    <div id="re-content">
+            	<div class="head">
+                    <h3 class="active">计算结果</h3>
+                    <h3>所有参与记录</h3>
+                    <h3>晒单</h3>
+                </div>
+                <div class="content">
+                	<div class="box1" style="display:block;">
+                    	<div class="count"></div>
+                    	<table border="0" cellpadding="0" cellspacing="0">
+                        	<tr class="tr1">
+                            	<td colspan="2">夺宝时间</td>
+                                <td>会员账号</td>
+                                <td>奖品名称</td>
+                                <td>参与人次</td>
+                            </tr>
+                            <tr>
+                            	<td class="timeout" colspan="5">截止该奖品最后夺宝时间【{:microtime_format("Y-m-d  H:i:s.x",$lastTime)}】最后50条全站参与记录</td>
+                            </tr>
+                            <volist name="orders" id="orders">
+                            <tr>
+                            	<td class="td1">{$orders['create_time']|date='Y-m-d',###}</td>
+                                <td class="td1">{:microtime_format("H:i:s.x",$orders['create_time'])}<span class="turn">{:microtime_format("Hisx",$orders['create_time'])}</span></td>
+                                <td class="td2">{$orders.nickname}</td>
+                                <td class="td2">{$orders.title}</td>
+                                <td class="td2">{$orders.length}</td>
+                            </tr>
+                            </volist>
+                        </table>
+                    </div>
+                    <div class="box2">
+                    	<div class="record">
+                        	<h2>{$ordlist[0]['create_time']|date='Y-m-d',###}</h2>
+                            <ul>
+                            <volist name="ordlist" id="list">
+                            	<li>
+                                	<div class="date">{:microtime_format("Y-m-d H:i:s.x", $list['create_time'])}</div>
+                                    <div class="little-p"><if condition="$list['photo'] neq null"><img src="{$list.photo|thumb=20,20}" width="20" height="20" />
+                                    <else/><img src="__IMG__/photo.png" width="20" height="20" /></if></div>
+                                    <div class="info"><span>{$list.nickname}</span>购买了<em>{$list.length}</em>人次</div>
+                                </li>
+                             </volist>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="box3">
+                    	<div class="sai">
+                        	<ul>
+                            <volist name="uPrints" id="list">
+                            	<li>
+                                	<div class="photo"><img src="{$list.photo|thumb=82,82}" width="82" height="82" /><h3>{$list.nickname}</h3></div>
+                                    <div class="cont">
+                                    	<div class="cont-t">
+                                        	<h2><span>{$list.periods}&nbsp;&nbsp;</span>{$list.title}</h2>
+                                            <h4>2015-03-26</h4>
+                                        </div>
+                                        <div class="cont-m">{$list.say}</div>
+                                        <div class="cont-b">
+                                        <volist name="list['pic']" id = "li">
+                                        	<img src="{$li|thumb=138,135}" width="138" height="135" />
+                                        </volist>
+                                        </div>
+                                    </div>
+                                </li>
+                               </volist>
+                            </ul>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+  </div>
+  <div id="reco">
+    <div class="tit">
+      <h2>推荐奖品</h2>
+    </div>
+    <div class="pro">
+      <ul>
+        <volist name="reco" id="list" offset="0" length="5">
+          <li> <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}"><img src="{$list.cover_id|thumb=227,183}" width="227" height="183"/></a> <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}" class="title">{$list.title}</a>
+            <div class="people">总需:{$list.total}人次<span>仅剩:{$list.diff}人次</span></div>
+          </li>
+        </volist>
+      </ul>
+    </div>
+  </div>
+<SCRIPT type=text/javascript>
+$(function(){			
+  var menus = $("#re-content .head h3"); 
+  menus.click(function(){
+       $(this).addClass("active") 
+       .siblings().removeClass("active"); 
+        var index = menus.index( $(this) ); //找到h3子节点的索引
+        $("#re-content .content > div").eq(index).show() 
+        .siblings().hide();   
+    }); 				
+})
+</SCRIPT>
+</block>

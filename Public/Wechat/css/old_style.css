@@ -1,0 +1,2066 @@
+@charset "utf-8";
+/* CSS Document */
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+img {
+    border: none;
+}
+
+body {
+    line-height: 1.4;
+    font-size: 14px;
+    color: #444;
+    font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Hiragino Sans GB", "Hiragino Sans GB W3";
+    min-width: 320px;
+    max-width: 680px;
+    min-height: 100%;
+    margin: 0px auto;
+    position: relative;
+}
+
+.header {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+/* 首页搜索 */
+.index-search {
+    width: 100%;
+    height: auto;
+    margin: 10px 12px;
+    clear: both;
+}
+
+.index-search .left {
+    width: 70%;
+    height: auto;
+    float: left;
+}
+
+.index-search .left .key {
+    width: 88%;
+    margin-left: 5%;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    background: url(../images/icon1.jpg) no-repeat 5px center #f1f1f1;
+    border-radius: 5px;
+    text-indent: 30px;
+    color: #cfcfcf;
+}
+
+.index-search .right {
+    width: 30%;
+    height: auto;
+    float: right;
+}
+
+.index-search .right input {
+    width: 80%;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    background: #ff4b90;
+    color: #fff;
+    border-radius: 5px;
+    margin: 0px auto;
+}
+
+/*首页一排按钮*/
+.index-btn {
+    width: 100%;
+    height: auto;
+    margin: 10px 0px;
+    clear: both;
+    padding: 10px 0px;
+}
+
+.index-btn a {
+    width: 25%;
+    height: auto;
+    padding: 10px 0px;
+    display: block;
+    float: left;
+    text-align: center;
+    color: #7b7b7b;
+    line-height: 2em;
+    text-decoration: none;
+}
+
+.index-btn a.focus {
+    color: #ff4d91;
+}
+
+.index-jp {
+    width: 94%;
+    height: auto;
+    margin: 0px auto;
+    clear: both;
+    margin-top: 10px;
+}
+
+.index-jp .head {
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+    background: #f1f1f1;
+    color: #5b5b5b;
+    text-indent: 20px;
+    font-size: 14px;
+    position: relative;
+}
+
+.index-jp .head .bg {
+    width: 100%;
+    height: 34px;
+    background: url(../images/icon6.jpg) no-repeat left center;
+    position: absolute;
+    left: 0px;
+    top: -2px;
+}
+
+.index-jp .con {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.index-jp .con ul {
+    width: 999em;
+    height: auto;
+    list-style: none;
+    position: relative;
+}
+
+.index-jp .con ul li {
+    width: 137px;
+    height: 141px;
+    overflow: hidden;
+    float: left;
+    position: relative;
+    margin-right: 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+}
+
+.index-jp .con ul li .img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.index-jp .con ul li .bg {
+    width: 100%;
+    height: 26px;
+    opacity: 0.9;
+    background: #333;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+}
+
+.index-jp .con ul li .title {
+    width: 100%;
+    height: 26px;
+    line-height: 26px;
+    color: #fff;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    z-index: 1;
+    text-align: center;
+}
+
+.index-href {
+    width: 94%;
+    height: auto;
+    margin: 10px auto;
+    clear: both;
+}
+
+.index-href img {
+    width: 100%;
+}
+
+.index-bk {
+    width: 94%;
+    height: auto;
+    margin: 0px auto;
+    clear: both;
+    margin-top: 10px;
+}
+
+.index-bk .head {
+    width: 100%;
+    height: 32px;
+    line-height: 34px;
+    background: #f1f1f1;
+    color: #5b5b5b;
+    text-indent: 15px;
+    font-size: 14px;
+    position: relative;
+}
+
+.index-bk .head .more {
+    float: right;
+    margin-right: 10px;
+}
+
+.index-bk .head .more a {
+    text-decoration: underline;
+    color: #2f2f2f;
+}
+
+.index-bk .head .bg {
+    width: 100%;
+    height: 34px;
+    background: url(../images/icon6.jpg) no-repeat left center;
+    position: absolute;
+    left: 0px;
+    top: -2px;
+}
+
+.index-bk .con {
+    width: 100%;
+    height: auto;
+}
+
+.index-bk .con .top {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.index-bk .con .top img {
+    width: 100%;
+}
+
+.index-bk .con .box {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.index-bk .con .box ul {
+    list-style: none;
+    margin-left: -3%;
+    margin-top: 10px;
+}
+
+.index-bk .con .box ul li {
+    width: 47%;
+    height: auto;
+    overflow: hidden;
+    float: left;
+    border: 1px solid #e6e6e6;
+    margin-left: 3%;
+    border-radius: 3px;
+}
+
+.index-bk .con .box ul li .img {
+    width: 100%;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.index-bk .con .box ul li .img img {
+    width: 100%;
+}
+
+.index-bk .con .box ul li .title {
+    width: 94%;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    color: #2b2b2b;
+    font-size: 14px;
+    margin: 0px auto;
+}
+
+.index-bk .con .box ul li .title a {
+    color: #2b2b2b;
+}
+
+.index-bk .con .box ul li .bottom {
+    width: 94%;
+    height: auto;
+    overflow: hidden;
+    margin: 0px auto;
+    margin-bottom: 8px;
+}
+
+.index-bk .con .box ul li .bottom .left {
+    width: 70%;
+    float: left;
+    font-size: 12px;
+    line-height: normal;
+}
+
+.index-bk .con .box ul li .bottom .left p {
+    margin: 0px;
+    line-height: 1.5em;
+}
+
+.index-bk .con .box ul li .bottom .left .price {
+    font-size: 13px;
+    color: #bb0512;
+}
+
+.index-bk .con .box ul li .bottom .left .scj {
+    text-decoration: line-through;
+}
+
+.index-bk .con .box ul li .bottom .right {
+    width: 30%;
+    float: right;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.3em;
+}
+
+.seckill ul {
+    list-style: none;
+    margin-left: -3%;
+    margin-top: 10px;
+}
+
+.seckill ul li {
+    width: 47%;
+    height: auto;
+    overflow: hidden;
+    float: left;
+    border: 1px solid #e6e6e6;
+    margin-left: 3%;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.seckill ul li .img {
+    width: 100%;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.seckill ul li .img img {
+    width: 100%;
+}
+
+.seckill ul li .title {
+    width: 94%;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    color: #2b2b2b;
+    font-size: 14px;
+    margin: 0px auto;
+}
+
+.seckill ul li .title a {
+    color: #2b2b2b;
+}
+
+.seckill ul li .bottom {
+    width: 94%;
+    height: auto;
+    overflow: hidden;
+    margin: 0px auto;
+    margin-bottom: 8px;
+}
+
+.seckill ul li .bottom .left {
+    width: 70%;
+    float: left;
+    font-size: 12px;
+    line-height: normal;
+}
+
+.seckill ul li .bottom .left p {
+    margin: 0px;
+    line-height: 1.5em;
+}
+
+.seckill ul li .bottom .left .price {
+    font-size: 13px;
+    color: #bb0512;
+}
+
+.seckill ul li .bottom .left .scj {
+    text-decoration: line-through;
+}
+
+.seckill ul li .bottom .right {
+    width: 30%;
+    float: right;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.3em;
+}
+
+.index-list {
+    width: 94%;
+    height: auto;
+    margin: 0px auto;
+    clear: both;
+    margin-top: 10px;
+}
+
+.index-list .head {
+    width: 100%;
+    height: 32px;
+    line-height: 34px;
+    background: #f1f1f1;
+    color: #5b5b5b;
+    text-indent: 15px;
+    font-size: 14px;
+    position: relative;
+}
+
+.index-list .head .more {
+    float: right;
+    margin-right: 10px;
+}
+
+.index-list .head .more a {
+    text-decoration: underline;
+    color: #2f2f2f;
+}
+
+.index-list .head .bg {
+    width: 100%;
+    height: 34px;
+    background: url(../images/icon6.jpg) no-repeat left center;
+    position: absolute;
+    left: 0px;
+    top: -2px;
+}
+
+.index-list .con {
+    width: 100%;
+    height: auto;
+}
+
+.index-list .con .top {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.index-list .con .top img {
+    width: 100%;
+}
+
+.index-list .con .box {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.index-list .con .box ul {
+    list-style: none;
+    margin-left: -3%;
+    margin-top: 10px;
+}
+
+.index-list .con .box ul li {
+    width: 47%;
+    height: auto;
+    overflow: hidden;
+    float: left;
+    border: 1px solid #e6e6e6;
+    margin-left: 3%;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.index-list .con .box ul li .img {
+    width: 100%;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.index-list .con .box ul li .img img {
+    width: 100%;
+}
+
+.index-list .con .box ul li .title {
+    width: 94%;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    color: #2b2b2b;
+    font-size: 14px;
+    margin: 0px auto;
+}
+
+.index-list .con .box ul li .title a {
+    color: #2b2b2b;
+}
+
+.index-list .con .box ul li .bottom {
+    width: 94%;
+    height: auto;
+    overflow: hidden;
+    margin: 0px auto;
+    margin-bottom: 8px;
+}
+
+.index-list .con .box ul li .bottom .left {
+    width: 70%;
+    float: left;
+    font-size: 12px;
+    line-height: normal;
+}
+
+.index-list .con .box ul li .bottom .left p {
+    margin: 0px;
+    line-height: 1.5em;
+}
+
+.index-list .con .box ul li .bottom .left .price {
+    font-size: 13px;
+    color: #bb0512;
+}
+
+.index-list .con .box ul li .bottom .left .scj {
+    text-decoration: line-through;
+}
+
+.index-list .con .box ul li .bottom .right {
+    width: 30%;
+    float: right;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.3em;
+}
+
+.footer {
+    width: 100%;
+    height: 62px;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    border-top: 1px solid #ececec;
+    background: #fff;
+    z-index: 999;
+}
+
+.footer a {
+    width: 25%;
+    height: 100%;
+    display: block;
+    float: left;
+    text-align: center;
+    line-height: 1.5em;
+    color: #7b7b7b;
+    text-decoration: none;
+    padding-top: 8px;
+}
+
+.footer a img {
+    margin-top: 9px;
+}
+
+.footer a.focus {
+    background: #ff4c90;
+    color: #fff;
+}
+
+.footer a span {
+    font-size: 24px;
+}
+
+.top-head {
+    width: 100%;
+    height: 52px;
+    line-height: 52px;
+    text-align: center;
+    background: #f7f5f6;
+    position: relative;
+    overflow: hidden;
+}
+
+.top-head h2 {
+    padding: 0px;
+    margin: 0px;
+    font-size: 18px;
+    line-height: 52px;
+}
+
+.top-head .back {
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    background: url(../images/icon8.jpg) left center no-repeat;
+    text-indent: 10px;
+}
+
+.top-head .back a {
+    color: #424242;
+}
+
+.fl_index {
+    width: 94%;
+    height: auto;
+    margin: 10px auto;
+}
+
+.fl_index .fl_lists {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.fl_index .fl_lists .head {
+    width: 100%;
+    height: 22px;
+    line-height: 22px;
+    border-left: 6px solid #ff4c8e;
+    font-weight: bold;
+    text-indent: 10px;
+}
+
+.fl_index .fl_lists ul {
+    list-style: none;
+    margin: 10px 0px;
+}
+
+.fl_index .fl_lists ul li {
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    float: left;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.fl_index .fl_lists ul li .img {
+    width: 100%;
+}
+
+.fl_index .fl_lists ul li .img img {
+    width: 100%;
+}
+
+.fl_index .fl_lists ul li .title {
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    overflow: hidden;
+}
+
+.fl_index .fl_lists ul li .title a {
+    color: #84797d;
+    text-decoration: none;
+}
+
+.pro_list {
+    width: 94%;
+    height: auto;
+    margin: 0px auto;
+    overflow: hidden;
+}
+
+.pro_list ul {
+    list-style: none;
+    margin-left: -3%;
+    margin-top: 10px;
+}
+
+.pro_list ul li {
+    width: 96%;
+    height: auto;
+    overflow: hidden;
+    float: left;
+    border: 1px solid #e6e6e6;
+    margin-left: 3%;
+    border-radius: 3px;
+    margin-bottom: 3%;
+}
+
+.pro_list ul li .img {
+    width: 30%;
+    float: left;
+}
+
+.pro_list ul li .img img {
+    width: 100%;
+}
+
+.pro_list ul li .info {
+    width: 70%;
+    float: left;
+}
+
+.pro_list ul li .title {
+    width: 94%;
+    height: 40px;
+    line-height: 20px;
+    overflow: hidden;
+    color: #2b2b2b;
+    font-size: 14px;
+    margin: 3px auto;
+}
+
+.pro_list ul li .title a {
+    color: #2b2b2b;
+}
+
+.pro_list ul li .bottom {
+    width: 94%;
+    height: auto;
+    overflow: hidden;
+    margin: 0px auto;
+    margin-bottom: 8px;
+}
+
+.pro_list ul li .bottom .left {
+    width: 70%;
+    float: left;
+    font-size: 11px;
+    line-height: normal;
+}
+
+.pro_list ul li .bottom .left p {
+    margin: 0px;
+    line-height: 1.5em;
+}
+
+.pro_list ul li .bottom .left .price {
+    font-size: 12px;
+    color: #bb0512;
+}
+
+.pro_list ul li .bottom .left .scj {
+    text-decoration: line-through;
+}
+
+.pro_list ul li .bottom .right {
+    width: 30%;
+    float: right;
+    font-size: 13px;
+    text-align: center;
+    line-height: 1.3em;
+    margin-top: 1px;
+}
+
+.pro_detail {
+}
+
+.pro_detail .img_list {
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+
+.pro_detail .img_list img {
+    max-width: 100%;
+    max-height: 200px;
+}
+
+.pro_detail .info {
+    width: 94%;
+    margin: 0px auto;
+    margin-top: 10px;
+    height: 50px;
+    /*overflow:hidden;*/
+}
+
+.pro_detail .info .left {
+    width: 80%;
+    height: auto;
+    float: left;
+}
+
+.pro_detail .info .left .title {
+    width: 96%;
+    height: auto;
+    line-height: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.pro_detail .info .left .price .xianjia {
+    font-size: 18px;
+    color: #ff0026;
+    margin-top: 5px;
+}
+
+.pro_detail .info .left .price .yuanjia {
+    margin-top: 5px;
+}
+
+.pro_detail .info .left .price .yuanjia span {
+    text-decoration: line-through;
+    margin-right: 5px;
+}
+
+.pro_detail .info .right {
+    width: 20%;
+    float: right;
+    position: relative;
+    text-align: center;
+}
+
+.pro_detail .info .right span {
+    font-size: 22px;
+    color: #ff0026;
+}
+
+.pro_detail .info .right .line {
+    width: 1px;
+    height: 50px;
+    background: #f8f8f8;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.pro_detail .info .right a {
+    color: #5a5a5a;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.pro_detail .pro_content {
+    clear: both;
+    width: 100%;
+    padding-top: 15px;
+}
+
+.pro_detail .pro_content .head {
+    width: 100%;
+    height: 40px;
+    position: relative;
+    border-top: 1px solid #f8f8f8;
+}
+
+.pro_detail .pro_content .head ul {
+    list-style: none;
+}
+
+.pro_detail .pro_content .head ul li {
+    width: 50%;
+    float: left;
+    text-align: center;
+    line-height: 40px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.pro_detail .pro_content .head ul li a {
+    color: #858585;
+    text-decoration: none;
+}
+
+.pro_detail .pro_content .head ul li.focus a {
+    color: #ff0026;
+}
+
+.pro_detail .pro_content .head .line {
+    width: 50%;
+    height: 1px;
+    background: #ff0026;
+    position: absolute;
+    left: 0px;
+    bottom: -2px;
+}
+
+.pro_detail .pro_content .content {
+    margin-top: 10px;
+}
+
+.pro_detail .pro_content .content img {
+    max-width: 100%;
+}
+pro_detail .parti{
+    width:100%;
+    height:120px;
+    border-top:1px solia #333333;
+
+}
+pro_detail .parti div{
+    margin-top:50px;
+}
+pro_detail .parti div ul{
+    overflow:hidden;
+
+}
+pro_detail .parti div ul li{
+    float:left;
+    width:40%;
+    height:auto;
+
+}
+pro_detail .parti div ul li span{
+    display:block;
+}
+.buy_footer {
+    width: 100%;
+    height: 50px;
+    background: #f5f5f5;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    z-index: 999;
+}
+
+.buy_footer .cart {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background: #ff0026;
+    border-radius: 50%;
+    display: block;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    position: absolute;
+    left: 10px;
+    top: 5px;
+}
+
+.buy_footer .cart span {
+    width: 20px;
+    height: 20px;
+    background: #f5f5f5;
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    line-height: 20px;
+    font-size: 12px;
+    border-radius: 50%;
+    color: #ff0026;
+}
+
+.buy_footer .add_cart {
+    width: 37%;
+    height: 38px;
+    position: absolute;
+    left: 20%;
+    top: 6px;
+}
+
+.buy_footer .add_cart a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 1px solid #ff0026;
+    text-align: center;
+    line-height: 38px;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 16px;
+    color: #ff0026;
+    text-decoration: none;
+}
+
+.buy_footer .buy_now {
+    width: 37%;
+    height: 38px;
+    position: absolute;
+    right: 10px;
+    top: 6px;
+}
+
+.buy_footer .buy_now a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    text-align: center;
+    line-height: 38px;
+    border-radius: 8px;
+    background: #ff0026;
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.cart_edit {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    width: 60px;
+    height: 27px;
+    line-height: 25px;
+}
+
+.cart_edit a {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.cart_selall {
+    position: absolute;
+    left: 7px;
+    top: 10px;
+    line-height: 25px;
+}
+
+.selalllabel {
+    font-weight: normal;
+}
+
+.cart {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+.cart .lists {
+    margin: 0px;
+    padding: 0px;
+}
+
+.cart .lists ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+.cart .lists ul li {
+    clear: both;
+    width: 100%;
+    height: 90px;
+    padding: 13px 0px 13px 0px;
+    margin-bottom: 10px;
+}
+
+.cart .lists ul li .top {
+    width: 100%;
+    height: 70px;
+}
+
+.cart .lists ul li .top .btn {
+    width: 33px;
+    height: 100%;
+    overflow: hidden;
+    text-align: center;
+    float: left;
+    line-height: 60px;
+    margin-right: 0px;
+    padding: 0px;
+}
+
+.cart .lists ul li .top .img {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    border: 1px solid #e7e7e7;
+    text-align: center;
+    padding: 2px;
+    line-height: 60px;
+    float: left;
+}
+
+.cart .lists ul li .top .title {
+    width: 40%;
+    height: 100%;
+    line-height: 20px;
+    float: left;
+    margin-left: 5px;
+    overflow: hidden;
+}
+
+.cart .lists ul li .top .title .tit {
+    height: 40px;
+    overflow: hidden;
+}
+
+.cart .lists ul li .top .title .tit a {
+    color: #454545;
+    text-decoration: none;
+}
+
+.cart .lists ul li .top .title .num {
+    margin-top: 5px;
+    color: #8f9195;
+}
+
+.cart .lists ul li .top .price {
+    width: 70px;
+    overflow: hidden;
+    float: right;
+    margin-right: 20px;
+    text-align: right;
+}
+
+.cart .lists ul li .xiaoji {
+    width: 90%;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid #dedede;
+    float: right;
+    color: #ff0026;
+}
+
+.cart .lists ul li .xiaoji .duo {
+    float: right;
+    margin-right: 20px;
+}
+
+.cart .lists ul li .numedit {
+}
+
+.cart .lists ul li .numedit a {
+    width: 24px;
+    height: 19px;
+    display: block;
+    border: 1px solid #d9d9d9;
+    float: left;
+    text-align: center;
+    line-height: 19px;
+    text-decoration: none;
+    color: #b7b9ba;
+}
+
+.cart .lists ul li .numedit .numtxt {
+    width: 30px;
+    height: 19px;
+    float: left;
+    border: 1px solid #d9d9d9;
+    border-radius: 0px;
+    box-shadow: none;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+}
+
+#cart .lists ul li .top .btn {
+    width: 10px;
+}
+
+#cart .lists ul li .xiaoji {
+    width: 95%;
+    float: left;
+    margin-left: 10px;
+}
+
+.jiesuan {
+    width: 100%;
+    height: 50px;
+    overflow: hidden;
+    background: #eaedf1;
+    position: fixed;
+    bottom: 60px;
+    left: 0px;
+    box-shadow: 0px 0px 3px #c0c0c0;
+}
+
+.jiesuan .allbtn {
+    width: 37px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    float: left;
+}
+
+.jiesuan .countprice {
+    float: left;
+    line-height: 50px;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #ff0026;
+    font-weight: bold;
+}
+.jiesuan .countprice code{
+    color: #ff0026 !important;
+}
+.jiesuan .gojs {
+    width: 100px;
+    height: 30px;
+    overflow: hidden;
+    background: #ff0026;
+    border-radius: 4px;
+    display: block;
+    float: right;
+    margin-right: 10px;
+    margin-top: 8px;
+    text-align: center;
+    color: #fff;
+    line-height: 30px;
+    text-decoration: none;
+}
+
+.jiesuan .delthis {
+    width: 100px;
+    height: 30px;
+    overflow: hidden;
+    border: 1px solid #f24b48;
+    border-radius: 4px;
+    float: right;
+    margin-right: 10px;
+    margin-top: 8px;
+    text-align: center;
+    color: #f77070;
+    line-height: 30px;
+    text-decoration: none;
+    background: #fff;
+}
+
+.jiesuan .delthis a {
+    color: #f77070;
+    text-decoration: none;
+}
+
+.jiesuan .delthis a span {
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.setjiesuan {
+    width: 100%;
+    height: 130px;
+    overflow: hidden;
+    background: #eaedf1;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    box-shadow: 0px 0px 3px #c0c0c0;
+}
+
+.setjiesuan .allbtn {
+    width: 37px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    float: left;
+}
+
+.setjiesuan .yunfei {
+    line-height: 28px;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #f24b48;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.setjiesuan .countprice {
+    line-height: 28px;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #f24b48;
+    font-weight: bold;
+}
+
+.setjiesuan .gojs {
+    width: 120px;
+    height: 40px;
+    overflow: hidden;
+    background: #f24b48;
+    border-radius: 4px;
+    display: block;
+    text-align: center;
+    color: #fff;
+    line-height: 40px;
+    text-decoration: none;
+    position: absolute;
+    right: 10px;
+    top: 14px;
+    font-size: 16px;
+}
+
+.setjiesuan .delthis {
+    width: 100px;
+    height: 30px;
+    overflow: hidden;
+    border: 1px solid #f24b48;
+    border-radius: 4px;
+    float: right;
+    margin-right: 10px;
+    margin-top: 8px;
+    text-align: center;
+    color: #f77070;
+    line-height: 30px;
+    text-decoration: none;
+    background: #fff;
+}
+
+.setjiesuan .delthis a {
+    color: #f77070;
+    text-decoration: none;
+}
+
+.setjiesuan .delthis a span {
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.shuohuo {
+    width: 95%;
+    margin: 0px auto;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.shuohuo h2 {
+    font-size: 16px;
+    margin: 0px;
+    padding: 0px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.shuohuo h2 a {
+    float: right;
+    font-size: 14px;
+    font-weight: normal;
+    color: #333;
+}
+
+.shuohuo .top {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+}
+
+.shuohuo .top .title {
+    float: left;
+}
+
+.shuohuo .top .tel {
+    float: right;
+}
+
+.user-index {
+    background: #f8f8f8;
+}
+
+.user-info {
+    width: 100%;
+    height: 120px;
+    background: url(../images/bg.jpg) no-repeat;
+    position: relative;
+}
+
+.user-info .img {
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    float: left;
+    margin-left: 15px;
+    margin-top: 15px;
+    border-radius: 50%;
+}
+
+.user-info .right {
+    float: left;
+    margin-left: 20px;
+    margin-top: 17px;
+    color: #fff;
+    line-height: 1em;
+}
+
+.user-info .bzj {
+    width: 60px;
+    height: 20px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 12px;
+    color: #fff;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: 18px;
+    border-radius: 5px;
+}
+
+.user-info .bzj span {
+    float: left;
+}
+
+.my-list {
+    width: 100%;
+    height: 50px;
+    margin: 5px 0px;
+    background: #fff;
+}
+
+.my-list ul {
+    list-style: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.my-list ul li {
+    width: 33%;
+    height: 100%;
+    float: left;
+    text-align: center;
+    line-height: 23px;
+    padding-top: 3px;
+}
+
+.my-list ul li p {
+    padding: 0px;
+    margin: 0px;
+}
+
+.my-list ul li a {
+    color: #333;
+    text-decoration: none;
+}
+
+.my-order {
+    width: 100%;
+    height: 100px;
+    margin-top: 15px;
+    background: #fff;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.my-order .top {
+    width: 90%;
+    height: 35px;
+    overflow: hidden;
+    margin: 0px auto;
+    line-height: 35px;
+    border-bottom: 1px solid #ccc;
+}
+
+.my-order .top h3 {
+    margin: 0px;
+    padding: 0px;
+    font-size: 16px;
+    font-weight: bold;
+    float: left;
+    line-height: 35px;
+}
+
+.my-order .top span {
+    float: right;
+}
+
+.my-order .top span a {
+    color: #333;
+    text-decoration: none;
+}
+
+.my-order .bottom {
+    width: 95%;
+    height: auto;
+    float: right;
+    margin-top: 15px;
+}
+
+.my-order .bottom ul {
+    list-style: none;
+}
+
+.my-order .bottom ul li {
+    width: 33.33%;
+    height: auto;
+    float: left;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+.my-order .bottom ul li a {
+    width: 86%;
+    height: 30px;
+    display: block;
+    border: 1px solid #ff4c90;
+    border-radius: 5px;
+    line-height: 28px;
+    position: relative;
+    color: #333;
+    text-decoration: none;
+}
+
+.my-order .bottom ul li a span {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: -7px;
+    top: -7px;
+    display: block;
+    font-size: 12px;
+    background: #C36;
+    border-radius: 50%;
+    color: #fff;
+    line-height: 20px;
+}
+
+.my-money {
+    width: 100%;
+    height: 100px;
+    background: #fff;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.my-money .top {
+    width: 90%;
+    height: 35px;
+    overflow: hidden;
+    margin: 0px auto;
+    line-height: 35px;
+    border-bottom: 1px solid #ccc;
+}
+
+.my-money .top h3 {
+    margin: 0px;
+    padding: 0px;
+    font-size: 16px;
+    font-weight: bold;
+    float: left;
+    line-height: 35px;
+}
+
+.my-money .bottom {
+    width: 90%;
+    height: auto;
+    margin: 0px auto;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.my-money .bottom ul {
+    list-style: none;
+}
+
+.my-money .bottom ul li {
+    width: 33.33%;
+    float: left;
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    line-height: 25px;
+}
+
+.my-money .bottom ul li:first-child {
+    text-align: left;
+}
+
+.my-money .bottom ul li:last-child {
+    text-align: right;
+}
+
+.my-money .bottom ul li p {
+    padding: 0px;
+    margin: 0px;
+}
+
+.my-money .bottom ul li a {
+    color: #333;
+    text-decoration: none;
+}
+
+.user-page {
+    margin: 0px;
+    padding-top: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.user-page.order {
+    background: #ebebeb;
+}
+
+.user-page .order {
+    width: 100%;
+    height: auto;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    clear: both;
+}
+
+.user-page .order .list {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+}
+
+.user-page .order .list ul.listul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+.user-page .order .list ul li.listli {
+    width: 100%;
+    height: 272px;
+    background: #fbfbfb;
+    overflow: hidden;
+    border-bottom: 1px solid #bcbcbc;
+    box-shadow: 0px 0px 5px #c0c0c0;
+    border-top: 1px solid #bcbcbc;
+    margin: 0px 0px 10px 0px;
+}
+
+.user-page .order .list ul li.listli .info {
+    padding: 10px;
+    line-height: 150%;
+    color: #aea59d;
+    position: relative;
+}
+
+.user-page .order .list ul li.listli .info span {
+    color: #555555;
+}
+
+.user-page .order .list ul li.listli .info .price {
+    color: #ff0026;
+}
+
+.user-page .order .list ul li.listli .info .genzhong {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 80px;
+    height: 25px;
+    border: 1px solid #f24b48;
+    border-radius: 4px;
+    color: #fff;
+    background: #f24b48;
+    text-decoration: none;
+    text-align: center;
+    line-height: 25px;
+}
+
+.user-page .order .list ul li.listli .prolist {
+    width: 100%;
+    height: 93px;
+    overflow: hidden;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.user-page .order .list ul li.listli .prolist ul {
+    list-style: none;
+    padding: 10px;
+}
+
+.user-page .order .list ul li.listli .prolist ul li {
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 0px 3px #c0c0c0;
+    float: left;
+    text-align: center;
+    line-height: 70px;
+    margin-right: 10px;
+    margin-top: 0px;
+}
+
+.user-page .order .list ul li.listli .prolist ul li a {
+    margin-top: 5px;
+}
+
+.user-page .order .list ul li.listli .prolist ul li img {
+    margin-top: 5px;
+    vertical-align: baseline;
+}
+
+.user-page .order .list ul li.listli .status {
+    width: 100%;
+    height: 30px;
+    text-indent: 10px;
+    line-height: 30px;
+}
+
+.user-page .order .list ul li.listli .status span {
+    color: #ff0026;
+}
+
+.user-page .order .list ul li.listli .status a {
+    padding: 0px 10px;
+    display: inline-block;
+    background: #ff0026;
+    text-align: center;
+    text-indent: 0px;
+    height: 22px;
+    line-height: 21px;
+    margin-left: 10px;
+    border-radius: 4px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.user-team {
+    width: 96%;
+    height: auto;
+    overflow: hidden;
+    margin: 0px auto;
+}
+
+.user-team ul {
+    list-style: none;
+    margin-left: -1px;
+    width: 100%;
+}
+
+.user-team ul li {
+    width: 49%;
+    height: 105px;
+    overflow: hidden;
+    float: left;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+.user-team ul li .left {
+    width: 38%;
+    float: left;
+    height: 100%;
+    margin-left: 3%;
+    overflow: hidden;
+    font-size: 12px;
+}
+
+.user-team ul li .left .img {
+    margin-top: 3px;
+}
+
+.user-team ul li .left .img img {
+    width: 90%;
+}
+
+.user-team ul li .left .group {
+    margin-top: 8px;
+    text-align: center;
+}
+
+.user-team ul li .right {
+    margin-left: 2%;
+    font-size: 14px;
+    line-height: 1.7em;
+    float: left;
+    width: 54%;
+    overflow: hidden;
+}
+
+.user-yue {
+    width: 90%;
+    height: auto;
+    margin: 0px auto;
+    overflow: hidden;
+}
+
+.user-yue .info {
+    padding: 20px 0px 30px 0px;
+    border-bottom: 1px solid #ccc;
+}
+
+.user-yue .info .money {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.user-yue .info .btns {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.user-yue .info .btns a {
+    padding: 15px 9px;
+    margin: 0px 10px;
+    border-radius: 50%;
+    background: #ff0026;
+    color: #fff;
+    font-size: 12px;
+}
+
+.user-yue ul {
+    list-style: none;
+}
+
+.user-yue ul li {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-bottom: 1px dashed #ccc;
+    padding: 10px 0px;
+    position: relative;
+}
+
+.user-yue ul li .price {
+    font-size: 20px;
+    color: #009966;
+}
+
+.user-yue ul li .time {
+    position: absolute;
+    right: 10px;
+    top: 40%;
+    font-size: 12px;
+}
+
+.reg {
+    clear: both;
+    overflow: hidden;
+    background: #F8F8F8;
+}
+
+.reg .bg {
+    width: 100%;
+    height: 100px;
+    background: url(../images/bg.jpg) no-repeat;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    padding-top: 20px;
+}
+
+.reg .bg h2 {
+    padding: 0px;
+    margin: 0px;
+}
+
+.reg .bg p {
+    margin-top: 10px;
+}
+
+.reg .content {
+}
+
+.reg .content .frominfo {
+    width: 90%;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    margin: 0px auto;
+    margin-top: 20px;
+}
+
+.reg .content .frominfo .img {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.reg .content .frominfo .img img {
+    max-width: 100%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.reg .content .frominfo .title {
+    width: auto;
+    position: absolute;
+    left: 80px;
+    top: 10px;
+    font-size: 20px;
+}
+
+.reg .content .form {
+}
+
+.reg .content .form ul {
+    list-style: none;
+}
+
+.reg .content .form ul li {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #CCCCCC;
+    position: relative;
+}
+
+.reg .content .form ul li .left {
+    width: 28%;
+    float: left;
+    text-align: center;
+}
+
+.reg .content .form ul li .right {
+    width: 60%;
+    float: left;
+    position: relative;
+}
+
+.reg .content .form ul li .right input {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    background: #f8f8f8;
+    color: #ccc;
+}
+
+.reg .content .form ul li .right input:focus {
+    color: #333;
+}
+
+.reg .content .form ul li .right input.verify {
+    width: 150px;
+}
+
+.reg .content .form ul li .ver {
+    width: 80px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    color: #fff;
+    position: absolute;
+    right: 5px;
+    top: 10px;
+}
+
+.reg .content .form ul li .ver.focus {
+    width: 100px;
+    right: 5px;
+}
+
+.reg .content .form ul li .ver.focus a {
+    background: #ccc;
+}
+
+.reg .content .form ul li .ver a {
+    background: #ff0026;
+    border: none;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+
+.reg .content .form .submit {
+    width: 80%;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    background: #ff0026;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.user-hb {
+    width: 100%;
+    height: auto;
+    background: #f5f5f5;
+}
+
+.user-hb .geshu {
+    width: 80%;
+    height: 45px;
+    border-radius: 5px;
+    background: #fff;
+    margin: 0px auto;
+    position: relative;
+}
+
+.user-hb .title {
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    line-height: 45px;
+}
+
+.user-hb input {
+    width: 100px;
+    height: 20px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    right: 50px;
+    top: 12px;
+    text-align: right;
+    line-height: 20px;
+}
+
+.user-hb .info {
+    width: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    line-height: 45px;
+}
+
+.user-hb .zje {
+    width: 80%;
+    height: 45px;
+    border-radius: 5px;
+    background: #fff;
+    margin: 0px auto;
+    position: relative;
+}
+
+.user-hb .liuyan {
+    width: 80%;
+    height: 45px;
+    border-radius: 5px;
+    background: #fff;
+    margin: 0px auto;
+    position: relative;
+}
+
+.user-hb .liuyan input {
+    width: 50%;
+    right: 10px;
+}
+
+.user-hb .countmoney {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.user-hb p {
+    width: 80%;
+    height: auto;
+    margin: 0px auto;
+    margin-top: 3px;
+}
+
+.user-hb .sub {
+    width: 80%;
+    height: 50px;
+    margin: 0px auto;
+}
+
+.user-hb .sub a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #ff0026;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+    text-decoration: none;
+    line-height: 50px;
+    border-radius: 8px;
+}

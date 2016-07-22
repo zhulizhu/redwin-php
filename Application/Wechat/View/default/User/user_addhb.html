@@ -1,0 +1,155 @@
+﻿<extend name="Base/common"/>
+
+
+<block name="body">
+<div class="top-head">
+	<div class="back"><a href="javascript:;" onclick="window.history.go(-1);">返回</a></div>
+	<h2>制作红包</h2>
+</div>
+
+<div class="user-hb" style="background:#f8f8f8; position:relative;">
+	<form action="{:U('pay_hb')}" method="post" class="hbform">
+	<div style=" height:10px;">&nbsp;</div>
+    <div class="geshu">
+    	<span class="title">红包个数</span>
+        <input type="tel" name="times" class="times" style="" />
+        <span class="info">个</span>
+    </div>
+    <p>我的余额：￥<span class="mymoney">{$money}</span></p>
+    <div style=" height:20px;">&nbsp;</div>
+    <div class="zje">
+    	<span class="title">总金额</span>
+        <input type="tel" name="money" class="money" />
+        <span class="info">元</span>
+    </div>
+    <p>每人抽到的金额随机，<a href="javascript:;" class="change">改为普通红包</a></p>
+    <div style=" height:20px;">&nbsp;</div>
+    <div class="liuyan">
+    	<span class="title">留言</span>
+        <input type="text" name="content" class="content" value="恭喜发财，大吉大利！" />
+    </div>
+    <div style=" height:20px;">&nbsp;</div>
+    <div class="countmoney">￥<span>0.00</span></div>
+    <div style=" height:20px;">&nbsp;</div>
+    <input type="hidden" name="hb_type" class="hb_type" value="2" />
+    <div class="sub"><a href="javascript:;">塞钱进红包</a></div>
+    </form>
+    
+</div>
+
+<script>
+$(function(){
+	var dcheight = $(document).height() - 52 - 72;
+	$(".user-hb").height(dcheight);
+	$(".content").focus(function(){
+		if($(this).val()=="恭喜发财，大吉大利！"){
+			$(this).val("");
+		}
+	});
+	$(".content").blur(function(){
+		if($(this).val()==""){
+			$(this).val("恭喜发财，大吉大利！");
+		}
+	});
+	
+	var type = 2;
+	$(".times").change(function(){
+		var times = $(this).val();
+		times = parseInt(times);
+		if(times){
+			$(this).val(times);
+			var money = $(".money").val();
+			money = parseFloat(money);
+			if(money){
+				money = parseFloat(money).toFixed(2);
+				if(type==2){
+					var countmoney = money;
+				}else{
+					var countmoney = money * times;
+				}
+				$(".countmoney span").html(countmoney);
+			}
+		}else{
+			$(".countmoney span").html("0.00");
+			$(this).val("");
+		}
+	});
+	
+	$(".money").change(function(){
+		var money = $(this).val();
+		money = parseFloat(money);
+		if(money){
+			money = parseFloat(money).toFixed(2);
+			$(this).val(money);
+			var times = $(".times").val();
+			times = parseInt(times);
+			if(times){
+				money = parseFloat(money).toFixed(2);
+				if(type==2){
+					var countmoney = money;
+				}else{
+					var countmoney = money * times;
+				}
+				$(".countmoney span").html(countmoney);
+			}
+		}else{
+			$(".countmoney span").html("0.00");
+			$(this).val("");
+		}
+	});
+	
+	$(".change").click(function(){
+		if(type==2){
+			type=1;
+			$(".hb_type").val(1);
+			$(this).html("改为拼手气红包");
+			$(".zje .title").html("单个金额");
+		}else if(type==1){
+			type=2;
+			$(".hb_type").val(2);
+			$(".zje .title").html("总金额");
+			$(this).html("改为普通红包");
+		}
+		var money = $(".money").val();
+		var times = $(".times").val();
+		money = parseFloat(money);
+		times = parseInt(times);
+		if(money && times){
+			money = parseFloat(money).toFixed(2);
+			if(type==2){
+				var countmoney = money;
+			}else{
+				var countmoney = money * times;
+			}
+			$(".countmoney span").html(countmoney);
+		}else{
+			$(".countmoney span").html("0.00");
+		}
+	});
+	
+	$(".sub").click(function(){
+		<eq name="paypass" value="is">
+			
+		var money = $(".money").val();
+		var times = $(".times").val();
+		money = parseFloat(money);
+		times = parseInt(times);
+		var countmoney = $(".countmoney span").html();
+		var mymoney = $(".mymoney").html();
+		mymoney = parseFloat(mymoney);
+		if(money && times && countmoney!="0.00" && mymoney>=money){
+			$(".hbform").submit();
+		}else{
+			alert("请正确填写！");
+		}
+		<else/>
+			if(confirm("您还未设置支付密码，是否去设置？")){
+				window.location.href="{:U('User/setpaypass')}";
+			}
+		</eq>
+	});
+	
+});
+</script>
+
+</block>

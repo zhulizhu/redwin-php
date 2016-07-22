@@ -1,0 +1,286 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>营销规则 </h2>
+    </div>
+
+    <div class="cf">
+        <a class="btn" href="{:U('add')}">新 增</a>
+        <!-- 高级搜索
+        <div class="search-form fr cf">
+            <div class="sleft">
+                <input type="text" name="title" class="search-input" value="{:I('title')}" placeholder="请输入菜单名称">
+                <a class="sch-btn" href="javascript:;" id="search" url="__SELF__"><i class="btn-search"></i></a>
+            </div>
+        </div>
+         -->
+    </div>
+    
+    <div class="data-table table-striped">
+        <form class="ids">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>名称</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>活动产品</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+				<notempty name="list">
+                <volist name="list" id="menu">
+                    <tr>
+                        <td>{$menu.id}</td>
+                        <td>{$menu.title}</td>
+                        <td>{$menu.start_time|time_format='Y-m-d H:i'}</td>
+                        <td>{$menu.end_time|time_format='Y-m-d H:i'}</td>
+                        <td><a href="javascript:;" title="{$menu.id}" class="selprobtn btn">选择</a></td>
+                        <td><a title="编辑" href="{:U('edit?id='.$menu['id'])}">编辑</a>
+                        <a class="confirm ajax-get" title="删除" href="{:U('del?id='.$menu['id'])}">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+				<else/>
+				<td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+				</notempty>
+                </tbody>
+            </table>
+        </form>
+        <!-- 分页 -->
+        <div class="page">
+            {$_page}
+        </div>
+    </div>
+    
+<style>
+.bg
+{ width:100%; height:100%; background:#333; opacity:0.5; position:fixed; left:0px; top:0px; z-index:999; display:none;}
+.selpro
+{ width:800px; height:500px; position:fixed; left:50%; margin-left:-400px; top:50%; margin-top:-300px; background:#fff; z-index:1000; overflow:hidden; display:none;}
+.selpro .tables
+{ height:430px; overflow-y:scroll;}
+.edit_price
+{ width:700px; height:400px; position:fixed; left:50%; margin-left:-350px; top:50%; margin-top:-200px; background:#fff; z-index:1005; overflow:hidden; display:none;}
+.edit_price .con
+{ padding:20px;}
+.edit_price .con tr
+{ height:40px;}
+.edit_price .con .left
+{ text-align:right; padding-right:5px;}
+.edit_price .con .right
+{ padding-left:20px;}
+</style>
+<div class="bg"></div>
+<div class="selpro">
+<form action="{:U('selpro')}" method="post" class="selform">
+	<div class="data-table table-striped tables">
+    	<table>
+        	<thead>
+                <tr>
+                    <th>选择</th>
+                    <th>ID</th>
+                    <th>名称</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <volist name="prolist" id="list">
+            <tr>
+                <td><input type="checkbox" name="ids[]" class="proids{$list.id}" value="{$list.id}"></td>
+                <td>{$list.id}</td>
+                <td>{$list.title}</td>
+                <td><a href="javascript:;" class="editpricebtn" title="{$list.id}"  >编辑价格</a></td>
+            </tr>
+            </volist>
+        </table>
+    </div>
+
+
+    
+    <div class="submit" style="text-align:center;">
+        <a href="javascript:;" class="btn selpro_btn">确认</a>
+        <a href="javascript:;" class="btn close1">关闭</a>
+
+    </div>
+    <input type="hidden" name="gzpid" class="gzpid" value="" />
+</form>
+</div>
+
+<div class="edit_price">
+<div class="con">
+	<form action="" method="post" class="editform">
+    <table>
+    	<tr>
+        	<th colspan="4">价格设定</th>
+        </tr>
+        <tr>
+        	<td class="left">第一阶梯</td>
+            <td>&nbsp;数量：<input type="text" class="text input-small" name="one_length" class="one_length" value="0" /></td>
+            <td>&nbsp;价格：<input type="text" class="text input-small" name="one_price" class="one_price" value="0.00" /></td>
+            <td>&nbsp;邮费：<input type="text" class="text input-small" name="one_youfei" class="one_youfei" value="0" />
+                <label><input type="checkbox" name="one_dp" value="1">&nbsp;单品邮费</label>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="left">第二阶梯</td>
+            <td>&nbsp;数量：<input type="text" class="text input-small" name="two_length" class="two_length" value="0" /></td>
+            <td>&nbsp;价格：<input type="text" class="text input-small" name="two_price" class="two_price" value="0.00" /></td>
+            <td>&nbsp;邮费：<input type="text" class="text input-small" name="two_youfei" class="two_youfei" value="0" />
+                <label><input type="checkbox" name="two_dp" value="1">&nbsp;单品邮费</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="left">第三阶梯</td>
+            <td>&nbsp;数量：<input type="text" class="text input-small" name="three_length" class="three_length" value="0" /></td>
+            <td>&nbsp;价格：<input type="text" class="text input-small" name="three_price" class="three_price" value="0.00" /></td>
+            <td>&nbsp;邮费：<input type="text" class="text input-small" name="three_youfei" class="three_youfei" value="0" />
+                <label><input type="checkbox" name="three_dp" value="1">&nbsp;单品邮费</label>
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="pid" class="xxpid" value="" />
+    <input type="hidden" name="proid" class="xxproid" value="" />
+    </form>
+    <div class="sub_price" style="text-align:center; margin-top:20px;">
+    	<button class="btn pricesubmit">确认</button>
+        <button class="btn quxiao">取消</button>
+    </div>
+</div>
+</div>
+
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(function() {
+			$(".selprobtn").click(function(){
+				var id = $(this).attr("title");
+				$(".gzpid").val(id);
+				$(".bg").show();
+				$(".selpro").show();
+                var url = "{:U('ajax_get')}?pid="+id;
+                $.get(url,function(data){
+                    data.forEach(function(e){
+                        $(".proids"+e['proid']).attr("checked",'true');
+                    })
+                });
+			});
+			
+			$(".editpricebtn").click(function(){
+				var pro = $(this).attr("title");
+				var gzpid = $(".gzpid").val();
+				var url = "{:U('get_new_price')}?pid="+gzpid+"&proid="+pro;
+				$.get(url,function(data){
+					if(data=="0"){
+						$(".con .text").each(function() {
+							$(this).val("");
+						});
+					}else{
+						Think.setValue("one_price",data.one_price);
+						Think.setValue("one_length",data.one_length);
+						Think.setValue("one_youfei",data.one_youfei);
+                        Think.setValue("one_dp",data.one_dp);
+						Think.setValue("two_price",data.two_price);
+						Think.setValue("two_length",data.two_length);
+						Think.setValue("two_youfei",data.two_youfei);
+                        Think.setValue("two_dp",data.two_dp);
+						Think.setValue("three_price",data.three_price);
+						Think.setValue("three_length",data.three_length);
+						Think.setValue("three_youfei",data.three_youfei);
+                        Think.setValue("three_dp",data.three_dp);
+					}
+				});
+				
+				
+				$(".bg").css({"z-index":"1001"});
+				$(".edit_price").show();
+				
+				$(".xxpid").val(gzpid);
+				$(".xxproid").val(pro);
+			});
+			
+			$(".submit .close1").click(function(){
+				$(".bg").hide();
+				$(".selpro").hide();
+			});
+
+            $(".selpro_btn").click(function(){
+                $(".selform").submit();
+            });
+			
+			$(".pricesubmit").click(function(){
+				var data = $(".editform").serialize();
+				var url = "{:U('update_list')}";
+				$.post(url,data).success(function(info){
+					if(info=="1"){
+						updateAlert("添加成功！",'alert-success');
+					}else if(info=="2"){
+						updateAlert("修改成功！",'alert-success');
+					}else if(info=="-2"){
+						updateAlert("修改失败！");
+					}else if(info=="0"){
+						updateAlert("添加失败！");
+					}
+					setTimeout(function(){
+						$(".bg").css({"z-index":"999"});
+						$(".edit_price").hide();
+						$('#top-alert').find('button').click();
+						$(that).removeClass('disabled').prop('disabled',false);
+						
+					},1500);
+				});
+			});
+
+            $(".quxiao").click(function(){
+                $(".bg").css({"z-index":"999"});
+                $(".edit_price").hide();
+                $('#top-alert').find('button').click();
+                $(that).removeClass('disabled').prop('disabled',false);
+            });
+			
+            //搜索功能
+            $("#search").click(function() {
+                var url = $(this).attr('url');
+                var query = $('.search-form').find('input').serialize();
+                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+                query = query.replace(/^&/g, '');
+                if (url.indexOf('?') > 0) {
+                    url += '&' + query;
+                } else {
+                    url += '?' + query;
+                }
+                window.location.href = url;
+            });
+            //回车搜索
+            $(".search-input").keyup(function(e) {
+                if (e.keyCode === 13) {
+                    $("#search").click();
+                    return false;
+                }
+            });
+            //导航高亮
+            highlight_subnav('{:U('index')}');
+            //点击排序
+        	$('.list_sort').click(function(){
+        		var url = $(this).attr('url');
+        		var ids = $('.ids:checked');
+        		var param = '';
+        		if(ids.length > 0){
+        			var str = new Array();
+        			ids.each(function(){
+        				str.push($(this).val());
+        			});
+        			param = str.join(',');
+        		}
+
+        		if(url != undefined && url != ''){
+        			window.location.href = url + '/ids/' + param;
+        		}
+        	});
+        });
+    </script>
+</block>

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="zh-CN">
+<head>
+	<include file="Public/head"/>
+</head>
+<body>
+
+	<!-- 头部 -->
+	<block name="header">
+    <include file="Public/header"/>
+    </block>
+	<!-- /头部 -->
+	
+	<!-- 主体 -->
+    <div id="main" >
+	<block name="body">
+    	
+    </block>
+    </div>
+	<!-- /主体 -->
+
+	<block name="footer">
+        <div class="fot">
+            <ul class="fot_ul">
+                <a href="{:U('Index/index')}">
+                    <li class=" unbindClick <eq name='modelname' value='Index/index'>public_fot</eq>" id="home" value=1>
+                        <img src="__IMG__/hdshsdh_03.png" id="img_a" alt="">
+                        首页
+                    </li>
+                </a>
+                <a href="{:U('Product/index')}">
+                    <li id="feng" class=" unbindClick <eq name='modelname' value='Product/index'>public_fot</eq>" value=1>
+                        <img src="__IMG__/khkh_03.png" id="img_b" alt="">
+                        商城
+                    </li>
+                </a><a href="{:U('Shopping/cart')}">
+                <li id="cart" class="unbindClick <eq name='modelname' value='Shopping/cart'>public_fot</eq>" value=1>
+                    <img src="__IMG__/hfhfh_15.png" id="img_c" alt="">
+                    购物车
+                </li>
+            </a>
+                <a href="{:U('User/index')}">
+                    <li id="mymy" class="unbindClick <eq name='modelname' value='User/index'>public_fot</eq>" value=1>
+                        <img src="__IMG__/hfhfh_17.png" id="img_d" alt="">
+                        个人中心
+                    </li>
+                </a>
+            </ul>
+        </div>
+    </block>
+    
+	<!-- 底部 -->
+	<include file="Public/footer"/>
+	<!-- /底部 -->
+
+</body>
+</html>

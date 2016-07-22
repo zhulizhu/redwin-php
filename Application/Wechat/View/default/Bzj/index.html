@@ -1,0 +1,25 @@
+<extend name="Base/common"/>
+<block name="body">
+
+<div class="top-head">
+	<div class="back"><a href="javascript:;" onclick="window.history.go(-1);">返回</a></div>
+	<h2>保证金充值</h2>
+</div>
+<style>
+.bzjcz
+{ width:90%; margin:0px auto; text-align:center;}
+.bzjcz select
+{ width:60%; height:30px;}
+.bzjcz input
+{ width:60%; height:35px; background:#FF4C90; color:#fff; border:none;}
+</style>
+<div class="bzjcz">
+	<form action="{:U('update')}">
+    <h3>请选择充值金额</h3>
+    <p><select name="money"><option value="2000">2000</option><option value="20000">20000</option></select></p>
+    <p><input type="submit" value="确认充值" /></p>
+    </form>
+</div>
+
+</block>
+<block name="footer"></block>

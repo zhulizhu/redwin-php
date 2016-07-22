@@ -1,0 +1,34 @@
+<link href="__ROOT__/Addons/piaofu/style/1/css/slider.css" rel="stylesheet" type="text/css" charset="utf-8">
+<script type="text/javascript" src="__ROOT__/Addons/piaofu/style/1/js/jquery-1.7.2.min.js" charset="utf-8"></script>
+
+<div id="divQQbox" class="QQbox">
+	<div id="divOnline" class="Qlist">
+		<div class="OnlineLeft">
+			<div class="con">
+				<ul>
+                	<volist name="addons_qq" id="qq">
+                    <?php	$tqq = explode(":",$qq); ?>
+					<li>{$tqq.0}<a target="_blank" href="tencent://message/?uin={$tqq.1}&&Site=www.cheewo.com&&Menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=1:{$tqq.1}:42"></a></li>
+                    </volist>
+				</ul>
+			</div>
+		</div>
+		<div class="OnlineBtn">
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	//建站热线展开效果
+	$("#divQQbox").hover(
+		function(){
+			$(this).stop(true,false);
+			$(this).animate({left:0},300);	
+		},
+		function(){
+			$(this).animate({left:-276},149);	
+		}
+	)
+	
+});
+</script>

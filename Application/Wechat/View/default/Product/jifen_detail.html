@@ -1,0 +1,159 @@
+<extend name="Base/common"/>
+
+
+
+
+<block name="body">
+<link href="__PUBLIC__/Wechat/css/animate.css" type="text/css" rel="stylesheet" />
+
+<div class="top-head">
+	<div class="back"><a href="{:U('Product/index')}">返回</a></div>
+    <div class="cart_edit"><a href="{:U('Index/index')}">首页</a></div>
+	<h2>产品详情</h2>
+</div>
+
+
+
+<div class="pro_detail">
+	
+    <div class="img_list">
+    	<img src="{$info.cover_id|picture}" />
+    </div>
+    
+    <div class="info">
+    	
+        <div class="left">
+        	<div class="title">{$info.title}</div>
+            <div class="price">
+            	<div class="xianjia"><span>{$info['real_price']}</span>&nbsp;&nbsp;积分</div>
+                <div class="yuanjia">原价：<span>￥{$info.price}</span>销量：{$info.xiaoliang}</div>
+            </div>
+        </div>
+        <div class="right">
+        	<div class="line">&nbsp;</div>
+        	<a href="javascript:;" class="likebtn" title="{$info.id}"><span class="<eq name="like" value="收藏">icon-heart-empty<else/>icon-heart</eq>"></span><br /><i style="font-style:normal;">{$like}</i></a>
+        </div>
+        
+    </div>
+    
+    <div class="pro_content">
+    	<div class="head">
+        	<ul>
+            	<li class="focus xq"><a href="javascript:;">商品详情</a></li>
+                <li class="pj"><a href="javascript:;">评论（{:pj_count($info['id'])}）</a></li>
+            </ul>
+            <div class="line hengline">&nbsp;</div>
+        </div>
+        <div class="content">
+        	{$info.content}
+        </div>
+        <div class="content" style="display:none;">
+        	<ul class="pjlist">
+            	<volist name="pjlist" id="list">
+            	<li>
+                	<div class="img"><img src="{$list.uid|get_face}" /></div><div class="username">{$list.uid|get_nickname}</div><div class="time">{$list.create_time|time_format}</div>
+                    <div class="con">{$list.content}</div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<style>
+.pjlist
+{ list-style:none; width:96%; height:auto; overflow:hidden; margin:0px auto;}
+.pjlist li
+{ height:auto; border-bottom:1px dashed #ccc; padding:5px 0px;}
+.pjlist li .img
+{ width:30px; height:30px; overflow:hidden; float:left;}
+.pjlist li .img img
+{ max-width:100%; border-radius:50%;}
+.pjlist li .username
+{ float:left; line-height:30px; margin-left:5px;}
+.pjlist li .time
+{ float:right; line-height:30px;}
+.pjlist li .con
+{ clear:both; padding:5px 0px; margin-top:15px;}
+.content p
+{ line-height:normal; margin:0px; padding:0px;}
+</style>
+<script type="text/javascript">
+$(function(){
+	
+	$(".pro_content .head ul .xq").click(function(){
+		$(".pro_content .head ul .pj").removeClass("focus");
+		$(this).addClass("focus")
+		$(".hengline").animate({"left":"0px"});
+		$(".content").eq(0).show();
+		$(".content").eq(1).hide();
+	});
+	
+	$(".pro_content .head ul .pj").click(function(){
+		$(".pro_content .head ul .xq").removeClass("focus");
+		$(this).addClass("focus")
+		$(".hengline").animate({"left":"50%"});
+		$(".content").eq(1).show();
+		$(".content").eq(0).hide();
+	});
+	
+	$(".likebtn").click(function(){
+		var id = $(this).attr("title");
+		var url = "{:U('Like/auto')}?id="+id;
+		$.get(url,function(data){
+			if(data=="添加收藏"){
+				setlike();
+			}else if(data=="取消收藏"){
+				clike();
+			}else{
+				window.location.href = "{:U('User/login')}";
+			}
+		});
+	});
+	function setlike(){
+		$(".likebtn").find("span").removeClass("icon-heart-empty");
+		$(".likebtn").find("span").addClass("icon-heart");
+		$(".likebtn").find("i").html("已收藏");
+	}
+	function clike(){
+		$(".likebtn").find("span").addClass("icon-heart-empty");
+		$(".likebtn").find("span").removeClass("icon-heart");
+		$(".likebtn").find("i").html("收藏");
+	}
+});
+</script>
+</block>
+
+<block name="footer">
+<div style=" clear:both; margin-bottom:72px;"></div>
+<div class="buy_footer">
+	<egt name="user_jifen" value="info.real_price">
+    	<div class="buy_now" style="right:0px; left:33%;"><a href="javascript:;" value="{$info.id}">立即兑换</a></div>
+    <else/>
+    	<div class="buy_jifen" style=" width:37%; height:38px; position:absolute; top:6px;right:0px; left:33%;"><a href="javascript:;" value="{$info.id}" style=" width:100%; height:100%; display:block; text-align:center; line-height:38px; border-radius:8px; font-size:16px; color:#fff; text-decoration:none; background:#999999;">积分不足</a></div>
+    </egt>
+</div>
+
+<script type="text/javascript">
+$(function(){
+	$(".buy_jifen a").click(function(){
+		var pro_id = $(this).attr("value");
+		var url = "{:U('Cart/jifen_cart')}?pro_id="+pro_id;
+		$.get(url,function(data){
+			if(data>0){
+				var url1 = "{:U('Shopping/get_thisproid')}?proid="+pro_id;
+				$.get(url1,function(info){
+					if(info>0){
+						var url2 = "{:U('Shopping/jifen_cart?tpl=1')}?status="+info+"&save_type=1";
+						window.location.href = url2;
+					}
+				});
+			}else{
+				alert(data);
+			}
+		});
+	});
+});
+</script>
+
+</block>

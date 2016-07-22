@@ -1,0 +1,163 @@
+<extend name="Public/base" />
+
+<block name="body">
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="main-title cf">
+		<h2><if condition="ACTION_NAME eq 'add'">新增<else/>编辑</if>联动菜单</h2>
+	</div>
+
+	<!-- 标签页导航 -->
+	<div class="tab-wrap">
+		<div class="tab-content">
+			<!-- 表单 -->
+			<form id="form" action="__SELF__" method="post" class="form-horizontal doc-modal-form">
+            <input type="hidden" name="id" value="{$info.id}">
+				<!-- 基础 -->
+					<div class="form-item cf">
+						<label class="item-label">菜单标识<span class="check-tips">（请输入菜单标识）</span></label>
+						<div class="controls">
+							<input type="text" class="text input-large" name="name" value="{$info.name}">
+						</div>
+					</div>
+					<div class="form-item cf">
+						<label class="item-label">菜单名称<span class="check-tips">（请输入菜单的名称,一行一个）</span></label>
+						<div class="controls">
+                        	<label class="textarea input-large">
+                        	<textarea name="title">{$info.title}</textarea>
+                            </label>
+						</div>
+					</div>
+                 		 <div class="form-item cf">
+                            <label class="item-label">选择类别<span class="check-tips"></span></label>
+                            <div class="controls">
+                            	<volist name="sort" id="list">
+                            	<label><input type="checkbox" class='checkboxs' name="sort[]" value="{$list.id}" />{$list.title}</label>
+                            	</volist>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+	                        $(document).ready(function(){
+								  <if condition=" $pid != ''">
+								  	 var theValue=null;
+								  <else />
+								  	 var theValue='{$info.sort}';
+								  </if>
+								  var theArray = theValue.split(",");
+								  var CheckboxArray=$(".checkboxs");
+								  for (var i = 0; i < theArray.length; i++) {
+									  for (var b = 0; b < CheckboxArray.length; b++) {
+										  if(theArray[i]==CheckboxArray[b].value){
+											  CheckboxArray[b].checked= true;
+										}
+									  }
+								  }
+							  });
+                        </script>
+                        
+                                <div class="controls">
+                       			 <div class="controls">
+									<input type="file" id="upload_picture_picture">
+                                    <if condition=" $pid != ''">
+										<input type="hidden" name="picture" id="cover_id_picture" value=""/>
+                                   <else />
+										<input type="hidden" name="picture" id="cover_id_picture" value="{$info.picture}"/>
+                                    </if>
+                                    <div class="upload-img-box">
+                                    	<if condition="$info['picture'] != null">
+                                        	<if condition=" $pid != ''">
+                                            <else />
+                                            	<div class="upload-pre-item"><img src="{$info.picture|thumb=220,220}"/></div>
+                                            </if>
+                                    	</if>
+									</div>
+								</div>
+								<script type="text/javascript">
+								//上传图片
+							    /* 初始化上传插件 */
+								$("#upload_picture_picture").uploadify({
+							        "height"          : 30,
+							        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+							        "fileObjName"     : "download",
+							        "buttonText"      : "上传图片",
+							        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+							        "width"           : 120,
+							        'removeTimeout'	  : 1,
+							        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+							        "onUploadSuccess" : uploadPicturecover_id,
+							        'onFallback' : function() {
+							            alert('未检测到兼容版本的Flash.');
+							        }
+							    });
+								function uploadPicturecover_id(file, data){
+							    	var data = $.parseJSON(data);
+							    	var src = '';
+							        if(data.status){
+							        	$("#cover_id_picture").val(data.id);
+							        	src = data.url || '__ROOT__' + data.path
+							        	$("#cover_id_picture").parent().find('.upload-img-box').html(
+							        		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+							        	);
+							        } else {
+							        	updateAlert(data.info);
+							        	setTimeout(function(){
+							                $('#top-alert').find('button').click();
+							                $(that).removeClass('disabled').prop('disabled',false);
+							            },1500);
+							        }
+							    }
+								</script>
+                               </div>
+                        
+				<!-- 按钮 -->
+				<div class="form-item cf">
+					<label class="item-label"></label>
+					<div class="controls edit_sort_btn">
+						<input type="hidden" name="id" value="{$info['id']}"/>
+                        <input type="hidden" name="pid" value="{$info['pid']}" />
+						<button class="btn submit-btn " type="submit" target-form="form-horizontal">确 定</button>
+						<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</block>
+<block name="script">
+<script type="text/javascript" charset="utf-8">
+//导航高亮
+highlight_subnav('{:U('Linkage/index')}');
+</script>
+<script type="text/javascript" charset="utf-8">
+	//设置复选框
+	function setFxk(theName, theValue){
+		alert(theName);
+		var e;
+		var chkboxname = "temp" + theName;
+			if (theValue == "") {
+			var thelist = '';
+				for (var i = 0; i < document.getElementsByName(chkboxname).length; i++) {
+					e = document.getElementsByName(chkboxname)[i];
+						if (e.checked) {
+							if (thelist != '') {
+								thelist += ",";
+							}
+							thelist += e.value;
+						}
+					}
+					document.getElementById(theName).value = thelist;
+					}
+					else {
+					var theArray = theValue.split(",");
+					for (var i = 0; i < theArray.length; i++) {
+					for (var b = 0; b < document.getElementsByName(chkboxname).length; b++) {
+					e = document.getElementsByName(chkboxname)[b];
+					if (e.value == theArray[i]) {
+					e.checked = true;
+					}
+				}
+			}
+		}
+	}
+</script>
+</block>
+

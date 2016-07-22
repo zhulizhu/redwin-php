@@ -1,0 +1,156 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<!-- 标题栏 -->
+	<div class="main-title">
+		<h2>订单列表</h2>
+	</div>
+    
+	<div class="cf">
+        <!-- 高级搜索 -->
+        <form action="{:U('order/index')}" method="post" id="myform">
+		<div class="search-form fr cf">
+			<div class="sleft">
+                <input type="text" name="search_order" class="search-input" value="{:I('search_order')}" placeholder="请输入要查询的订单编号">
+			</div>
+		</div>
+        </form>
+        <!-- 高级搜索 -->
+        <form action="{:U('order/index')}" method="post" id="myform">
+		<div class="search-form fr cf">
+			<div class="sleft">
+                <input type="text" name="search_uid" class="search-input" value="{:I('search_uid')}" placeholder="请输入要查询的用户ID">
+			</div>
+		</div>
+        </form>
+        <div class="fr cf" style="margin-right:20px;">
+        <select class="orderby">
+        	<option value="">默认排序</option>
+            <option value="create_time" <eq name="orderby" value="create_time">selected="selected"</eq> >下单时间</option>
+            <option value="update_time" <eq name="orderby" value="update_time">selected="selected"</eq>>收货时间</option>
+        </select>
+        </div>
+        <script type="text/javascript">
+        $(function(){
+			$(".orderby").change(function(){
+				var value = $(this).val();
+				var url = "?orderby="+value;
+				window.location.href = url;
+			});
+		});
+        </script>
+    </div>
+    
+    <!-- 数据列表 -->
+    <div class="data-table table-striped">
+    
+    
+    <table class="ordertable">
+    	<tbody>
+        <empty name="ord">
+        <tr><td colspan="8">空空如也...</td></tr>
+        <else/>
+        
+        <volist name="ord" id="list">
+        
+    	<tr style="cursor:pointer;" class="ordertr">
+        	<td>
+            	<div class="userinfo">
+                	<div class="img"><img src="<empty name="list.userinfo.headimgurl">__PUBLIC__/Admin/images/getheadimg.jpg<else/>{$list.userinfo.headimgurl}</empty>" /></div>
+                    <div class="right">
+                    	<div class="title"><span style="color:#09F;">{$list.userinfo.username}&nbsp;&nbsp;UID:{$list.userinfo.id}</span> <span style="color:#60F;">{:get_group_title_by_uid($list['userinfo']['id'])}</span></div>
+                        <div class="tel"><span style="color:#F66;">{$list.userinfo.mobile}</span></div>
+                    </div>
+                </div>
+            </td>
+        	<td>订单编号：<strong style="color:#F00;">{$list.id}</strong></td>
+            <td>订单总额：<strong style="color:#F33;">￥{$list.price}</strong></td>
+            <td>订单状态：<strong style="color:#69F;">{$list.status|get_order_status}</strong></td>
+            <td>下单时间：<strong style="color:#69F;">{$list.create_time|time_format='Y-m-d H:i:s'}</strong></td>
+            <td>收货时间：<strong style="color:#0C9;">{$list.update_time|time_format='Y-m-d H:i:s'}</strong></td>
+        </tr>
+        <tr><td colspan="9" style=" display:none;"></td></tr>
+        <tr><td><strong>收件人信息</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;收件人：<span style="color:#09C;">{$list.username}</span></td><td>电话：<span style="color:#069;">{$list.tel}</span></td><td colspan="3">地址：{$list.address}</td>
+        	<td class="no">
+                快递方式：<strong style="color:#69F">{$list.express|get_express}</strong>&nbsp;&nbsp;&nbsp;
+                <neq name="list.status" value="0">
+                快递公司：{$list.express_com}&nbsp;快递单号：{$list.expressnum}
+                <notempty name="list.expressnum"><a href="{:U('show_express?id='.$list['id'])}" target="_blank" class="btn">查看快递信息</a></notempty>
+                </neq>
+            
+            </td>
+        </tr>
+        <tr><td colspan="9" style=" display:none;"></td></tr>
+        <tr><td colspan="9"><strong>订单留言：</strong>{$list.liuyan}</td></tr>
+        <tr>
+        	<td colspan="9" style="height:0px;">
+            	<table style=" display:none;" class="morelist">
+                	<tr>
+                    	<td>
+                        	<h4>订单详情：</h4>
+                            <div class="orderlist">
+                            	<ul>
+                                	<volist name="list['suborder']" id="li">
+                                	<li>
+                                    	<div class="left">
+                                        	<div class="img"><img src="{$li.pic}" /></div>
+                                        </div>
+                                        <div class="right">
+                                        	<div class="title">{$li.title}</div>
+                                            <div class="price">价格：￥{$li.price}</div>
+                                            <div class="num">数量：{$li.length}</div>
+                                        </div>
+                                    </li>
+                                    </volist>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </volist>
+        </empty>
+        </tbody>
+    </table>
+    
+    
+	
+	</div>
+    </form>
+    <div class="page">
+        {$_page}
+    </div>
+</block>
+
+<block name="script">
+	<script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+	<script type="text/javascript">
+	
+	$(".ordertr td").not(".no").click(function(){
+		$(this).parent().next().next().next().next().next().find(".morelist").toggle();
+	});
+	
+	//搜索功能
+	$("#search").click(function(){
+		var url = $(this).attr('url');
+        var query  = $('.search-form').find('input').serialize();
+       	query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+        query = query.replace(/^&/g,'');
+        if( url.indexOf('?')>0 ){
+            url += '&' + query;
+        }else{
+            url += '?' + query;
+        }
+		window.location.href = url;
+	});
+	//回车搜索
+	$(".search-input").keyup(function(e){
+		if(e.keyCode === 13){
+			$("#search").click();
+			return false;
+		}
+	});
+	
+	</script>
+</block>

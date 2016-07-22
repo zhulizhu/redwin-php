@@ -1,0 +1,69 @@
+<extend name="Base/common"/>
+
+<block name="header">
+<div class="user-page-head">
+	<div class="back"><a href="javascript:;" onclick="history.back();" class="icon-chevron-left"></a></div>
+    <h2>{$info.title}</h2>
+</div>
+</block>
+
+<block name="body">
+
+<style>
+.map
+{ width:90%; height:auto; margin:20px auto;}
+.map p
+{ font-size:16px; margin-bottom:15px;}
+.map select
+{ width:130px;}
+.map .btn
+{ padding:3px 10px;}
+.map .list
+{}
+.map .list ul
+{ margin:0px; padding:0px; list-style:none;}
+.map .list ul li
+{ width:100%; height:44px; line-height:44px; overflow:hidden; border-bottom:1px dashed #ccc; position:relative;}
+.map .list ul li a
+{ color:#333; text-decoration:none;}
+.map .list ul li span
+{ position:absolute; right:5px; top:20px; font-size:18px; color:#069;}
+</style>
+<div class="user-page">
+	<div class="map">
+    	<form action="__SELF__" method="get">
+    	<p>请选择城市：
+        <select name="city" class="city">
+        <volist name="city" id="list" >
+        <option value="{$list.id}">{$list.title}</option>
+        </volist>
+        </select></p>
+        <p>请选择品牌：
+        <select name="pinpai" class="pinpai">
+        <volist name="pinpai" id="list" >
+        <option value="{$list.id}">{$list.title}</option>
+        </volist>
+        </select>
+        </p>
+        <p align="center"><input type="submit" value="立即查询" class="btn" /></p>
+        </form>
+        <div class="list">
+        	<ul>
+            	<volist name="maplist" id="maplist">
+            	<li><a href="{:U('detailmap','id='.$maplist['id'])}">{$maplist.title}<span class="icon-map-marker"></span></a></li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+$(function(){
+	<if condition="$info.city neq ''">
+	$(".city").val("{$info.city}");
+	$(".pinpai").val("{$info.pinpai}");
+	</if>
+});
+</script>
+
+</block>

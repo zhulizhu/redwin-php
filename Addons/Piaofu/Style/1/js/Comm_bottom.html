@@ -1,0 +1,49 @@
+<div id="globle_bottom">
+	<div id="Comm_bottom">
+    	<div class="bottom_list">
+        	<ul>
+            	<li>新手指南
+                	<ul>
+                    	<article:list typeid="77" row="5" addon="true">
+                    		<li><a href="{:U('Article/intro?category=Transaction&id='.$list[id])}">{$list.title}</a></li>
+                        </article:list>
+                    </ul>
+                </li>
+                <li>交易安全
+                	<ul>
+                    	<article:list typeid="78" row="5" addon="true">
+                    		<li><a href="{:U('Article/intro?category=Transaction&id='.$list[id])}">{$list.title}</a></li>
+                        </article:list>
+                    </ul>
+                </li>
+                <li>支付方式
+                	<ul>
+                    	<article:list typeid="79" row="5" addon="true">
+                    		<li><a href="{:U('Article/intro?category=Payment&id='.$list[id])}">{$list.title}</a></li>
+                        </article:list>
+                    </ul>
+                </li>
+                <li>配送方式
+                	<ul>
+                    	<article:list typeid="80" row="5" addon="true">
+                    		<li><a href="{:U('Article/intro?category=Distribution&id='.$list[id])}">{$list.title}</a></li>
+                        </article:list>
+                    </ul>
+                </li>
+                <li>帮助中心
+                	<ul>
+                    	<article:list typeid="81" row="5" addon="true">
+                    		<li><a href="{:U('Article/intro?category=Help&id='.$list[id])}">{$list.title}</a></li>
+                        </article:list>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    	<div class="Copyright">
+        	中国农产品官方网站 版权所有2014-2015<br>
+            Copyright 2013-2014 蜀ICP备14012423号<br>
+            360安全网址 可信网站 成都网警报案 经营性网站备案信息	诚信网站
+        </div>
+    </div>
+</div>
+{:hook('pageFooter', 'widget')}

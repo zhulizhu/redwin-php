@@ -1,0 +1,125 @@
+<extend name="Base/common"/>
+
+<block name="body">
+<div class="top-head">
+    <h2>用户注册</h2>
+</div>
+<link href="__PUBLIC__/Wechat/iCheck/skins/flat/red.css" type="text/css" rel="stylesheet" />
+<script src="__PUBLIC__/Wechat/iCheck/icheck.min.js" type="text/javascript"></script>
+
+<div class="reg">
+
+	<div class="bg">
+    	<h2>优享购商城</h2>
+        <p>立即加入我们，获得更多体验</p>
+    </div>
+    
+    <div class="content">
+    	<notempty name="frominfo">
+        <div class="frominfo">
+        	
+            <div class="img"><img src="{$frominfo.headimgurl}"></div>
+            <div class="title">{$frominfo.username} 邀请您加入！</div>
+            
+        </div>
+        </notempty>
+        
+        <div class="form">
+        	<form action="{:U('register')}" method="post" class="regform">
+            	<ul>
+                	<li>
+                    	<div class="left">手机号：</div>
+                        <div class="right"><input type="tel" name="mobile" class="mobile" value="请输入手机号码"></div>
+                    </li>
+                    <li>
+                    	<div class="left">验证码：</div>
+                        <div class="right"><input type="text" name="verify" class="verify" value="请输入收到的验证码"></div>
+                        <div class="ver"><a href="javascript:;" class="send_sms">发送验证码</a></div>
+                    </li>
+                </ul>
+                <div style="text-align:center; margin-top:20px;">
+                	<label><input type="checkbox" class="xieyi" checked="checked" value="1" />&nbsp;<a href="{:U('Article/detail?id=992')}">《优享GO用户服务协议》</a></label>
+                </div>
+                <div style=" text-align:center; margin-top:20px;">
+            	<input type="submit" value="立即注册" class="submit">
+                </div>
+            </form>
+        </div>
+        
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+$(function(){
+	$('.xieyi').iCheck({
+    	checkboxClass: 'icheckbox_flat-red',
+    	increaseArea: '20%' // optional
+  	});
+	$('.xieyi').on('ifChecked', function(event){
+		$(".xieyi").val("1");
+	});
+	$('.xieyi').on('ifUnchecked', function(event){
+		$(".xieyi").val("0");
+	});
+});
+var height = $(document).height();
+var topheight = $(".top-head").height();
+var height = height-topheight-72;
+$(".reg").css({"min-height":height});
+
+$(".send_sms").click(function(){
+	var mobile = $(".mobile").val();
+	if(mobile.length!=11){
+		alert("请输入11位手机号码");
+	}else{
+		var url = "{:U('reg_send_sms')}?mobile="+mobile;
+		$.get(url,function(data){
+			if(data==true){
+				$(".ver").addClass("focus");
+				$(".send_sms").html("60秒后重新获取");
+				var timer = 60;
+				var djs = setInterval(function(){
+					if(timer>0){
+						timer = timer - 1;
+						var str = timer+"秒后重新获取";
+						$(".send_sms").html(str);
+					}else{
+						clearInterval(djs);
+						$(".ver").removeClass("focus");
+						$(".send_sms").html("发送验证码");
+					}
+				},1000)
+			}
+		});
+	}
+	
+	return false;
+});
+$(".regform").submit(function(){
+	
+	var status = $(".xieyi").val();
+	if(status==0){
+		alert("您还未同意用户服务协议");
+		return false;
+	}
+	
+	var mobile = $(".mobile").val();
+	if(mobile.length!=11){
+		alert("请输入11位手机号码");
+		return false;
+	}
+	var verify = $(".verify").val();
+	if(verify.length!=4){
+		alert("请输入4位验证码");
+		return false;
+	}
+	
+});
+$(".form ul input").focus(function(){
+	$(this).val("");
+	$(this).addClass("focus");
+});
+</script>
+</block>

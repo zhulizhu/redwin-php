@@ -1,0 +1,41 @@
+﻿<extend name="Base/common"/>
+
+
+<block name="body">
+<div class="top-head">
+	<div class="back"><a href="javascript:;" onclick="window.history.go(-1);">返回</a></div>
+	<h2>我的优分</h2>
+</div>
+
+<div class="user-yue">
+	
+    <div class="info">
+    	<div class="money">优分：{$youfen}</div>
+    </div>
+    <ul>
+    	<volist name="list" id="list">
+    	<li>
+        	<eq name="list.yf_type" value="0">
+        	<div class="price">+{$list.val}</div>
+            <div class="money_type">类型：得分</div>
+            <div class="more">{:get_nickname($list['uid'])}注册</div>
+            <div class="time">{:time_format($list['create_time'])}</div>
+            </eq>
+            <eq name="list.yf_type" value="1">
+            <div class="price">+{$list.val}</div>
+            <div class="money_type">类型：得分</div>
+        	<div class="more">{:get_nickname($list['uid'])}消费</div>
+            <div class="time">{:time_format($list['create_time'])}</div>
+            </eq>
+            <eq name="list.money_type" value="2">
+        	<div class="price" style="color:#ff4c90;">-{$list.val}</div>
+            <div class="money_type">类型：扣分</div>
+            <div class="time">{:time_format($list['create_time'])}</div>
+            </eq>
+        </li>
+        </volist>
+    </ul>
+    
+</div>
+
+</block>

@@ -1,0 +1,139 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>领取记录</h2>
+    </div>
+
+    <div class="cf">
+        <div class="search-form fr cf">
+        
+        	<div class="fr cf">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</div>
+            
+			<div class="btn-group-click adv-sch-pannel fr"  style="margin-right:20px;">
+                <button class="btn">高 级<i class="btn-arrowdown"></i></button>
+                <div class="dropdown cf">
+                	<div class="row">
+                		<label>领取时间：</label>
+                		<input type="text" id="time-start" name="time-start" class="text input-2x" value="" placeholder="起始时间" /> -
+                		<input type="text" id="time-end" name="time-end" class="text input-2x" value="" placeholder="结束时间" />
+                	</div>
+                	<div class="row">
+                		<label>使用状态：</label>
+                		<label><input type="radio" name="status" value="0" />已使用</label>
+                        <label><input type="radio" name="status" value="1" />未使用</label>
+                	</div>
+                </div>
+            </div>
+            <div class="sleft fr cf">
+				<input type="text" name="uid" class="search-input" value="{:I('uid')}" placeholder="请输入用户编号">
+				<a class="sch-btn" href="javascript:;" id="search" url="{:U('')}"><i class="btn-search"></i></a>
+			</div>
+            
+		</div>
+    </div>
+    
+    <div class="data-table table-striped">
+        <form class="ids">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>领取者</th>
+                        <th>发放者</th>
+                        <th>领取金额</th>
+                        <th>领取时间</th>
+                        <th>使用状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+				<notempty name="list">
+                <volist name="list" id="menu">
+                    <tr>
+                        <td>{$menu.id}</td>
+                        <td><img src="{$menu.uid|get_face}" width="40" height="40" align="middle" style="border-radius:5px; margin-right:3px;" /><a href="{:U('User/index?uid='.$menu['uid'])}">{$menu.uid|get_nickname}</a></td>
+                        <td><img src="{$menu.puid|get_face}" width="40" height="40" align="middle" style="border-radius:5px; margin-right:3px;" /><a href="{:U('User/index?uid='.$menu['puid'])}">{$menu.puid|get_nickname}</a></td>
+                        <td>{$menu.money}</td>
+                        <td>{$menu.create_time|time_format='Y-m-d H:i'}</td>
+                        <td><eq name="menu.status" value="0">已使用<else/>未使用</eq></td>
+                    </tr>
+                </volist>
+				<else/>
+				<td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+				</notempty>
+                </tbody>
+            </table>
+        </form>
+        <!-- 分页 -->
+        <div class="page">
+			{$_page}
+        </div>
+    </div>
+    
+</block>
+
+<block name="script">
+<script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+    <link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+        $(function() {
+			$('#time-start').datetimepicker({
+				format: 'yyyy-mm-dd',
+				language:"zh-CN",
+				minView:2,
+				autoclose:true
+			});
+		
+			$('#time-end').datetimepicker({
+				format: 'yyyy-mm-dd',
+				language:"zh-CN",
+				minView:2,
+				autoclose:true
+			});
+            //搜索功能
+            $("#search").click(function() {
+                var url = $(this).attr('url');
+                var query = $('.search-form').find('input').serialize();
+                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+                query = query.replace(/^&/g, '');
+                if (url.indexOf('?') > 0) {
+                    url += '&' + query;
+                } else {
+                    url += '?' + query;
+                }
+                window.location.href = url;
+            });
+            //回车搜索
+            $(".search-input").keyup(function(e) {
+                if (e.keyCode === 13) {
+                    $("#search").click();
+                    return false;
+                }
+            });
+            
+            //点击排序
+        	$('.list_sort').click(function(){
+        		var url = $(this).attr('url');
+        		var ids = $('.ids:checked');
+        		var param = '';
+        		if(ids.length > 0){
+        			var str = new Array();
+        			ids.each(function(){
+        				str.push($(this).val());
+        			});
+        			param = str.join(',');
+        		}
+
+        		if(url != undefined && url != ''){
+        			window.location.href = url + '/ids/' + param;
+        		}
+        	});
+        });
+    </script>
+</block>

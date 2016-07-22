@@ -1,0 +1,74 @@
+<extend name="Base/common" />
+<block name="Comm_top">
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div id="register_top">
+    	<div class="top_regis">
+            <div class="lable"> 欢迎来到99车盟汇！ </div>
+            <div class="sc"><a onClick="AddFavorite(window.location,document.title)" href="javascript:void(0)" title="收藏我们">收藏我们</a></div>
+            <div class="gz"><a  href="{:U('Article/detail?id=572')}" title="关注我们">关注我们</a></div>
+        </div>
+    </div>
+</block>
+
+<block name="body">
+<section>
+	<div id="reg_befor">
+    	<a href="{:U('Home/index/index')}" title="{:C('WEB_SITE_TITLE')}"><img src="__IMG__/logo-reg.png" width="216" height="65"/></a>
+        <div class="back"><a href="{:U('Home/index/index')}" title="返回首页">返回首页</a></div>
+    </div>
+	<div id="registers">
+        <div class="reg_up">
+            <h2>用户注册</h2>
+            <div class="login">
+                已经是会员？马上去<a href="{:U('login')}" class="log_btn" title="登录">登录</a>
+            </div>
+        </div>
+        <div class="comp_down">
+            <form class="comp-form" action="__SELF__" method="post" onSubmit="return CkInfo(this);">
+            <h2>完善资料</h2>
+                <table cellpadding="1" cellspacing="1" border="0">
+                    <tr>
+                        <th width="90"><em>*&nbsp;</em>昵称</th>
+                        <td width="549">
+                            <input type="text" id="inputNickname"   value="" name="nickname" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="90"></th>
+                        <td width="549" class="tip">
+                            <p>6-16个字符，区分大小写</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="90"><em>*&nbsp;</em>姓名</th>
+                        <td width="549"><input type="text" id="inputUsername"  value="" name="username">
+                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="90"><em>*&nbsp;</em>性别</th>
+                        <td width="549"><input class="sex" type="radio" name="sex"  value="0"/>男
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="sex" type="radio" name="sex"  value="1" />女
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="90"><em>*&nbsp;</em>QQ</th>
+                        <td width="549"><input type="text" id="inputQQ"   name="qq">
+                        </td>
+                    </tr>
+                   <tr>
+                        <th width="90">收货地址</th>
+                        <td width="549" height="80"><input type="text" id="inputAddress"   name="address">
+                        </td>
+                    </tr>
+                </table>
+                <div class="submits">
+                    <input class="subm" type="submit"  value="保存" />
+                </div>
+              </form> 
+          </div> 
+	</div>
+</section>
+</block>
+<block name="Comm_Copyright">
+</block>

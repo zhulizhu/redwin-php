@@ -1,0 +1,93 @@
+﻿<extend name="Base/common"/>
+
+
+<block name="body">
+
+<style>
+.userhb
+{ width:100%; height:auto; background:#c0211e; position:relative;}
+.userhb .bgimg
+{ width:100%; height:auto;}
+.userhb .bgimg img
+{ width:100%;}
+.userhb .face
+{ width:60px; height:60px; border-radius:50%; position:absolute; left:40px; top:30px; z-index:1; overflow:hidden;}
+.userhb .top-btn
+{ width:90%; position:relative; margin-left:5%; margin-top:20px;}
+.userhb .top-btn .qun
+{ width:100%; height:40px; line-height:40px; text-align:center; position:absolute; left:0px; top:0px; background:#ff8901; border-radius:8px; color:#fff; font-size:16px;}
+.userhb .top-btn .putong
+{ width:46%; height:40px; line-height:40px; text-align:center; position:absolute; left:50%; top:0px; background:#fbe63d;  border-radius:8px; color:#a35c00; font-size:16px;}
+.userhb .bottom-btn
+{ width:100%; position:relative; text-align:center; margin-top:90px; color:#fff;}
+.userhb .bottom-btn a
+{ color:#fff;}
+</style>
+
+<div class="userhb">
+	<div class="face"><img src="{:get_face()}" width="60" height="60" /></div>
+	<div class="bgimg"><img src="__PUBLIC__/wechat/images/hb/a.png" /></div>
+    <div class="top-btn">
+    	<a href="{:U('user_addhb')}" class="qun">立即发红包</a>
+    </div>
+    <div class="bottom-btn">
+    	<a href="{:U('myhb')}">我发的红包</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="{:U('coupons')}">收到的红包</a>
+    </div>
+</div>
+<script>
+$(function(){
+	$(".userhb").height($(window).height()-62);
+});
+</script>
+
+<!--
+<div class="top-head">
+	<div class="back"><a href="javascript:;" onclick="window.history.go(-1);">返回</a></div>
+	<h2>发出去的红包</h2>
+    <div class="cart_edit"><a href="{:U('user_addhb')}" class="editcart">+ 发红包</a></div>
+</div>
+<style>
+.user-coupons
+{ width:100%; height:auto;}
+.user-coupons ul
+{ width:90%; height:auto; list-style:none; margin:0px auto; margin-top:30px;}
+.user-coupons ul li
+{ width:100%; height:110px; overflow:hidden; border-radius:5px; position:relative; background:#f8f8f8; margin-bottom:20px;}
+.user-coupons ul li .title
+{ position:absolute; left:10px; top:10px; font-size:20px;}
+.user-coupons ul li .youxiaoqi
+{ position:absolute; left:10px; top:40px;}
+.user-coupons ul li .shuoming
+{ position:absolute; left:10px; bottom:10px;}
+.user-coupons ul li .money
+{ position:absolute; right:10px; top:10px; font-size:14px; text-align:right;}
+.user-coupons ul li .hb_type
+{ position:absolute; left:10px; top:50px;}
+.user-coupons ul li .money span
+{ font-size:20px; color:#fe2020; margin-right:3px;}
+.user-coupons ul li .bottom
+{ width:100%; height:5px; background:#F63; position:absolute; left:0px; bottom:0px;}
+</style>
+<div class="user-coupons">
+	
+    <ul>
+    	<volist name="list" id="list">
+    	<li>
+        	<a href="{:U('index/userhb?id='.$list['id'])}" style="color:#333;">
+        	<div class="title">￥{$list.countmoney}</div>
+            <div class="shuoming">{$list.content}</div>
+            <div class="hb_type"><eq name="list.hb_type" value="2">拼手气红包<else/>普通红包</eq></div>
+            <div class="money">
+            	<eq name="list.hb_type" value="2">总金额<else/>单个金额</eq>：￥<span>{$list.money}</span>元<br />
+            	共<span>{$list.times}</span>个<br />
+                剩<span>{$list.last}</span>个
+            </div>
+        	<div class="bottom"></div>
+            </a>
+        </li>
+        </volist>
+    </ul>
+    
+</div>
+-->
+</block>

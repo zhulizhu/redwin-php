@@ -1,0 +1,82 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<!-- 标题 -->
+	<div class="main-title">
+		<h2>{$meta_title}</h2>
+	</div>
+
+	<!-- 按钮工具栏 -->
+	<div class="cf">
+		<div class="fl">
+            <!--<button class="btn ajax-post confirm" url="{:U('change')}">
+            <a href="{:U('change')}">修改</a>
+            </button> -->
+		</div>
+        <!-- 高级搜索 -->
+        <div class="search-form fr cf">
+            <div class="sleft">
+                <input type="text" name="content" class="search-input" value="{:I('content')}" placeholder="请输入标题">
+                <a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
+            </div>
+        </div>
+	</div>
+
+
+	<!-- 文字数据 -->
+    <form action="{:U('change')}" method="post"> 
+    <textarea name="content" style="width:100%;height: 400px;max-width: 100%;max-height: 400px; margin-top:20px;">
+	{$content}
+	</textarea>
+    <input type="submit" value="确认修改" style="background-color:#2980B9; width:70px; height:30px; border:none; color:white; margin-top:4px; border-radius:4px;"/>
+    </form>
+	
+	
+</div>
+
+</block>
+<block name="script">
+    <script type="text/javascript">
+        $(function() {
+            //搜索功能
+            $("#search").click(function() {
+                var url = $(this).attr('url');
+                var query = $('.search-form').find('input').serialize();
+                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+                query = query.replace(/^&/g, '');
+                if (url.indexOf('?') > 0) {
+                    url += '&' + query;
+                } else {
+                    url += '?' + query;
+                }
+                window.location.href = url;
+            });
+            //回车搜索
+            $(".search-input").keyup(function(e) {
+                if (e.keyCode === 13) {
+                    $("#search").click();
+                    return false;
+                }
+            });
+            //导航高亮
+            highlight_subnav('{:U('index')}');
+            //点击排序
+        	$('.list_sort').click(function(){
+        		var url = $(this).attr('url');
+        		var ids = $('.ids:checked');
+        		var param = '';
+        		if(ids.length > 0){
+        			var str = new Array();
+        			ids.each(function(){
+        				str.push($(this).val());
+        			});
+        			param = str.join(',');
+        		}
+
+        		if(url != undefined && url != ''){
+        			window.location.href = url + '/ids/' + param;
+        		}
+        	});
+        });
+    </script>
+</block>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="/Public/static/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+<div class="main-title">
+	<h2>打印快递单 <a href="javascript:;" class="btn print" >打印</a> </h2>
+</div>
+
+<div class="cf">
+        <a class="btn dz" href="javascript:;">电子面单</a>
+        <a href="javascript:;" class="btn pt">普通面单</a>
+        <a href="javascript:;" class="btn chdbtn">出货单</a>
+        <label style="margin-left:20px;">当前单号：{$info.id}&nbsp;&nbsp;<input type="text" name="hb" class='hb' value="请输入其他单号" ><a href="javascript:;" class="hbbtn">合并订单</a></label>
+</div>
+<script type="text/javascript">
+$(function(){
+	$(".hb").focus(function(){
+		$(this).val("");
+	});
+	$(".hbbtn").click(function(){
+		var txt = $(".hb").val();
+		if(txt!="请输入其他单号"){
+			var str = "{$info.id}," + $(".hb").val();
+			window.location.href = "{:U('kdd')}?id="+str;
+		}
+	});
+});
+</script>
+
+<div class="putong" style="width:850px; height:467px; margin-top:20px; position:relative; display:none; background:url(__PUBLIC__/admin/images/putong.jpg) no-repeat;">
+<!--startprint1-->
+<div class="print">
+
+	<div class="jijianren" style="position:absolute; left:120px; top:75px; font-weight:bold;">优享GO</div>
+    <div class="jijiandizhi" style="position: absolute; left: 80px; top: 160px; font-size: 16px; font-weight: bold;">快递哥，包裹内为失传已久的“护肤珍品”<br>未免我主焦急等待，请速派~</div>
+    <div class="jijiandianhua" style="position: absolute; left: 145px; top: 212px; font-weight: bold;">18200509997</div>
+	
+    <div class="shoujianren" style="position: absolute; left: 460px; top: 70px; font-weight: bold;">{$info.username}</div>
+    <div class="shoujiandizhi" style="position: absolute; left: 440px; top: 160px; font-weight: bold; width: 300px; height: auto; font-size:16px;">{$info.address}</div>
+    <div class="shoujiandianhua" style="position: absolute; left: 500px; top: 215px; font-weight: bold; width: 250px; height: auto;">{$info.tel}</div>
+    
+</div>
+<!--endprint1-->
+</div>
+
+<div class="dianzi" style="width:370px; height:618px; margin-top:20px; position:relative; background:url(__PUBLIC__/admin/images/dianzi.jpg) no-repeat;">
+<!--startprint2-->
+<div class="print">
+    <div class="jijiandizhi" style="position: absolute; left: 40px; top: 130px; font-weight: bold;">快递哥，包裹内为失传已久的“护肤珍品”<br>未免我主焦急等待，请速派~</div>
+    <div class="jijiandianhua" style="position: absolute; font-weight: bold; left: 40px; top: 169px;">寄件人：孙先生 电话：18200509997</div>
+	
+    <div class="shoujianren" style="position: absolute; left: 40px; top: 65px; font-weight: bold;">{$info.username}&nbsp;&nbsp;&nbsp;&nbsp;{$info.tel}</div>
+    <div class="shoujiandizhi" style="position: absolute; left: 40px; font-weight: bold; width: 330px; height: auto; top: 85px;">{$info.address}</div>
+    
+</div>
+<!--endprint2-->
+</div>
+
+<div class="chd" style="margin-top:20px; border:1px solid #ccc; width:254mm; display:none; position:relative;">
+<!--startprint3-->
+<div class="print">
+    <h3 style="width:100%; text-align:center; padding:0px; margin:0px;">优享GO</h3><div style="position:absolute; right:70px; top:20px;">订单编号：<?php echo 100000+$info['id']; ?></div>
+	<table style="width:100%;">
+    	<tr height="30">
+        <td>收件人：{$info.username}</td><td>昵称：{$info.uid|get_nickname}</td><td>联系方式：{$info.tel}</td>
+        </tr>
+        <tr height="30">
+        	<td colspan="3">地址：{$info.address}</td>
+        </tr>
+    </table>
+    <table style="width:100%; border:1px dashed #000;">
+    	<tr>
+        	<td style="border-bottom:1px dashed #000;">序号</td><td style="border-bottom:1px dashed #000; border-left:1px dashed #000;">商品名称</td><td style="border-bottom:1px dashed #000; border-left:1px dashed #000;">积分</td><td style="border-bottom:1px dashed #000; border-left:1px dashed #000;">数量</td><td style="border-bottom:1px dashed #000; border-left:1px dashed #000;">积分</td>
+        </tr>
+        <volist name="info.list" id="list">
+        	<tr>
+            	<td style="border-bottom:1px dashed #000;">{$key+1}</td>
+                <td style="border-bottom:1px dashed #000; border-left:1px dashed #000;">{$list.title}</td>
+                <td style="border-bottom:1px dashed #000; border-left:1px dashed #000;">{$list.price}</td>
+                <td style="border-bottom:1px dashed #000; border-left:1px dashed #000;">x{$list.length}</td>
+                <td style="border-bottom:1px dashed #000; border-left:1px dashed #000;"><?php echo number_format($list['price']*$list['length'],2,'.',''); ?></td>
+            </tr>
+        </volist>
+        
+        <tr>
+        	<td style="border-bottom:1px dashed #000;">总计</td>
+            <td colspan="2" style="border-bottom:1px dashed #000; border-left:1px dashed #000;"></td>
+            <td style="border-bottom:1px dashed #000; border-left:1px dashed #000;">x{$length}</td>
+            <td style="border-bottom:1px dashed #000; border-left:1px dashed #000;">{$money}</td>
+        </tr>
+        <tr>
+        	<td colspan="5">促销折扣：运费：{$info.exp_price} &nbsp;&nbsp;&nbsp;积分：<?php echo $info['exp_price']+$money; ?></td>
+        </tr>
+    </table>
+    <table>
+    	<tr>
+        	<td>发件人：孙先生</td><td>联系方式：18200509997</td>
+        </tr>
+        <tr>
+        	<td colspan="2">地址：四川省成都市武侯区晋吉南路146号交大庭院13栋3单元1楼</td>
+        </tr>
+        <tr>
+        	<td colspan="2">买家留言：{$info.liuyan}</td>
+        </tr>
+        <tr>
+        	<td colspan="2">打印时间：<?php echo date("Y-m-d H:i:s"); ?></td>
+        </tr>
+    </table>
+    </div>
+    <!--endprint3-->
+</div>
+
+
+
+<script language="javascript">
+var oper = 2;
+$(function(){
+	$(".dz").click(function(){
+		oper = 2;
+		$(".putong").hide();
+		$(".dianzi").show();
+		$(".chd").hide();
+	});
+	$(".pt").click(function(){
+		oper = 1;
+		$(".putong").show();
+		$(".dianzi").hide();
+		$(".chd").hide();
+	});
+	$(".chdbtn").click(function(){
+		oper = 3;
+		$(".putong").hide();
+		$(".dianzi").hide();
+		$(".chd").show();
+	});
+	$(".print").click(function(){
+		preview(oper);
+	});
+});
+
+
+function preview(oper){
+  if (oper < 10){
+	  var bdhtml=window.document.body.innerHTML;//获取当前页的html代码
+	  var sprnstr="<!--startprint"+oper+"-->";//设置打印开始区域
+	  var eprnstr="<!--endprint"+oper+"-->";//设置打印结束区域
+	  var prnhtml=bdhtml.substring(bdhtml.indexOf(sprnstr)+18); //从开始代码向后取html
+	  var prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));//从结束代码向前取html
+	  window.document.body.innerHTML=prnhtml;
+	  window.print();
+	  window.document.body.innerHTML=bdhtml;
+  }
+}
+</script>
+</body>
+</html>

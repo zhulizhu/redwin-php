@@ -1,0 +1,15 @@
+<script>
+function onBridgeReady(){
+WeixinJSBridge.invoke('editAddress',{
+	"appId":"wx177bc3df9d18a485",
+	"scope":"jsapi_address",
+	"signType":"sha1",
+	"addrSign":"xxxx",
+	"timeStamp":"12345",
+	"nonceStr":"10000",	
+},function(res){
+	alert(res);
+});
+};
+</script>
+12321321

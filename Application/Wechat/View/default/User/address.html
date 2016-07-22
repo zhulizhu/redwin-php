@@ -1,0 +1,217 @@
+<extend name="Base/common"/>
+<block name="body">
+<style>
+.newaddress
+{ width:100%; position:fixed; left:0px; top:0px; height:auto; background:#fff; height:500px; overflow:hidden; display:none;}
+.newaddress .head
+{ width:100%; height:50px; position:relative;}
+.newaddress h2
+{ font-size:18px; margin:0px; padding:0px; margin-top:15px; text-indent:20px;}
+.newaddress .closebtn
+{ position:absolute; right:10px; top:10px; font-size:24px; width:30px; height:30px; display:block; border-radius:50%; text-align:center; line-height:30px; background:#f24b48; color:#fff;}
+.newaddress .con
+{ width:90%; height:auto; margin:0px auto;}
+.newaddress .con ul
+{ list-style:none; margin:10px 0px;}
+.newaddress .con ul li
+{ width:100%; height:40px; line-height:40px; margin:5px 0px; border-bottom:1px solid #ccc;}
+.newaddress .con ul li .left
+{ width:20%; height:100%; float:left; font-size:16px;}
+.newaddress .con ul li .right
+{ width:70%; height:100%; margin-left:4%; float:left;}
+.newaddress .con ul li .right input
+{ border:none; color:#999; width:100%; height:35px;}
+.newaddress .con ul li .right select
+{ width:100%; height:30px; line-height:30px;}
+.newaddress .con .btnadd
+{ width:200px; height:40px; line-height:40px; background:#f24b48; border-radius:8px; color:#fff; text-align:center; margin:10px auto; border:none; display:block;}
+.user-page .address
+{ width:90%; margin:0px auto;}
+.user-page .address ul
+{ list-style:none;}
+.user-page .address ul li
+{ width:100%; height:60px; overflow:hidden; border-bottom:1px solid #ccc; line-height:25px; position:relative;}
+.user-page .address ul li .title
+{ font-size:16px; color:#333; margin-top:5px;}
+.user-page .address ul li .del
+{ position:absolute; right:10px; top:5px;}
+.user-page .address ul li p
+{ color:#999;}
+</style>
+<div class="top-head">
+	<h2>收货地址</h2>
+    <div class="cart_edit"><a href="javascript:;" class="addaddress">添加地址</a></div>
+</div>
+<div class="user-page">
+	<div class="address">
+    	<ul>
+        	<volist name="list" id="list">
+        	<li>
+                <div class="title">
+                	<span>{$list.nickname}，</span><span>{$list.tel}</span>
+                </div>
+                <a href="javascript:;" class="del" title="{$list.id}">删除</a>
+                <p>{$list.province}&nbsp;{$list.city}&nbsp;{$list.area}&nbsp;{$list.address}</p>
+            </li>
+            </volist>
+        </ul>
+    </div>
+    
+</div>
+
+<div class="newaddress">
+<a href="javascript:;" class="closebtn">X</a>
+    <h2>新增地址</h2>
+    <div class="con">
+    	<ul>
+        	<li>
+            	<div class="left">收货人</div>
+                <div class="right"><input type="text" name="nickname" class="nickname" value="请输入姓名" /></div>
+            </li>
+            <li>
+            	<div class="left">手机号码</div>
+                <div class="right"><input type="text" name="tel" class="tel" value="请输入11位手机号" /></div>
+            </li>
+            <li>
+            	<div class="left">地区信息</div>
+                <div class="right">
+                	<select name="province" class="province">
+                    	<option>请选择地区信息</option>
+                        <volist name="sheng" id="list">
+                        <option value="{$list.id}">{$list.title}</option>
+                        </volist>
+                    </select>
+                </div>
+            </li>
+            <li style="display:none;" class="cityli">
+            	<div class="left">市</div>
+                <div class="right">
+                	<select name="city" class="city">
+                    	<option>请选择市级</option>
+                    </select>
+                </div>
+            </li>
+            <li style="display:none;" class="areali">
+            	<div class="left">区/县</div>
+                <div class="right">
+                	<select name="area" class="area">
+                    	<option>请选择区/县</option>
+                    </select>
+                </div>
+            </li>
+            <li>
+            	<div class="left">详细地址</div>
+                <div class="right"><input type="text" name="address" class="address" value="街道门牌信息" /></div>
+            </li>
+        </ul>
+        <input type="button" class="btnadd" value="保存收货地址" />
+    </div>
+
+</div>
+<script type="text/javascript">
+$(function(){
+	$(".addaddress").click(function(){
+		$(".newaddress").show();
+	});
+	$(".closebtn").click(function(){
+		$(".newaddress").hide();
+	});
+	$(".newaddress").height($(document).height());
+	$(".newaddress input").focus(function(){
+		$(this).val("");
+	});
+	$(".newaddress .btnadd").click(function(){
+		var nickname = $(".newaddress .nickname").val();
+		if(nickname=="" || nickname=="请输入姓名"){
+			alert("请输入姓名");
+			$(".newaddress .nickname").focus();
+			return false;
+		}
+		var tel = $(".newaddress .tel").val();
+		if(tel=="" || tel=="请输入11位手机号"){
+			alert("请输入11位手机号");
+			$(".newaddress .tel").focus();
+			return false;
+		}
+		var province = $(".newaddress .province").val();
+		if(province=="" || province=="请选择地区信息"){
+			alert("请选择地区信息");
+			return false;
+		}
+		var city = $(".newaddress .city").val();
+		if(city=="" || city=="请选择"){
+			alert("请选择");
+			return false;
+		}
+		var area = $(".newaddress .area").val();
+		if(area=="" || area=="请选择"){
+			alert("请选择");
+			return false;
+		}
+		var address = $(".newaddress .address").val();
+		if(address=="" || address=="街道门牌信息"){
+			alert("请输入街道门牌信息");
+			$(".newaddress .address").focus();
+			return false;
+		}
+		
+		var url = "{:U('Shopping/add_address')}";
+		$.post(url,
+		{
+			nickname:nickname,
+			tel:tel,
+			province:province,
+			city:city,
+			area:area,
+			address:address
+		},function(data){
+			if(data=="1"){
+				window.location.href = "__SELF__";
+			}else{
+				alert("保存失败，请重试或与管理员联系！");
+			}
+		});
+	});
+	
+	$(".del").click(function(){
+		var id = $(this).attr("title");
+		var url = "{:U('deladdress')}?id="+id;
+		if(confirm("确定要删除该地址？")){
+			window.location.href = url;
+		}
+	});
+	
+	
+	$(".newaddress .province").change(function(){
+		var pid = $(this).val();
+		if(pid!="请选择地区信息"){
+			var url = "{:U('Shopping/get_area')}?pid="+pid;
+			$.get(url,function(data){
+				$(".newaddress .city").html(data);
+			});
+			$(".newaddress .cityli").show();
+			$(".newaddress .areali").hide();
+		}else{
+			$(".newaddress .cityli").hide();
+			$(".newaddress .areali").hide();
+		}
+	});
+	$(".newaddress .city").change(function(){
+		var pid = $(this).val();
+		if(pid!="请选择"){
+			var url = "{:U('Shopping/get_area')}?pid="+pid;
+			$.get(url,function(data){
+				$(".newaddress .area").html(data);
+			});
+			$(".newaddress .areali").show();
+		}else{
+			$(".newaddress .areali").hide();
+		}
+	});
+	
+	
+	
+	
+});
+</script>
+</block>

@@ -1,0 +1,37 @@
+<extend name="Base/common" />
+<block name="title">99车盟汇 - 安全中心</block>
+<block name="Comm_top">
+<div id="register_top">
+    	<div class="top_regis">
+            <div class="lable"> 欢迎来到99车盟汇！ </div>
+            <div class="sc"><a onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)" title="收藏我们">收藏我们</a></div>
+            <div class="gz"><a  href="{:U('Article/detail?id=572')}" title="关注我们">关注我们</a></div>
+        </div>
+ </div>
+</block>
+<block name="body">
+ <div id="forget_pwd">
+    <div id="safe_head">
+    <h1>
+    <a class="logo_tb" href="{:U('Index/index')}" title="{:C('WEB_SITE_TITLE')}">99车盟汇</a>
+    <em class="logo_aq">安全中心</em>
+    </h1> 
+    </div>
+    <div id="content">
+    <div class="password_box">
+    	<div class="hd">
+        <h2 class="hd_title">找回密码</h2>
+        </div>
+        <div class="bd">
+        <div class="password">
+            <div class="result">
+            	<img src="__IMG__/img08.png" width="34" height="30"/>
+           		<p class="succeed">恭喜您，重置密码成功！</p>
+               	<p class="login"><a href="{:U('login?username='.$username)}" title="立即登录">&gt;&gt;立即登录</a></p>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+ </div>
+</block>

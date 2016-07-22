@@ -1,0 +1,149 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<div class="main-title">
+		<h2>自定义菜单管理</h2>
+	</div>
+	<!-- /表格列表 -->
+  	<form action="__SELF__" method="post" class="form-horizontal" >
+    	<if condition=" $pid neq 0 ">
+        	<div class="form-item">
+            	<label class="item-label">上级菜单<span class="check-tips">（上级菜单）</span></label>
+            	<div class="controls">
+                	<input type="text" class="text input-large" disabled="disabled" value="{$topname}" />
+            	</div>
+        	</div>
+        </if>
+      	<div class="form-item">
+            <label class="item-label">标题<span class="check-tips">（菜单标题）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="name" value="{$info.name}" />
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">点击类型<span class="check-tips">（点击后执行什么）</span></label>
+            <div class="controls">
+                <label class="inline radio"><input type="radio" name="type" value="0" checked="checked" >自定义消息</label>
+				<label class="inline radio"><input type="radio" name="type" value="4">打开商城</label>
+				<label class="inline radio"><input type="radio" name="type" value="5">打开网站</label>
+            </div>
+        </div>
+        <div class="box">
+        	<div class="form-item">
+            	<label class="item-label">消息内容</label>
+            	<div class="controls">
+                	<label class="textarea">
+                		<textarea name="content1">{$info.content}</textarea>
+                    	{:hook('adminArticleEdit', array('name'=>content1,'value'=>$info.content,'height'=>200,'editor_type'=>4))}
+                	</label>
+            	</div>
+        	</div>
+            <div class="form-item" style="display:none;">
+            	<label class="item-label">请选择素材</label>
+                <input type="hidden" name="content[]"  />
+            	<div class="controls">
+					<ul class="nav1 nav1-tabs" id="myTab">
+  						<li class="active"><a href="#home" data-toggle="tab">图片</a></li>
+  						<li><a href="#profile" data-toggle="tab">语音</a></li>
+  						<li><a href="#messages" data-toggle="tab">视频</a></li>
+  						<li><a href="#settings" data-toggle="tab">图文消息</a></li>
+					</ul>
+					<div class="tab-content">
+  						<div class="tab-pane active" id="home">
+                        	<!-- 数据列表 -->
+							<div class="data-table">
+        						<div class="data-table table-striped">
+									<table class="">
+    									<thead>
+        									<tr>
+											<th class="row-selected row-selected"></th>
+											<th class="">编号</th>
+											<th class="">标识</th>
+											<th class="">名称</th>
+											<th class="">创建时间</th>
+											<th class="">状态</th>
+											<th class="">操作</th>
+											</tr>
+    									</thead>
+    									<tbody>
+											<tr>
+            									<td><input class="ids" type="radio" name="ids[]" value="{$vo.id}" /></td>
+												<td>{$vo.id} </td>
+												<td>{$vo.name}</td>
+												<td><a data-id="{$vo.id}" href="{:U('Linkage/index?pid='.$vo['id'])}">{$vo.title}</a></td>
+												<td><span>{$vo.create_time|time_format}</span></td>
+												<td>{$vo.status_text}</td>
+											</tr>
+										</tbody>
+    								</table>
+        						</div>
+    						</div>
+                            <!--结束数据列表-->
+                        </div>
+  						<div class="tab-pane" id="profile">
+                        	语音
+                        </div>
+  						<div class="tab-pane" id="messages">
+                       		视频
+                       	</div>
+  						<div class="tab-pane" id="settings">
+                        	图文消息
+                        </div>
+					</div>
+
+					<script>
+  						$(function () {
+    						$('#myTab a:first').tab('show')
+  						})
+					</script>
+            	</div>
+        	</div>
+            <div class="form-item" style="display:none;">
+            	<label class="item-label">请输入电话号码</label>
+            	<div class="controls">
+                	<input type="text" class="text input-large" name="content[]" value="{$info.name}" />
+            	</div>
+        	</div>
+            <div class="form-item" style="display:none;">
+            	<label class="item-label">请输入地图坐标</label>
+            	<div class="controls">
+                	<input type="text" class="text input-large" name="content[]" value="{$info.name}" />
+            	</div>
+        	</div>
+            <div class="form-item" style="display:none;">
+            	<label class="item-label">网站链接</label>
+            	<div class="controls">
+                	<input type="text" class="text input-large" name="content[]" value="{$info.name}" />
+            	</div>
+        	</div>
+			<div class="form-item" style="display:none;">
+				<label class="item-label">网站链接</label>
+				<div class="controls">
+					<input type="text" class="text input-large" name="content[]" value="{$info.name}" />
+				</div>
+			</div>
+        </div>
+      	<input type="hidden" name="pid" value="{$pid}"  />
+        <div class="form-item">
+            <input type="hidden" name="id" value="{$info.id|default=''}">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/bootstrap/css/modal.css">
+<script src="__PUBLIC__/Admin/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+	
+	$(function(){
+		$(".radio input").click(function(){
+				$(".box .form-item").hide();
+				$(".box .form-item").eq($(this).val()).show();
+			});
+	})
+        //导航高亮
+        highlight_subnav('{:U('Wechat/menu')}');
+    </script>
+</block>

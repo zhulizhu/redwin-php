@@ -1,0 +1,65 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <script src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <title>微信安全支付</title>
+
+	<script type="text/javascript">
+	window.onload = callpay();
+		//调用微信JS api 支付
+		function jsApiCall()
+		{
+			WeixinJSBridge.invoke(
+				'getBrandWCPayRequest',
+				{$jsApiParameters},
+				function(res){
+					WeixinJSBridge.log(res.err_msg);
+					if(res.err_msg=="get_brand_wcpay_request:ok"){
+						$(".Cancel").hide();
+						$(".ok").show();
+					}
+					if(res.err_msg=="get_brand_wcpay_request:cancel"){
+						$(".Cancel").show();
+					}
+					if(res.err_msg=="get_brand_wcpay_request:fail"){
+						$(".fail").show();
+					}
+					//alert(res.err_code+res.err_desc+res.err_msg);
+				}
+			);
+		}
+		function callpay()
+		{
+			if (typeof WeixinJSBridge == "undefined"){
+			    if( document.addEventListener ){
+			        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+			    }else if (document.attachEvent){
+			        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+			        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+			    }
+			}else{
+			    jsApiCall();
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="Cancel" style="padding:20px; display:none;">
+    	<p align="center">亲，您取消了支付 ): </p>
+        <p align="center"><a href="javascript:;" onClick="callpay();">重新支付</a></p>
+        <p align="center"><a href="{:U('User/index')}">返回个人中心</a></p>
+    </div>
+    <div class="fail" style="padding:20px; display:none;">
+    	<p align="center">亲，订单支付失败了 ): </p>
+        <p align="center"><a href="{:U('User/index')}">返回个人中心</a></p>
+        <p align="center">或者在主界面发送消息与我们联系</p>
+    </div>
+    <div class="Ok" style="padding:20px; display:none;">
+    	<p align="center">亲，订单支付成功了  (: </p>
+         <p align="center">充值成功！请到个人中心查看！</p>
+        <p align="center"><a href="{:U('User/index')}">返回个人中心</a></p>
+       
+    </div>
+</body>
+</html>

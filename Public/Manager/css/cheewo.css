@@ -1,0 +1,65 @@
+
+/* 顶部用户栏 */
+.user-bar {
+    margin-top: 12px;
+	display:block;
+}
+.user-bar .manager {
+	cursor:none;
+}
+
+/*系统统计*/
+.show-num-mod
+{ width:150px; padding:30px 0px; border:6px solid #35AFBA; border-radius:50%; margin:10px auto; text-align:center;}
+.show-num-mod.a
+{ border:6px solid #3498db;}
+.show-num-mod.b
+{ border:6px solid #9b59b6;}
+.show-num-mod.c
+{ border:6px solid #34495e;}
+.show-num-mod.d
+{ border:6px solid #f1c40f;}
+.show-num-mod.e
+{ border:6px solid #e67e22;}
+.show-num-mod.f
+{ border:6px solid #e74c3c;}
+
+
+/*站点信息*/
+.plan {
+  color: #fff;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+.plan-header {
+  position: relative;
+  background: #1abc9c;
+  background-size: 16px 16px;
+  border-radius: 6px 6px 0 0;
+  color: #34495e;
+  padding: 10px;
+}
+.plan ul {
+  background-color: #2c3e50;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  border-radius: 0 0 6px 6px;
+}
+.plan li {
+  background-size: 20px 20px;
+  font-size: 14px;
+  line-height: 1.214;
+  margin-top: 2px;
+  padding: 18px 42px 21px 25px;
+  position: relative;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+.plan li:first-child {
+  margin-top: 0;
+}
+.plan li:last-child {
+  border-radius: 0 0 6px 6px;
+  padding-bottom: 21px;
+}

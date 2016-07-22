@@ -1,0 +1,286 @@
+<extend name="Base/common"/>
+<block name="body">
+<div id="brand">
+	<div class="ad"><img src="{$purcate.ads|thumb=1218,383}" width="1218" height="383" /></div>
+    <div class="nav">
+    	<a href="#" title="团购首页">团购首页</a>
+        <a href="#intro" title="团购介绍">团购介绍</a>
+        <a href="#light" title="团购亮点">团购亮点</a>
+        <a href="#type" title="团购车型">团购车型</a>
+        <a href="#apply" title="团购报名">团购报名</a>
+        <a href="#review" title="团购回顾">团购回顾</a>
+    </div>
+    <div id="intro">
+    	<div class="head"><h2>团购介绍</h2></div>
+        <div class="content">
+        <div class="allp">
+        	<input id="sertime" type="hidden" value="{$sertime|date='Y/m/d H:i:s',###}" />
+        	<input type="hidden" id="purcateId" value="{$purcate.id}" />
+        	<p class="p1">团购主题：{$purcate.theme}
+            <span class="time">剩余时间：<span id="t_d"></span>天<span id="t_h"></span>小时<span id="t_m"></span>分<span id="t_s"></span>秒
+            </span>
+            </p>
+            <p>团购时间：<span id="etime"></span><input class="etime" type="hidden" value="{$purcate.time}" /></p>
+            <p>团购地点：{$purcate.address}</p>
+            <p class="type">团购车型：{$purcate.cars}</p>
+            <p class="p5">团购说明：{$purcate.explain}</p>
+            <script type="text/javascript">
+			$(function(){
+				var ntime = $('#sertime').val();
+				var NowTime = new Date(ntime);
+				var getNowtime = NowTime.getTime();
+				dateFormat();
+				setInterval(GetRTime,1000);
+			//日期格式化
+			function dateFormat(){
+				var time=$(".etime").val();
+				var etime=time.split("/");
+				$("#etime").html(etime[0]+"年"+etime[1]+"月"+etime[2]+"日");
+			}
+			//修改日期
+			function fixDate(id,time){
+				
+				 $.ajax({
+					type:"GET",
+					url:"{:U('setTime')}?id="+id+"&time="+time,
+					async:false,
+					success:function(){
+						$(".etime").val(time);
+						dateFormat();
+					},
+					error:function(){
+						
+					}
+					}); 
+			}
+			//倒计时
+			function GetRTime(){
+			   var etime = $(".etime").val();
+			   var EndTime= new Date(etime+' 00:00:00');
+			   var t =EndTime.getTime() - getNowtime;
+			   var d=Math.floor(t/1000/60/60/24);
+			   var h=Math.floor(t/1000/60/60%24);
+			   var m=Math.floor(t/1000/60%60);
+			   var s=Math.floor(t/1000%60);
+			   $("#t_d").html(d);
+			   $("#t_h").html(h);
+			   $("#t_m").html(m);
+			   $("#t_s").html(s);
+			   getNowtime+=1000;
+			   if(t==0||t<0){
+				   var date = new Date(etime);
+				   date.setDate(date.getDate()+30);
+				   var newdate = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate();
+				   var id = $("#purcateId").val();
+				   fixDate(id,newdate);
+			   }
+			   
+		   }
+		
+					
+				});
+			
+			</script>
+            </div>
+        </div>
+    </div>
+    <div id="light">
+    	<div class="head"><h2>团购亮点</h2></div>
+        <div class="content">
+       {$purcate.light}
+        </div>
+    </div>
+    <div id="type">
+    	<div class="head"><h2>团购车型</h2></div>
+        <div class="content">
+        <volist name="list" id="list" offset="0" length="6">
+        	<div class="type">
+            	<img src="{$list.cover_id|thumb=386,196}" width="386" height="196" />
+                <div class="top">{$list.title}<span class="total">报名人数：{$list.number}人</span></div>
+                <div class="left">
+                	<p>价格：<label>{$list.price}</label></p>
+                    <p>团购价格：<em>团购会公布价格</em></p>
+                </div>
+                <div class="right"><a href="#apply" title="立即报名">立即报名</a></div>
+            </div>
+        </volist>
+        </div>
+    </div>
+    <div id="apply">
+    	<div class="head"><h2>团购报名</h2></div>
+        <div class="left">
+        	 <form name="gou" method="post" id="tuangou"  >
+            <table cellpadding="0" cellspacing="0" border="0">
+            	<tr class="brand">
+                	<td><em>&nbsp;*&nbsp;&nbsp;</em>团购品牌</td>
+                    <td class="sel_wrap">
+                    <label>请选择品牌</label>
+                    <select class="select" name="brand" id="brands">
+                    <option value="0">请选择品牌</option>
+                   <volist name="purcateAll" id="list">
+                    <option value="{$list.id}">{$list.title}</option>
+                   </volist>
+                    </select>
+                    <script type="text/javascript">
+						$(function(){
+						$("#brands").change(function(){
+						$.post("{:U('Brand/linktwo')}",{id:$(this).val()},function(data){
+							$("#cars").find("option").remove();
+							$("#cars").append('<option value="0">请选择车系</option>');
+						
+							if(data==""){
+								
+							}else{
+								var dataObj=eval(data);
+								for(var i=0;i<dataObj.length;i++){
+									$("#cars").append("<option value='"+dataObj[i].id+"'>"+dataObj[i].title+"</option>");
+								}
+							}
+							});
+						    });
+						})
+					</script>
+                    </td>
+                    <td class="sel_wrap">
+                    <label>请选择车系</label>
+                    <select class="select" name="cars" id="cars">
+                    <option value="0">请选择车系</option>
+                    </select>
+                     <script type="text/javascript">
+						$(function(){
+						$("#cars").change(function(){
+						$.post("{:U('Brand/linkThree')}",{id:$(this).val()},function(data){
+							$("#deploy").find("option").remove();
+							$("#deploy").append('<option value="0">请选择配置</option>');
+							if(data==""){
+		
+							}else{
+								var dataObj=eval(data);
+								for(var i=0;i<dataObj.length;i++){
+									$("#deploy").append("<option value='"+dataObj[i].id+"'>"+dataObj[i].title+"</option>");
+								}
+							}
+							});
+						    });
+						})
+					</script>
+                    </td>
+                    <td class="sel_wrap">
+                    <label>请选择配置</label>
+                    <select class="select" name="deploy" id="deploy">
+                    <option value="0">请选择配置</option>
+                    </select></td>
+                </tr>
+                <tr class="area">
+					<td><em>&nbsp;*&nbsp;&nbsp;</em>您的地点</td>
+                    <td class="sel_wrap">
+                    <label>请选择市</label>
+                    <select class="select" name="city">
+                    <option value="0">请选择市</option>
+                    <option value="成都">成都</option>
+                    </select></td>
+                    <td class="sel_wrap">
+                    <label>请选择区</label>
+                    <select class="select" name="area">
+                    <option value="0">请选择区</option>
+                   <volist name="area" id="list">
+                   <option value="{$list.title}">{$list.title}</option>
+                   </volist>
+                    </select>
+                    </td>
+                </tr>
+                <tr class="uname">
+                	<td><em>&nbsp;*&nbsp;&nbsp;</em>您的姓名</td>
+                    <td><input type="text" class="username" name="username"  size="12" /></td>
+                    <td class="s"><input type="radio" name="sex" checked value="0" >男</td>
+                    <td class="s"><input type="radio" name="sex"  value="1" >女</td>
+                </tr>
+                <tr class="phone">
+                	<td><em>&nbsp;*&nbsp;&nbsp;</em>手机号码</td>
+                    <td><input type="text" name="mobile" id="mobile"  size="20"/></td>
+                </tr>
+                 <tr class="umort">
+                	<td><em>&nbsp;*&nbsp;&nbsp;</em>是否按揭</td>
+                    <td class="m"><input type="radio" name="mortgage" checked value="1" >是</td>
+                    <td class="m"><input type="radio" name="mortgage"  value="0" >否</td>
+                </tr>
+                <tr class="tip">
+                	<td><em>&nbsp;*&nbsp;&nbsp;</em>备注需求</td>
+                    <td><textarea name="tip"></textarea><br/><span>注：成功报名后，我们的客服人员会及时与您联系，请耐心等待。</span></td>
+                </tr>
+                <tr class="sub">
+                	<td></td>
+                	<td><input type="button" id="subm"  value="确认报名" /></td>
+                </tr>
+                  <script>
+				  //下拉菜单
+					$(".sel_wrap").on("change", function() {
+					var o;
+					var opt = $(this).find('option');
+					opt.each(function(i) {
+					if (opt[i].selected == true) {
+					o = opt[i].innerHTML;
+					}
+					})
+					$(this).find('label').html(o);
+					var next=$(this).next().find("option[value='0']").text();
+					$(this).next().find('label').html(next);
+					}).trigger('change');
+				  //报名
+					function apply(data,form){
+					$.ajax({
+					type:"POST",
+					data:data,
+					url:"{:U('apply/index')}",
+					success:function(msg){
+						alert(msg);
+						clearForm(form);
+					},
+					error:function(){
+						alert("报名失败！请重新提交！");
+					}
+					});
+					}
+					$("#subm").click(function(){
+					var form = $("#tuangou");
+					var data="";
+					if(CkApply(form[0])){
+						data = form.serialize();
+						apply(data,form[0]);
+						}
+					});
+					</script>
+            </table>
+          </form>
+        </div>
+        <div class="right">
+        	<div class="number">已有{$applyNum}人报名</div>
+            <table cellpadding="0" cellspacing="0" border="0">
+            <tr class="tr1">
+            	<td width="20%">姓名</td>
+                <td width="60%">车款型号</td>
+                <td width="20%">报名时间</td>
+            </tr>
+            <volist name="apply" id="list">
+            <tr>
+            	<td>{$list.username}</td>
+                <td class="brand">{:get_cars($list['cars'])}</td>
+                <td>{$list.create_time|date='Y-m-d',###}</td>
+            </tr>
+           </volist>
+            </table>
+        </div>
+    </div>
+    <if condition="$review eq null">
+    <div style=" width:100%; height:40px"></div>
+    <else/>
+    <div id="review">
+    <div class="head"><h2>团购回顾</h2></div>
+    <volist name="review" id="review">
+    <div class="re{$key+1}"><img src="__ROOT__{$review.path}"/></div>  
+    </volist>
+    </div>
+    </if>
+</div>
+
+</block>

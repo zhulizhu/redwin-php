@@ -1,0 +1,264 @@
+<extend name="Base/common"/>
+
+
+
+
+<block name="body">
+<link href="__PUBLIC__/Wechat/css/animate.css" type="text/css" rel="stylesheet" />
+
+<link rel="stylesheet" href="__PUBLIC__/Wechat/mslide/css/idangerous.swiper.css">
+<link rel="stylesheet" href="__PUBLIC__/Wechat/mslide/css/swiper-demos.css?v=1.8">
+
+
+<div class="top-head">
+	<div class="back"><a href="{:U('Product/index')}">返回</a></div>
+    <div class="cart_edit"><a href="{:U('Index/index')}">首页</a></div>
+	<h2>产品详情</h2>
+</div>
+
+
+
+<div class="pro_detail">
+
+    <div class="home-device"><a class="arrow-left" href="#"></a> <a class="arrow-right" href="#"></a>
+        <div class="swiper-main">
+          <div class="sm-free"></div>
+          <div class="swiper-container swiper1">
+            <div class="swiper-wrapper" style="overflow:hidden;">
+            	<volist name="picture" id="list">
+              <div class="swiper-slide"> <img src="{$list.photo}" style="width:100%;"> </div>
+              </volist>
+            </div>
+          </div>
+        </div>
+    <div class="pagination pagination1" style="margin:0px; padding:0px;"></div>
+      </div>
+    
+    <div class="info">
+    	<if condition="$killinfo eq true">
+
+			<!--限时秒杀-->
+			<div class="left">
+				<div class="title">{$info.title}</div>
+				<div class="price">
+					<div class="xianjia">限时秒杀:￥<span>{$info.id|auto_price}</span></div>
+					<div class="yuanjia">原价：<span>￥{$info.price}</span>销量：{$info.xiaoliang}&nbsp;&nbsp;库存：{$info.kucun}</div>
+				</div>
+			</div>
+			<div class="right">
+				<div class="line">&nbsp;</div>
+				<a href="javascript:;" class="likebtn" title="{$info.id}"><span class="<eq name="like" value="收藏">icon-heart-empty<else/>icon-heart</eq>"></span><br /><i style="font-style:normal;">{$like}</i></a>
+			</div>
+		<else/>
+			<div class="left">
+				<div class="title">{$info.title}</div>
+				<div class="price">
+					<div class="xianjia">￥<span>{:auto_price($info['id'])}</span></div>
+					<div class="yuanjia">原价：<span>￥{$info.price}</span>销量：{$info.xiaoliang}&nbsp;&nbsp;库存：{$info.kucun}</div>
+				</div>
+			</div>
+			<div class="right">
+				<div class="line">&nbsp;</div>
+				<a href="javascript:;" class="likebtn" title="{$info.id}"><span class="<eq name="like" value="收藏">icon-heart-empty<else/>icon-heart</eq>"></span><br /><i style="font-style:normal;">{$like}</i></a>
+			</div>
+		</if>
+
+        
+    </div>
+    
+    <div class="pro_content">
+    	<div class="head">
+        	<ul>
+            	<li class="focus xq"><a href="javascript:;">商品详情</a></li>
+                <li class="pj"><a href="javascript:;">评论（{:pj_count($info['id'])}）</a></li>
+            </ul>
+            <div class="line hengline">&nbsp;</div>
+        </div>
+        <div class="content">
+        	{$info.content}
+        </div>
+        <div class="content" style="display:none;">
+        	<ul class="pjlist">
+            	<volist name="pjlist" id="list">
+            	<li>
+                	<div class="img"><img src="{$list.uid|get_face}" /></div><div class="username">{$list.uid|get_nickname}</div><div class="time">{$list.create_time|time_format}</div>
+                    <div class="con">{$list.content}</div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<style>
+.pjlist
+{ list-style:none; width:96%; height:auto; overflow:hidden; margin:0px auto;}
+.pjlist li
+{ height:auto; border-bottom:1px dashed #ccc; padding:5px 0px;}
+.pjlist li .img
+{ width:30px; height:30px; overflow:hidden; float:left;}
+.pjlist li .img img
+{ max-width:100%; border-radius:50%;}
+.pjlist li .username
+{ float:left; line-height:30px; margin-left:5px;}
+.pjlist li .time
+{ float:right; line-height:30px;}
+.pjlist li .con
+{ clear:both; padding:5px 0px; margin-top:15px;}
+.content p
+{ line-height:normal; margin:0px; padding:0px;}
+</style>
+<script type="text/javascript">
+$(function(){
+	
+	$(".pro_content .head ul .xq").click(function(){
+		$(".pro_content .head ul .pj").removeClass("focus");
+		$(this).addClass("focus")
+		$(".hengline").animate({"left":"0px"});
+		$(".content").eq(0).show();
+		$(".content").eq(1).hide();
+	});
+	
+	$(".pro_content .head ul .pj").click(function(){
+		$(".pro_content .head ul .xq").removeClass("focus");
+		$(this).addClass("focus")
+		$(".hengline").animate({"left":"50%"});
+		$(".content").eq(1).show();
+		$(".content").eq(0).hide();
+	});
+	
+	$(".likebtn").click(function(){
+		var id = $(this).attr("title");
+		var url = "{:U('Like/auto')}?id="+id;
+		$.get(url,function(data){
+			if(data=="添加收藏"){
+				setlike();
+			}else if(data=="取消收藏"){
+				clike();
+			}else{
+				window.location.href = "{:U('User/login')}";
+			}
+		});
+	});
+	function setlike(){
+		$(".likebtn").find("span").removeClass("icon-heart-empty");
+		$(".likebtn").find("span").addClass("icon-heart");
+		$(".likebtn").find("i").html("已收藏");
+	}
+	function clike(){
+		$(".likebtn").find("span").addClass("icon-heart-empty");
+		$(".likebtn").find("span").removeClass("icon-heart");
+		$(".likebtn").find("i").html("收藏");
+	}
+});
+</script>
+</block>
+
+<block name="footer">
+<div style=" clear:both; margin-bottom:72px;"></div>
+<div class="buy_footer">
+	<if condition="$killinfo eq true">
+		<style>
+			.buy_footer .time{
+				margin-left: 20px;
+				margin-top: 10px;
+			}
+			.buy_footer .time div{
+				float: left;
+			}
+			.buy_footer .time .dian{
+				width: 4px;
+				height: 18px;
+				background: url(__IMG__/msdian.png) no-repeat;
+				margin: 5px 10px;
+			}
+			.buy_footer .time .ms{
+				width: 26px;
+				height: 29px;
+				background: url("__IMG__/mstime.png") no-repeat;
+				color: #fff;
+				line-height: 29px;
+				text-align: center;
+			}
+		</style>
+		<div class="time">
+			<div class="hour ms">00</div>
+			<div class="dian"></div>
+			<div class="fen ms">00</div>
+			<div class="dian"></div>
+			<div class="miao ms">00</div>
+		</div>
+		<script>
+			$(function(){
+				setInterval(function(){
+					$.get("{:U('Index/server_time?end_time='.$killinfo['end_time'])}",function(time){
+						$(".buy_footer .hour").html(time[0]);
+						$(".buy_footer .fen").html(time[1]);
+						$(".buy_footer .miao").html(time[2]);
+					});
+				},1000);
+			});
+		</script>
+		<div class="buy_now"><a href="javascript:;" value="{$info.id}">立即秒杀</a></div>
+	<else/>
+		<a class="cart icon-shopping-cart shopcar animated " href="{:U('shopping/cart')}"><span>{$cartcount}</span></a>
+		<div class="add_cart"><a href="javascript:;" value="{$info.id}">加入购物车</a></div>
+		<div class="buy_now"><a href="javascript:;" value="{$info.id}">立即购买</a></div>
+	</if>
+
+</div>
+
+<script type="text/javascript">
+$(function(){
+	
+	$(".add_cart a").click(function(){
+		var pro_id = $(this).attr("value");
+		var url = "{:U('Cart/update')}?pro_id="+pro_id;
+		$.get(url,function(data){
+			if(data>0){
+				$(".cart span").html(data);
+				$(".buy_footer .shopcar").addClass("flip");
+				window.setTimeout(function(){
+					$(".buy_footer .shopcar").removeClass("flip");
+					$(".buy_footer .shopcar").addClass("tada");
+				},1200);
+			}else if(data=="-1"){
+				var thisurl = "{:U('detail?id='.$info['id'])}";
+				window.location.href = "{:U('User/jump_login_from_other')}?fromurl="+thisurl;
+			}else{
+				alert(data);
+			}
+		});
+	});
+	$(".buy_now a").click(function(){
+		var pro_id = $(this).attr("value");
+		var url = "{:U('Cart/buynow_cart')}?pro_id="+pro_id;
+		$.get(url,function(data){
+			if(data>0){
+				var url1 = "{:U('Shopping/get_thisproid')}?proid="+pro_id;
+				$.get(url1,function(info){
+					if(info>0){
+						var url2 = "{:U('Shopping/cart?tpl=1')}?status="+info+"&save_type=1";
+						window.location.href = url2;
+					}
+				});
+			}else if(data=="-1"){
+				var thisurl = "{:U('detail?id='.$info['id'])}";
+				window.location.href = "{:U('User/jump_login_from_other')}?fromurl="+thisurl;
+			}else{
+				alert(data);
+			}
+		});
+	});
+});
+</script>
+
+<!-- Swiper -->
+<script  src="__PUBLIC__/Wechat/mslide/js/idangerous.swiper-1.9.1.min.js"></script>
+<!-- Swiper Scrollbar plugin -->
+<script  src="__PUBLIC__/Wechat/mslide/js/idangerous.swiper.scrollbar-1.2.js"></script>
+<!-- Demos code -->
+<script  src="__PUBLIC__/Wechat/mslide/js/swiper-demos.js"></script>
+
+
+</block>

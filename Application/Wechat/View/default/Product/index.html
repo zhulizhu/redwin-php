@@ -1,0 +1,27 @@
+<extend name="Base/common"/>
+
+<block name="body">
+
+<div class="top-head">
+	<h2>产品分类</h2>
+</div>
+
+<div class="fl_index">
+	
+    <volist name="tree" id="list">
+	<div class="fl_lists">
+        <div class="head">{$list.title}</div>
+        <div class="list">
+        	<ul>
+            	<volist name="list['_child']" id="ejlist">
+            	<li>
+                    <div class="title"><a href="{:U('Product/lists?category='.$ejlist['name'])}">{$ejlist.title}</a></div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+    </volist>
+</div>
+
+</block>

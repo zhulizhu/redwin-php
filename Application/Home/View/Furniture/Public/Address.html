@@ -1,0 +1,9 @@
+<div id="Address_top">
+<if condition="$NowAddress[0]['title'] ==''">
+	<span>首页</span> &gt; 搜索 &gt; {$text}
+<else/>
+    <span>{$NowAddress.0.title}</span>
+    > {$NowAddress.1.title}
+    <neq name="info.title" value="">> {$info.title}</neq>
+</if>
+</div>

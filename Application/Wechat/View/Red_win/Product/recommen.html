@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <script src="../../js/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <script src="../../js/bootstrap.min.js"></script>
+    <title>每日推荐</title>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            color: #393939;
+            font-family: Consolas, '微软雅黑';
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="recommen">
+    <div class="top_tu">
+        <img src="../../images/ghlsghds_02.png" alt="">
+        <!--<div class="heart">
+            <img src="img/jsjfgje_05.png" alt="" id="loving">
+            <span id="likeCount">99</span>
+        </div>-->
+        <div class="heart " id="like1" rel="like"></div>
+        <div class="likeCount" id="likeCount1">14</div>
+
+    </div>
+
+    <div class="to_pay">
+        <h5>红酒我红酒就会更好的规定</h5>
+
+        <p>If you would go up high, then use your own legs! </p>
+
+        <p>红酒的时间</p>
+
+        <div>
+            <span>价格<a href="">$99</a></span> <span>去购买</span>
+        </div>
+        <ul class="nav navbar-nav" style="margin-top:15px;">
+            <li class="col-xs-4">净含量</li>
+            <li class="col-xs-4">葡萄种类</li>
+            <li class="col-xs-4">产地</li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li class="col-xs-4"><a href="">750ml</a></li>
+            <li class="col-xs-4"><a href="">设龙珠</a></li>
+            <li class="col-xs-4"><a href="">中国</a></li>
+        </ul>
+        <ul class="nav navbar-nav" style="margin-top:20px;">
+            <li class="col-xs-4">保质期</li>
+            <li class="col-xs-4">酒精度</li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li class="col-xs-4"><a href="">750ml</a></li>
+            <li class="col-xs-4"><a href="">设龙珠</a></li>
+
+        </ul>
+        <p style="
+		padding-left:10px;">特点:<a href="" style="color:#80451f;">享受更多了时间过得更多鼓励大家享受更多了时间过得更多鼓励大家</a></p>
+    </div>
+    <div class="stor">品牌故事</div>
+    <img src="../../images/yeshsgdgg_02.png" alt="" style='max-width: 100%;height: auto;'>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        /*$(".top_tu>div").click(function(){
+         $("#loving").attr('src',$("#loving").attr('src')=='img/jsjfgje_05.png'?'img/jfgjgfjs_05.png':'img/jsjfgje_05.png');
+
+         });*/
+        $('body').on("click", '.heart', function () {
+            console.log("ghsdgjsd");
+            var A = $(this).attr("id");
+            var B = A.split("like");
+            var messageID = B[1];
+            var C = parseInt($("#likeCount" + messageID).html());
+            $(this).css("background-position", "")
+            var D = $(this).attr("rel");
+
+            if (D === 'like') {
+                $("#likeCount" + messageID).html(C + 1);
+                $(this).addClass("heartAnimation").attr("rel", "unlike");
+            }
+            else {
+                $("#likeCount" + messageID).html(C - 1);
+                $(this).removeClass("heartAnimation").attr("rel", "like");
+                $(this).css("background-position", "left");
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

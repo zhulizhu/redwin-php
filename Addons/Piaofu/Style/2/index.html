@@ -1,0 +1,29 @@
+<link href="__ROOT__/addons/piaofu/style/2/css/zzsc.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__ROOT__/addons/piaofu/style/2/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="__ROOT__/addons/piaofu/style/2/js/jquery.hhService.js"></script>
+<script type="text/javascript">$(function(){$("#hhService").fix({float:"right",minStatue:false,skin:'green',durationTime:0})});</script>
+<!-- 代码 开始 -->
+<div class="scrollsidebar" id="hhService">
+	<div class="side_content">
+		<div class="side_list">
+			<div class="side_title">
+				<a title="隐藏" class="close_btn"><span>关闭</span></a></div>
+			<div class="side_center">
+				<div class="qqserver">
+                	<volist name="addons_qq" id="qq">
+                    <?php	$tqq = explode(":",$qq); ?>
+					<p><a title="点击这里给我发消息" href="http://wpa.qq.com/msgrd?v=3&uin={$tqq[1]}&site=qq&menu=yes" target="_blank">
+					<img src="http://wpa.qq.com/pa?p=1:{$tqq[1]}:51">{$tqq[0]}</a></p>
+                    </volist>
+				</div>
+				<strong>TEL：{$addons_fourzz.0}</strong><div class="msgserver">
+					<p>{:C('WEB_SITE_TITLE')}</p>
+				</div>
+			</div>
+			<div class="side_bottom">
+			</div>
+		</div>
+	</div>
+	<div class="show_btn"><span>在线客服</span></div>
+</div>
+<!-- 代码 结束 -->

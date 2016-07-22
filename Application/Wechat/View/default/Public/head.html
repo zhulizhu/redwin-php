@@ -1,0 +1,95 @@
+<title><if condition="$info.title !=''">{$info.title}-</if>{:C('WEB_SITE_TITLE')}</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+
+
+<link href="__PUBLIC__/Wechat/FontAwesome/css/font-awesome.css" rel="stylesheet" />
+<link href="__PUBLIC__/Wechat/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="__CSS__/style.css" rel="stylesheet" />
+
+<block name="style"></block>
+<script src="__JS__/jquery.js" type="text/javascript"></script>
+<script src="__JS__/jquery.pjax.js" type="text/javascript"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+<script type="text/javascript">
+wx.config({
+    debug: false,
+    appId: '{$signPackage.appId}',
+    timestamp: {$signPackage.timestamp},
+    nonceStr: '{$signPackage.nonceStr}',
+    signature: '{$signPackage.signature}',
+	jsApiList: [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+	]
+});
+wx.ready(function () {
+	wx.onMenuShareAppMessage({
+		title: '{$sharetitle}{:C(WEB_SITE_TITLE)}', // 分享标题
+		desc: '{:C(WEB_SITE_DESCRIPTION)}', // 分享描述
+		link: '{$shareurl}?openid={$openid}', // 分享链接
+		imgUrl: '<empty name='shareimg'>http://{:C(WEB_SITE_DOMAIN)}/public/wechat/images/getheadimg.jpg<else/>{$shareimg}</empty>', // 分享图标
+		type: '', // 分享类型,music、video或link，不填默认为link
+		dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+		success: function () { 
+			
+		},
+		cancel: function () { 
+			// 用户取消分享后执行的回调函数
+		}
+	});
+	wx.onMenuShareTimeline({
+		title: '{$sharetitle}{:C(WEB_SITE_TITLE)}', // 分享标题
+		link: '{$shareurl}?openid={$openid}', // 分享链接
+		imgUrl: '<empty name='shareimg'>http://{:C(WEB_SITE_DOMAIN)}/public/wechat/images/getheadimg.jpg<else/>{$shareimg}</empty>', // 分享图标
+		success: function () { 
+			
+		},
+		cancel: function () { 
+		}
+	});
+	wx.onMenuShareQQ({
+		title: '{$sharetitle}{:C(WEB_SITE_TITLE)}', // 分享标题
+		desc: '{:C(WEB_SITE_DESCRIPTION)}', // 分享描述
+		link: '{$shareurl}?openid={$openid}', // 分享链接
+		imgUrl: '<empty name='shareimg'>http://{:C(WEB_SITE_DOMAIN)}/public/wechat/images/getheadimg.jpg<else/>{$shareimg}</empty>', // 分享图标
+		success: function () { 
+		   // 用户确认分享后执行的回调函数
+		},
+		cancel: function () { 
+		   // 用户取消分享后执行的回调函数
+		}
+	});
+	wx.onMenuShareWeibo({
+		title: '{$sharetitle}{:C(WEB_SITE_TITLE)}', // 分享标题
+		desc: '{:C(WEB_SITE_DESCRIPTION)}', // 分享描述
+		link: '{$shareurl}?openid={$openid}', // 分享链接
+		imgUrl: '<empty name='shareimg'>http://{:C(WEB_SITE_DOMAIN)}/public/wechat/images/getheadimg.jpg<else/>{$shareimg}</empty>', // 分享图标
+		success: function () { 
+		   // 用户确认分享后执行的回调函数
+		},
+		cancel: function () { 
+			// 用户取消分享后执行的回调函数
+		}
+	});
+	wx.onMenuShareQZone({
+		title: '{$sharetitle}{:C(WEB_SITE_TITLE)}', // 分享标题
+		desc: '{:C(WEB_SITE_DESCRIPTION)}', // 分享描述
+		link: '{$shareurl}?openid={$openid}', // 分享链接
+		imgUrl: '<empty name='shareimg'>http://{:C(WEB_SITE_DOMAIN)}/public/wechat/images/getheadimg.jpg<else/>{$shareimg}</empty>', // 分享图标
+		success: function () { 
+		   // 用户确认分享后执行的回调函数
+		},
+		cancel: function () { 
+			// 用户取消分享后执行的回调函数
+		}
+	});
+});
+</script>
+<!-- 页面header钩子，一般用于加载插件CSS文件和代码 -->
+{:hook('pageHeader')}

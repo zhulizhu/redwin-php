@@ -1,0 +1,123 @@
+<extend name="Base/common" />
+<block name="title">99车盟汇 - 安全中心</block>
+<block name="Comm_top">
+<div id="register_top">
+    	<div class="top_regis">
+            <div class="lable"> 欢迎来到99车盟汇！ </div>
+            <div class="sc"><a onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)" title="收藏我们">收藏我们</a></div>
+            <div class="gz"><a  href="{:U('Article/detail?id=572')}" title="关注我们">关注我们</a></div>
+        </div>
+ </div>
+</block>
+<block name="body">
+ <div id="forget_pwd">
+    <div id="safe_head">
+    <h1>
+    <a class="logo_tb" href="{:U('Index/index')}" title="{:C('WEB_SITE_TITLE')}">99车盟汇</a>
+    <em class="logo_aq">安全中心</em>
+    </h1> 
+    </div>
+    
+    <div id="content">
+    <div class="password_box">
+    	<div class="hd">
+        <h2 class="hd_title">找回密码</h2>
+        </div>
+        <div class="bd">
+        <div class="password">
+        	<div class="flowsteps">
+            <ol class="num4">
+            <li class="first done">
+            	<span>
+                	<i>1</i>
+                    <em>输入账户名</em>
+                </span>
+            </li>
+            <li class="current">
+            	<span>
+                	<i>2</i>
+                    <em>验证身份</em>
+                </span>
+            </li>
+            <li>
+                <span>
+                	<i>3</i>
+                    <em>重置密码</em>
+                </span>
+            </li>
+            <li class="last">
+                <span>
+                	<i>4</i>
+                    <em>完成</em>
+                </span>
+            </li>
+            </ol>
+            </div>
+            <div class="info">
+            <form method="post" action="__SELF__" onsubmit="return CkVerify(this);">
+            <div class="type">
+            <label>请选择验证方式：</label>
+            <select><option value="mobile">手机短信</option></select>
+            </div>
+            <table  border="0" cellpadding="0" cellspacing="10">
+            <tr>
+            	<td>您的手机号码：</td>
+                <td><input type="text" name="user_mobile" id="user_mobile" class="user_email" value="{$mobile}" disabled="disabled"/></td>
+            </tr>
+            <tr>
+            	<td></td>
+            	<td><input type="button" id="mobile_btn"  value="免费获取验证码"></td></tr>
+            <tr>
+            	<td>获取的验证码：</td>
+                <td><input type="text" id="verifys" size="10"  name="verifys" class="verifys"></td>
+            </tr>
+            <tr>
+            <td></td>
+            <td><input type="submit" value="下一步" class="next"></td>
+            </tr>
+            </table>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+ </div>
+ <script type="text/javascript">
+   
+	function Send(mobile){
+                $.ajax({
+				type:"GET",
+				url:"{:U('getVerify')}?mobile="+mobile,
+				success:function(msg){
+					alert(msg);
+				},
+				error:function(){
+					alert("发送失败，等待重新发送！");
+				}
+				});
+	}
+	 var wait=60;
+	document.getElementById("mobile_btn").disabled = false;		
+	function time(o) {
+		if (wait == 0) {
+			o.removeAttribute("disabled");          
+			o.value="免费获取验证码";
+			wait = 60;
+		} else {
+			o.setAttribute("disabled", true);
+			o.value="重新发送(" + wait + ")";
+			wait--;
+			setTimeout(function() {
+				time(o);
+			},
+			1000)
+		}
+	}
+	document.getElementById("mobile_btn").onclick=function(){
+		var mobile=$("#user_mobile").val();
+			Send(mobile);time(this);
+		}
+				
+ </script>
+</block>

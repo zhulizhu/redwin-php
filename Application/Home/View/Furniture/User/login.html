@@ -1,0 +1,81 @@
+<extend name="Base/common" />
+<block name="title">99车盟汇 - 登录</block>
+<block name="Comm_top"></block>
+<block name="body">
+<link href="__PUBLIC__/home/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+
+    <div id="login_top">
+    	<div class="top">
+        	<div class="lable"> 欢迎来到99车盟汇！ </div>
+            <div class="sc"><a onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)" title="收藏我们">收藏我们</a></div>
+            <div class="gz"><a  href="{:U('Article/detail?id=572')}" title="关注我们">关注我们</a></div>
+        </div>
+    </div>
+     <div id="login_mid">
+     	<div class="mid">
+        	<a href="{:U('Home/index/index')}" title="{:C('WEB_SITE_TITLE')}"><img src="__IMG__/logo-reg.png" width="216" height="65"/></a>
+        	<div class="welcome">欢迎登录</div>
+            <div class="gp">
+            	<ul>
+                	<li class="li1">公平公正公开</li>
+                    <li class="li2">正品保证</li>
+                    <li class="li3">权益保障</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="login_main">
+    	<div class="login_main">
+        	<div class="box">
+            	<img src="__IMG__/login_bg.png" width="512" height="407" />
+            </div>
+            <div class="Content">
+            	 <form action="__SELF__" method="post" onsubmit="return login(this)" role="form">
+                 	<div class="row1">
+                        <div class="lab">账号</div>	
+                        <input type="text" name="username" class="textUser" value="{$_GET['username']}" placeholder="已验证手机">
+                    </div>
+                    <div class="row2">
+                        <div class="lab">密码</div>	
+                        <input type="password" name="password" class="textPwa" placeholder="请输入密码" >
+                    </div>
+                    <div class="row3">
+                        <input type="submit" class="denglu" value="登 录" />
+                    </div>
+                    <div class="row4">
+                        <div class="checkbox1">
+                                <input type="checkbox"  />
+                                <em>记住密码</em>
+                        </div>
+                        <div class="forget_pwd">
+                                <a href="{:U('forget_pwd')}" title="忘记密码">忘记密码？|</a>
+                        </div>
+                        <div class="reg">
+                        		<a href="{:U('register')}" title="免费注册">免费注册</a>
+                        </div>
+                    </div>
+                 </form>
+            </div>
+            <div class="cop">&nbsp;&nbsp;&nbsp;&nbsp;ICP证川A2-10124567&nbsp;&nbsp;&nbsp;&nbsp;99车盟汇公司版权所有2003-2020</div>
+        </div>
+    </div>
+ <script type="text/javascript">
+ 	function login(theFrom){
+		if(theFrom.username.value==""){
+			alert("用户名不能为空！！");
+			return false;
+		}
+		if(theFrom.password.value==""){
+			alert("密码不能为空!!");
+			return false;
+		}
+	}
+	$(function(){
+		$(".textUser").focus(function(){
+			
+		});
+	})
+ </script>
+</block>
+<block name="Comm_Copyright">
+</block>

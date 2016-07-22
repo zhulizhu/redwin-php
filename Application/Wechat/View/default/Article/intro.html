@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<include file="Public/head"/>
+</head>
+<body>
+	<!-- 头部 -->
+	<include file="Public/header"/>
+	
+<!--通用导航-->
+<include file="Public/address"/>
+	
+	<div id="EjMain">
+		<div id="left">
+			 {:LeftNav()}
+		</div>
+		<div id=right>
+			<div id="Show_Content">
+            	{$info.content}
+			</div>
+		</div>
+	</div>	
+	<!-- 底部 -->
+	<include file="Public/Comm_bottom"/>
+</body>
+</html>

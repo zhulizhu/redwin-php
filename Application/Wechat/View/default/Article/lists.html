@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<include file="Public/head"/>
+</head>
+<body>
+	<!-- 头部 -->
+	<include file="Public/header"/>
+	<include file="Public/address"/>
+	<div id="EjMain">
+		<div id="left">
+			 {:leftnav()}
+		</div>
+		<div id="right">
+			<div id="right_List">
+			<!--新闻列表-->
+			<if condition="$category['model'][0] == 2">
+				<include file="ShowMode/NewsList"/>
+			<!--下载-->	
+			<elseif condition="$category['model'][0] == 3"/>
+				<include file="ShowMode/NewsList"/>
+			<!--产品-->
+			<elseif condition="$category['model'][0] == 6"/>
+				<include file="ShowMode/NewsList"/>
+			</if>
+				<include file="Comm/thePageInfo"/>
+			</div>	
+		</div>	
+	</div>
+		<!-- 底部 -->
+	<include file="Public/Comm_bottom"/>
+</body>
+</html>

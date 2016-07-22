@@ -1,0 +1,93 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>{:isset($info['id'])?'编辑':'新增'}升级规则</h2>
+    </div>
+    <form action="{:U(update)}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">待升级组<span class="check-tips">（准备升级的组）</span></label>
+            <div class="controls">
+            	<select name="group_id">
+                <volist name="group_list" id="list">
+                	<option value="{$list.id}">{$list.title}</option>
+                </volist>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">升级到组<span class="check-tips">（升级到的组）</span></label>
+            <div class="controls">
+            	<select name="to_group_id">
+                <volist name="group_list" id="list">
+                	<option value="{$list.id}">{$list.title}</option>
+                </volist>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">消费金额<span class="check-tips">（购物积累金额）</span></label>
+            <div class="controls">
+                <input type="text" class="text" name="shopping_price" value="{$info.shopping_price|default=0}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">团队业绩<span class="check-tips">（团队业绩）</span></label>
+            <div class="controls">
+                <input type="text" class="text" name="team_price" value="{$info.team_price|default=0}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">已消费会员<span class="check-tips">（已消费会员）</span></label>
+            <div class="controls">
+                <input type="text" class="text" name="shopping_num" value="{$info.shopping_num|default=0}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">黄金会员数<span class="check-tips">（黄金会员数）</span></label>
+            <div class="controls">
+                <input type="text" class="text" name="sanji_num" value="{$info.sanji_num|default=0}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">铂金会员数<span class="check-tips">（铂金会员数）</span></label>
+            <div class="controls">
+                <input type="text" class="text" name="erji_num" value="{$info.erji_num|default=0}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">钻石会员数<span class="check-tips">（钻石会员数）</span></label>
+            <div class="controls">
+                <input type="text" class="text" name="yiji_num" value="{$info.yiji_num|default=0}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">保证金<span class="check-tips">（保证金）</span></label>
+            <div class="controls">
+                <input type="text" class="text" name="bzj" value="{$info.bzj|default=0}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">自动升级<span class="check-tips">（是否自动升级）</span></label>
+            <div class="controls">
+                <label class="radio"><input type="radio" name="autoup" value="0" />手动升级</label>
+                <label class="radio"><input type="radio" name="autoup" value="1" />自动升级</label>
+            </div>
+        </div>
+        <div class="form-item">
+            <input type="hidden" name="id" value="{$info.id|default=''}">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+		Think.setValue("group_id", {$info.group_id|default = 1});
+		Think.setValue("to_group_id", {$info.to_group_id|default = 1});
+        Think.setValue("autoup", {$info.autoup|default = 0});
+        //导航高亮
+        highlight_subnav('{:U('index')}');
+    </script>
+</block>

@@ -1,0 +1,176 @@
+<extend name="Base/common"/>
+
+<block name="Comm_top">
+<div id="settle">
+	<div id="settle_globle_top">
+    	<div class="top_top">
+            <div class="lable"> 欢迎来到99车盟汇！ </div>
+            <div class="sc"><a onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)" title="收藏我们">收藏我们</a></div>
+            <div class="gz"><a  href="{:U('Article/detail?id=572')}" title="关注我们">关注我们</a></div>
+            <if condition="get_nickname() eq null">
+            <div class="log"><a href="{:U('User/login')}" title="请登录">请登录</a></div>
+            <div class="reg"><a href="{:U('User/register')}" title="免费注册">免费注册</a></div>
+            <else/>
+            <div class="log"><a href="{:U('User/index')}" title="{:get_nickname()}">{:get_nickname()}</a></div>
+            <div class="reg"><a href="{:U('User/logout')}" title="退出">【退出】</a></div>
+            </if>
+           <div class="get"><a href="{:U('User/index')}" title="我的夺宝">我的夺宝&nbsp;<span class="icon-chevron-down"></span></a>
+            <div class="get_li">
+                <ul>
+                    <li><a href="{:U('User/index')}" title="夺宝记录">夺宝记录</a></li>
+                    <li><a href="{:U('User/index')}" title="中奖记录">中奖记录</a></li>
+                    <li><a href="{:U('User/index')}" title="个人设置">个人设置</a></li>
+                    <li><a href="{:U('User/index')}" title="个人晒单">个人晒单</a></li>
+                </ul>
+            </div>
+        </div>
+            <script type="text/javascript">
+             $(function(){
+                $("#settle_globle_top .top_top .get").hover(function(){
+                    $(this).find(".get_li").show();
+                },function(){
+                    $(this).find(".get_li").hide();
+                })
+            })
+            </script>
+      </div>
+    </div>
+    <div id="settle_globle_bot">
+        <div class="logo">
+                <a href="{:U('Index/index')}" title="{:C('WEB_SITE_TITLE')}">
+                <img src="__IMG__/logo-reg.png" width="246" height="74" title="{:C('WEB_SITE_TITLE')}"/>	
+                </a>
+        </div>
+        <div class="step2"></div>
+    </div>
+</div>
+</block>
+
+<block name="body">
+<div id="EjMain">
+		<div id="Settlement">
+			<table cellpadding="0" cellspacing="0" border="0">
+				<tr class="tr1">
+                    <td width="20%">奖品名称</td>
+                    <td width="20%">价值</td>
+                    <td width="20%">夺宝价</td>
+                    <td width="20%">参与人次</td>
+                    <td width="20%">小计</td>
+                  </tr> 
+                <volist name="NewsList" id="data">
+                  	<tr class="table_tr">
+                  		<td class="tit"><a href="{:U('Product/detail?id='.$data['id'])}">{$data.title}</a></td>
+                        <td style="display:none;" class="alls">{$data.total}</td>
+                        <td class="val"></td>
+                        <td>{$data.price}夺宝币</td>
+                  		<td>
+                  			<div class="length">
+                  				 {$data.length}
+                                 <input type="hidden" class="lengths"  value="{$data.length}"/>
+                  			</div>
+                  		</td>
+                  		<td><input type="hidden" id="price"  value="{$data.price}"/>
+                        	<input type="hidden" name="price" class="pri" value="{$data.prices}"/>
+                        	<div class="Price">{$data.prices}夺宝币</div>
+                            <input type="hidden" name="pro_id" id="pro_id" value="{$data.id}"/>
+                        </td>
+                  	</tr>
+                  </volist>
+                <tr class="tr0">
+                  		<td colspan="5"><a href="{:U('cart')}">返回清单修改</a></span><em class="count"></em></td>
+                  </tr>
+                <tr>
+                   	<td class="le" colspan="3">请选择以下方式完成支付</td>
+                    <td class="ri" colspan="2">网银支付：<span id="cost">￥{$money}</span>元</td>
+                    <input type="hidden" id="clinch" name="clinch" value="{$money}"/>
+                    <input type="hidden" name="Length" id="Length" value="{$prod_length}"/>
+                   </tr>
+                <tr>
+                  	<td colspan="5" class="pay">
+                    	<div id="words">支付方式</div>
+                        <img class="focus" src="__IMG__/a.png" width="140" height="51" />
+ 						<input type="hidden" name="payment" id="payment" value="支付宝" />
+                        <img src="__IMG__/b.jpg" width="140" height="51" />
+                        <img src="__IMG__/c.jpg" width="140" height="51" />
+                    </td>
+                  </tr>
+                <script>
+						$(function(){
+						  $("#Settlement table .val").each(function(){
+							var alls = $(this).parent().find(".alls").text();
+							var val = alls*10;
+							$(this).html("￥"+val+"/个");
+						  });
+						  var count= 0;
+						  $("#Settlement table .pri").each(function(){
+							var cou = $(this).val();
+							 count +=cou*1;
+						  });
+						  $("#Settlement table .count").html("奖品合计：<i>&nbsp;"+count+"&nbsp;</i>夺宝币&nbsp;&nbsp;&nbsp;&nbsp;");
+						  $("#Settlement table .pay img").each(function(){
+							  $(this).click(function(){
+								  $(this).attr("class","focus");
+								  $(this).siblings().attr("class","");
+								  })
+							});
+						});
+				   </script>
+			</table>
+			<div class="Settlement">
+            	<input class="checkout" id="checkout" type="button"  value="确认支付"/>
+				<script type="text/javascript">
+			//提交订单
+			$(function(){ 
+				$("#checkout").click(function(){
+						$.ajax({
+						type:"POST",
+						url:"{:U('Order/update')}",
+						data:{price:$("#Length").val(),Length:$("#Length").val(),payment:$("#payment").val(),clinch:$("#clinch").val()},
+						async:false,
+						success:function(msg){
+							if(msg=='false'){
+								alert('订单提交失败，请检查提交产品数量！');	
+							}else{
+								location.href = "http://www.99cmh.com/Pay/doalipay?id="+msg;
+							}
+						},
+						error:function(){
+							alert('提交失败！请重新操作！');
+						}
+						});
+			   });
+		  });
+                </script>                
+               <script type="text/javascript">
+					$(function(){
+						setInterval(function(){
+							$("#Settlement table .table_tr").each(function() {
+							var pro_num = $(this).find('.lengths').val();
+							$.ajax({
+								type:"POST",
+								url:"{:U('shopping/pro_flash')}",
+								data:{pro_id:$(this).find(".pro_id").val()},
+								success:function(result){
+									result = parseInt(result);
+									if(result < pro_num){
+										$(this).find('.lengths').val(result);
+									}
+								},
+								error:function(){
+								}
+								});
+                            });
+						},1000);	
+					});    
+                </script>
+			</div>
+            <div class="ques">
+            付款遇到问题<br />
+ 			1、如您未开通网上银行，即可以使用储蓄卡快捷支付轻松完成付款；<br />
+		    2、如果您没有网银，可以使用银联在线支付，银联有支持无需开通网银的快捷支付和储值卡支付；<br />
+ 		    3、如果您有财付通或快钱、手机支付账户，可将款项先充入相应账户内，然后使用账户余额进行一次性支付；<br/>
+ 			4、如果银行卡已经扣款，但您的账户中没有显示，有可能因为网络原因导致，将在第二个工作日恢复。
+            </div>
+		</div>
+	</div>
+</block>

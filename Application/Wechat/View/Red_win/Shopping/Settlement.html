@@ -1,0 +1,694 @@
+<extend name="Base/common"/>
+
+<block name="body">
+<style>
+.shouhuodizhi
+{ min-height:50px; border-bottom:1px solid #eaeaea; padding-top:10px;}
+.shouhuodizhi .address
+{ padding:0px 10px; padding-bottom:0px; background:#f5f5f5;}
+.shouhuodizhi .address .top
+{ width:100%; float:left; margin-bottom:10px;}
+.shouhuodizhi .address .top div
+{ width:30%; float:left; text-align:center;}
+.shouhuodizhi .address .top div.title
+{ text-align:left; font-weight:bold;}
+.shouhuodizhi .address .add
+{ width:100%; clear:both;}
+.shouhuodizhi .btn
+{ padding-top:10px; margin-left:10px; margin-bottom:10px;}
+.shouhuodizhi .btn span
+{ font-size:14px; font-weight:bold;}
+.shouhuodizhi .btn i
+{ float:right; margin-right:10px; margin-top:5px;}
+.zhifufangshi
+{ height:40px; border-bottom:1px solid #eaeaea;}
+.zhifufangshi .btn
+{ margin-top:20px; margin-left:10px;}
+.zhifufangshi span
+{ font-weight:bold;}
+.zhifufangshi i
+{ float:right; margin-right:10px; font-style:normal;}
+
+.list
+{ padding:10px 0px; border:none;}
+.list h3
+{ padding:10px; font-size:14px; font-weight:bold;}
+.list ul
+{ margin:0px; padding:0px; border:none;}
+.list ul li
+{ width:100%; height:80px; padding:10px; background:#fff; border-bottom:1px dashed #ccc;}
+.list ul li .img
+{ border:1px solid #eaeaea; padding:3px; width:70px; height:70px; text-align:center; line-height:80px; float:left;}
+.list ul li .right
+{ float:left; margin-left:10px; padding-right:10px; height:75px; position:relative;}
+.list ul li .right .bottom
+{ margin-top:5px; width:100%; position:absolute; left:0px; bottom:0px;}
+.list ul li .right .title
+{ width:100%; height:55px; overflow:hidden;}
+.list ul li .right .bottom .num
+{ width:50%; float:left;}
+.list ul li .right .bottom .price
+{ float:left; width:43%; text-align:right; color:#ed4848;}
+.order
+{ width:100%; margin:20px 0px;}
+.order h3
+{ text-align:center;}
+.order h3 span
+{ color:#ed4848;}
+.downorder
+{ width:100%; height:45px; position:fixed; left:0px; bottom:0px;}
+.downorder a
+{ width:90%; height:35px; display:block; border-radius:3px; background:#ed4848; text-align:center; line-height:35px; text-decoration:none; color:#fff; margin:5px auto;}
+
+.setjiesuan
+{ width:100%; height:50px; overflow:hidden; background:#000; opacity:0.8; position:fixed; bottom:0px; left:0px;}
+.setjiesuan .con
+{ opacity:1;}
+.setjiesuan .yunfei
+{ line-height:28px; margin-left:10px; font-size:14px; color:#f24b48; font-weight:bold; margin-top:5px;}
+.setjiesuan .yunfei select
+{ border:1px solid #f24b48;}
+.setjiesuan .countprice
+{ line-height:28px; margin-left:15px; font-size:14px; color:#f24b48; font-weight:bold;}
+.setjiesuan .allprice
+{ line-height:50px; margin-left:15px; font-size:14px; color:#fff; font-weight:bold;}
+.setjiesuan .allprice span
+{ font-size:20px;}
+.setjiesuan .gojs
+{ width:130px; height:50px; overflow:hidden; background:#ff0026; border-radius:0px; display:block; text-align:center; color:#fff; line-height:50px; text-decoration:none; position:absolute; right:0px; top:0px; font-size:18px;}
+
+h3
+{ clear:both; text-indent:10px; font-size:16px; margin:0px; padding:0px; font-weight:bold; margin-top:10px;}
+
+.shuohuo
+{ background:#f8f8f8; padding-bottom:10px; width:100%; margin-top:10px; border-bottom:none;}
+
+.shuohuo .con
+{ width:100%; background:#fff; margin:0px auto;}
+.shuohuo .box
+{ width:96%; margin:0px auto; min-height:40px;}
+
+.payway
+{ width:100%; padding:10px 0px; background:#f8f8f8;}
+.payway .con
+{ background:#fff; padding:10px 0px;}
+.payway .box
+{ width:96%; margin:0px auto;}
+.payway .box1
+{ margin-top:10px;}
+.payway .box1 a
+{ width:100px; height:40px; line-height:40px; color:#333; border:1px solid #ccc; border-radius:5px; display:block; float:left; margin-right:10px; text-align:center;}
+.payway .box1 a.focus
+{ background:#ff0026; color:#fff; border:1px solid #ff0026;}
+
+.coupons
+{ width:100%; padding:10px 0px; background:#f8f8f8;}
+.coupons .con
+{ background:#fff; padding:10px 0px;}
+.coupons .box
+{ coupons:96%; margin:0px auto;}
+.coupons h3
+{ clear:both; text-indent:10px; font-size:16px; margin:0px; padding:0px; font-weight:bold; margin-top:0px;}
+.coupons .box1
+{ margin-top:10px;}
+.coupons .box1 a
+{ width:100px; height:40px; line-height:16px; color:#333; border:1px solid #ccc; border-radius:5px; display:block; float:left; margin-left:10px; text-align:center; font-size:14px; padding-top:5px;}
+.coupons .box1 a.focus
+{ background:#f24b48; color:#fff; border:1px solid #f24b48;}
+
+
+.psway
+{ width:100%; padding:10px 0px; background:#f8f8f8;}
+.psway .con
+{ background:#fff; padding:10px 0px;}
+.psway .box
+{ width:96%; margin:0px auto;}
+.psway .box1
+{ margin-top:10px;}
+.psway .box1 a
+{ width:100px; height:40px; line-height:16px; color:#333; border:1px solid #ccc; border-radius:5px; display:block; float:left; margin-right:10px; text-align:center; font-size:14px; padding-top:5px; margin-bottom:8px;}
+.psway .box1 a.focus
+{ background:#ff0026; color:#fff; border:1px solid #ff0026;}
+
+
+.end
+{ width:100%; padding:10px 0px; background:#f8f8f8;}
+.end .con
+{ background:#fff; padding:10px 0px;}
+.end .box
+{ width:96%; margin:0px auto;}
+.end .box div
+{ margin:0px 0px; font-size:14px;}
+.end .box div code
+{ float:right; margin-right:10px; font-size:14px;color: #ff0026!important;}
+
+
+#cart .xiaoji
+{ border-bottom:none;}
+#cart ul li
+{ border-bottom:1px solid #dedede; height:100px; overflow:hidden;}
+#cart ul li:last-child
+{ border-bottom:none;}
+#cart ul li .top
+{ height:60px; overflow:hidden;}
+
+.addlist
+{ margin-top:10px;}
+.addlist ul
+{ list-style:none; height:50px; overflow:hidden;}
+.addlist ul li
+{ width:100%; height:60px; overflow:hidden; border-bottom:1px dashed #ccc; padding:5px 0px 10px 0px;}
+.addlist ul li input
+{ width:5%; float:left; margin-top:18px;}
+.addlist ul li .right
+{ width:90%; overflow:hidden; float:left; margin-left:2%; display:block;}
+.addlist ul li label
+{ width:100%;}
+.addlist ul li p
+{ height:25px; line-height:25px; margin:0px; padding:0px; display:block;}
+.addlist ul li p.moreadd
+{white-space:nowrap; width:100%; display:inline-block;}
+.addlist .openbtn
+{ clear:both; text-align:center; margin:0px auto; width:200px; height:25px; line-height:25px; display:block; margin-bottom:10px; font-size:14px;}
+</style>
+<div class="top-head">
+	<div class="back"><a href="{:U('cart')}">返回</a></div>
+	<h2>结算中心</h2>
+</div>
+<form  method="post" class="selform" action="{:U('Order/update')}">
+<div class="shuohuo">
+	<div class="con">
+    <div class="box">
+	<h2 style="position:relative;">收件人信息<a href="javascript:;" class="seladdress" style=" position:absolute; right:0px; top:-5px; padding:6px 20px; font-size:18px; display:block; background:#ff0026; color:#fff; text-decoration:none; border-radius:5px;">+</a></h2>
+    <empty name="addresslist">
+    <p align="center">请添加收货地址</p>
+    <else/>
+    <div class="addlist">
+    	<ul>
+        	<volist name="addresslist" id="list">
+        	<li>
+            	<label>
+                <input type="radio" name="addid" class="addid" value="{$list.id}" <eq name="list.is_def" value="1">checked="checked"</eq> />
+                	<div class="right">
+                	<p>{$list.nickname}&nbsp;&nbsp;&nbsp;{$list.tel}</p>
+                    <p class="moreadd">{$list.province}{$list.city}{$list.area}{$list.address}</p>
+                    </div>
+                </label>
+            </li>
+            </volist>
+            
+            <div style="clear:both;"></div>
+        </ul>
+        <a href="javascript:;" class="openbtn">点击展开更多↓</a>
+    </div>
+    </empty>
+    </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$(".seladdress").click(function(){
+		$(".newaddress").show();
+	});
+	$(".openbtn").click(function(){
+		var html = $(this).html();
+		if(html=="点击展开更多↓"){
+			$(".addlist ul").css({"height":"auto"});
+			$(this).html("点击收起更多↑");
+		}else{
+			$(".addlist ul").css({"height":"50px"});
+			$(this).html("点击展开更多↓");
+		}
+		
+	});
+});
+</script>
+<div class="cart" id="cart">
+	<div class="lists">
+    <h3 class="qdcount" title="{:count(NewsList)}">产品清单</h3>
+    	<ul>
+        	<volist name="NewsList" id="data">
+        	<li>
+            	<div class="top">
+                	<div class="btn"></div>
+                    <div class="right">
+                    	<div class="img"><a href="{:U('Product/index')}" onClick="jump();"><img src="{$data.cover_id|picture}" class="img-responsive" width="60" height="60" /></a></div>
+                        <div class="title">
+                        	<div class="tit"><a href="{:U('Product/index')}" onClick="jump();">{$data.title}</a></div>
+                            <div class="num">
+                            	<div class="style_num1">数量：<span>{$data.num}</span></div>
+                            </div>
+                        </div>
+                        <div class="price"><span>￥{$data[price]}</span></div>
+                    </div>
+                </div>
+                <div class="xiaoji">小计:<span>￥<?php echo $data['num']*$data['price']; ?></span>
+                </div>
+                
+            </li>
+            </volist>
+        </ul>
+    </div>
+</div>
+
+<div class="payway">
+	<div class="con">
+    	<div class="box">
+			<h3 style="margin:0px; text-indent:0px;">支付方式</h3>
+            <div class="box1">
+            	<a href="javascript:;" class="wxpay focus ">微信支付</a>
+                <a href="javascript:;" class="yepay ">余额支付</a>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+</div>
+
+<div class="payway">
+	<div class="con">
+    	<div class="box">
+        	<h3 style="margin:0px; text-indent:0px;">订单留言</h3>
+            <div class="box1">
+            	<textarea name="liuyan" style="width:100%; padding:5px;"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="coupons">
+	<div class="con">
+    	<div class="box">
+        	<h3>使用优惠券</h3>
+            <div class="box1">
+            	<empty name="clist">
+                	<span style="margin-left:10px;">无优惠券可用</span>
+                <else/>
+            	<volist name="clist" id="list">
+                	<eq name="list.type" value="no">
+                    	<a href="javascript:;"  data-id="{$list.id}" data-money="{$list.money}" data-type="{$list.type}" class="selcoupons <eq name="key" value="0"> focus </eq> " style=" line-height:30px;" >{$list.title}</a>
+                    <else/>
+                    	<a href="javascript:;"  data-id="{$list.id}" data-money="{$list.money}" data-type="{$list.type}" class="selcoupons <eq name="key" value="0"> focus </eq> " >{$list.title}<br />￥<span>{$list.money}</span></a>
+                    </eq>
+                </volist>
+                </empty>
+            </div>
+            <input type="hidden" name="cid" class="cid" value="{$clist.0.id}" />
+            <input type="hidden" name="gomoney" class="gomoney" value="{$gomoney}" />
+            <input type="hidden" name="hb_type" class="hb_type" value="{$clist.0.type}" />
+            <div style="clear:both"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="psway" style="display:none;">
+	<div class="con">
+    	<div class="box">
+        	<h3 style="margin:0px; text-indent:0px;">配送方式</h3>
+            <div class="box1">
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+</div>
+
+<div class="end">
+	<div class="con">
+    	<div class="box">
+        	<div class="spje"><strong>商品金额</strong><code>￥<span>{$money}</span></code></div>
+            <div style=" height:15px;"></div>
+            <div class="couponsinfo"><strong>优惠</strong><code>-<span>{$gomoney}</span></code></div>
+            <div style=" height:15px;"></div>
+            <div class="yfprice"><strong>运费</strong><code>￥<span>0.00</span></code></div>
+        </div>
+    </div>
+</div>
+
+
+<div style="height:50px; clear:both;">&nbsp;</div>
+
+<div class="setjiesuan">
+	<div class="con">
+        <div class="allprice">实付款：￥<span></span></div>
+        <a href="javascript:;" class="gojs" >提交订单</a>
+    </div>
+</div>
+<style>
+.newaddress
+{ width:100%; position:fixed; left:0px; top:0px; height:auto; background:#fff; height:500px; overflow:hidden; display:none;}
+.newaddress .head
+{ width:100%; height:50px; position:relative;}
+.newaddress h2
+{ font-size:18px; margin:0px; padding:0px; margin-top:15px; text-indent:20px;}
+.newaddress .closebtn
+{ position:absolute; right:10px; top:10px; font-size:24px; width:30px; height:30px; display:block; border-radius:50%; text-align:center; line-height:30px; background:#ff0026; color:#fff;}
+.newaddress .con
+{ width:90%; height:auto; margin:0px auto;}
+.newaddress .con ul
+{ list-style:none; margin:10px 0px;}
+.newaddress .con ul li
+{ width:100%; height:40px; line-height:40px; margin:5px 0px; border-bottom:1px solid #ccc;}
+.newaddress .con ul li .left
+{ width:30%; height:100%; float:left; font-size:16px;}
+.newaddress .con ul li .right
+{ width:60%; height:100%; margin-left:4%; float:left;}
+.newaddress .con ul li .right input
+{ border:none; color:#999; width:100%; height:35px;}
+.newaddress .con ul li .right select
+{ width:100%; height:30px; line-height:30px;}
+.newaddress .con .btnadd
+{ width:200px; height:40px; line-height:40px; background:#ff0026; border-radius:8px; color:#fff; text-align:center; margin:10px auto; border:none; display:block;}
+</style>
+<div class="newaddress">
+<a href="javascript:;" class="closebtn">X</a>
+    <h2>新增地址</h2>
+    <div class="con">
+    	<ul>
+        	<li>
+            	<div class="left">收货人</div>
+                <div class="right"><input type="text" name="nickname" class="nickname" value="请输入姓名" /></div>
+            </li>
+            <li>
+            	<div class="left">手机号码</div>
+                <div class="right"><input type="text" name="tel" class="tel" value="请输入11位手机号" /></div>
+            </li>
+            <li>
+            	<div class="left">地区信息</div>
+                <div class="right">
+                	<select name="province" class="province">
+                    	<option>请选择地区信息</option>
+                        <volist name="sheng" id="list">
+                        <option value="{$list.id}">{$list.title}</option>
+                        </volist>
+                    </select>
+                </div>
+            </li>
+            <li style="display:none;" class="cityli">
+            	<div class="left">市</div>
+                <div class="right">
+                	<select name="city" class="city">
+                    	<option>请选择市级</option>
+                    </select>
+                </div>
+            </li>
+            <li style="display:none;" class="areali">
+            	<div class="left">区/县</div>
+                <div class="right">
+                	<select name="area" class="area">
+                    	<option>请选择区/县</option>
+                    </select>
+                </div>
+            </li>
+            <li>
+            	<div class="left">详细地址</div>
+                <div class="right"><input type="text" name="address" class="address" value="街道门牌信息" /></div>
+            </li>
+        </ul>
+        <input type="button" class="btnadd" value="保存收货地址" />
+    </div>
+
+</div>
+<script type="text/javascript">
+$(function(){
+	$(".closebtn").click(function(){
+		$(".newaddress").hide();
+	});
+	$(".newaddress").height($(document).height());
+	$(".newaddress input").focus(function(){
+		$(this).val("");
+	});
+	$(".newaddress .btnadd").click(function(){
+		var nickname = $(".newaddress .nickname").val();
+		if(nickname=="" || nickname=="请输入姓名"){
+			alert("请输入姓名");
+			$(".newaddress .nickname").focus();
+			return false;
+		}
+		var tel = $(".newaddress .tel").val();
+		if(tel=="" || tel=="请输入11位手机号"){
+			alert("请输入11位手机号");
+			$(".newaddress .tel").focus();
+			return false;
+		}
+		var province = $(".newaddress .province").val();
+		if(province=="" || province=="请选择地区信息"){
+			alert("请选择地区信息");
+			return false;
+		}
+		var city = $(".newaddress .city").val();
+		if(city=="" || city=="请选择"){
+			alert("请选择");
+			return false;
+		}
+		var area = $(".newaddress .area").val();
+		if(area=="" || area=="请选择"){
+			alert("请选择");
+			return false;
+		}
+		var address = $(".newaddress .address").val();
+		if(address=="" || address=="街道门牌信息"){
+			alert("请输入街道门牌信息");
+			$(".newaddress .address").focus();
+			return false;
+		}
+		
+		var url = "{:U('Shopping/add_address')}";
+		$.post(url,
+		{
+			nickname:nickname,
+			tel:tel,
+			province:province,
+			city:city,
+			area:area,
+			address:address
+		},function(data){
+			if(data=="1"){
+				window.location.href = "__SELF__?status={$ids}";
+			}else{
+				alert("保存失败，请重试或与管理员联系！");
+			}
+		});
+	});
+	
+	
+	$(".newaddress .province").change(function(){
+		var pid = $(this).val();
+		if(pid!="请选择地区信息"){
+			var url = "{:U('get_area')}?pid="+pid;
+			$.get(url,function(data){
+				$(".newaddress .city").html(data);
+			});
+			$(".newaddress .cityli").show();
+			$(".newaddress .areali").hide();
+		}else{
+			$(".newaddress .cityli").hide();
+			$(".newaddress .areali").hide();
+		}
+	});
+	$(".newaddress .city").change(function(){
+		var pid = $(this).val();
+		if(pid!="请选择"){
+			var url = "{:U('get_area')}?pid="+pid;
+			$.get(url,function(data){
+				$(".newaddress .area").html(data);
+			});
+			$(".newaddress .areali").show();
+		}else{
+			$(".newaddress .areali").hide();
+		}
+	});
+	
+	
+	
+	
+});
+</script>
+<input type="hidden" name="express" class="express" />
+<input type="hidden" name="byk" class="byk" />
+<input type="hidden" name="payway" class="hiddenpayway" value="wechat" />
+<input type="hidden" name="ids" class="ids" value="{$ids}" />
+<input type="hidden" name="save_type" value="{$save_type}" />
+</form>
+
+<script>
+$(function(){
+	
+	/* 获取运费数据 */
+	var url = "{:U('auto_freight')}?address={$defaddress}&ids={$ids}&save_type={$save_type}";
+	
+	$.get(url,function(data){
+		/*显示运费数据*/
+		$(".psway .box1").html(data);
+		$(".psway").show();
+		
+		var yunfei = $(".psway a[class='focus'] span").html();
+		$(".yfprice span").html(yunfei);
+
+		/*  */
+		var price = $(".spje span").html();
+		var money = parseFloat(parseFloat(yunfei) + parseFloat(price)).toFixed(2);
+		//优惠券
+		var gomoney = parseFloat($(".gomoney").val());
+		money = parseFloat(money - gomoney).toFixed(2);
+		if(money<0){
+			money = parseFloat(0).toFixed(2);
+		}
+		
+		$(".allprice span").html(money);
+		
+		/* 添加运费数据到订单 */
+		var id = $(".psway a[class='focus']").attr("title");
+		$(".express").val(id);
+		var byk = $(".psway a[class='focus']").attr("byk");
+		$(".byk").val(byk);
+		
+	});
+	
+	$(".addid").change(function(){
+		
+		var address = $(this).parent().find(".moreadd").html();
+		if(address){
+			/* 获取运费数据 */
+			var url = "{:U('auto_freight')}?address="+address+"&ids={$ids}&save_type={$save_type}";
+			
+			$.get(url,function(data){
+				/*显示运费数据*/
+				$(".psway .box1").html(data);
+				$(".psway").show();
+				
+				var yunfei = $(".psway a[class='focus'] span").html();
+				$(".yfprice span").html(yunfei);
+				
+				/*  */
+				var price = $(".spje span").html();
+				var money = parseFloat(parseFloat(yunfei) + parseFloat(price)).toFixed(2);
+				
+				//优惠券
+				var gomoney = parseFloat($(".gomoney").val());
+				money = parseFloat(money - gomoney).toFixed(2);
+				if(money<0){
+					money = parseFloat(0).toFixed(2);
+				}
+				$(".allprice span").html(money);
+				
+				/* 添加运费数据到订单 */
+				var id = $(".psway a[class='focus']").attr("title");
+				$(".express").val(id);
+				var byk = $(".psway a[class='focus']").attr("byk");
+				$(".byk").val(byk);
+			});
+		}
+		
+	});
+	
+	
+	$(".username").val("");//初始化收件人信息
+	$(".gojs").click(function(){
+		
+		var addid = $(".addid").val();
+		if(addid<0 || !addid){
+			alert("请选择收货地址");
+			return false;
+		}
+		
+		var qdcount = $(".qdcount").attr("title");
+		if(!qdcount){
+			alert("商品清单错误，即将为您跳转购物车！");
+			window.location.href = "{:U('Shopping/cart')}";
+			return false;
+		}else{
+			var payway = $(".hiddenpayway").val();
+			if(payway=="yepay"){
+				var ok = true;
+				var money = $(".allprice span").html();
+				var url = "{:U('check_yue')}?money="+money;
+				$.get(url,function(data){
+					if(data=="false"){
+						alert("您的余额不足以支付该订单，请选择在线支付！");
+						return false;
+					}else{
+						if(ok==true){
+							$(".selform").submit();
+						}
+					}
+				});
+			}else{
+				$(".selform").submit();
+			}
+		}
+	});
+	
+	/* 更改新的价格 */
+	$(".psway").delegate('a',"click",(function(){
+		
+		$(".psway a").removeClass("focus");
+		$(this).addClass("focus");
+		
+		var yunfei = $(this).attr("value");
+		$(".yfprice span").html(yunfei);
+		/*显示运费数据*/
+		var price = $(".spje span").html();
+		var money = parseFloat(parseFloat(yunfei) + parseFloat(price)).toFixed(2);
+		//优惠券
+		var gomoney = parseFloat($(".gomoney").val());
+		money = parseFloat(money - gomoney).toFixed(2);
+		if(money<0){
+			money = parseFloat(0).toFixed(2);
+		}
+		$(".allprice span").html(money);
+		/*将运费数据更新到订单*/
+		var id = $(this).attr("title");
+		$(".express").val(id);
+		var byk = $(this).attr("byk");
+		$(".byk").val(byk);
+	}));
+	
+	$(".selcoupons").click(function(){
+		$(this).parent().find(".selcoupons").removeClass("focus");
+		$(this).addClass("focus");
+		var id = $(this).attr("data-id");
+		var money = $(this).attr("data-money");
+		var type = $(this).attr("data-type");
+		
+		$(".cid").val(id);
+		$(".gomoney").val(money);
+		$(".hb_type").val(type);
+		
+		$(".couponsinfo span").html(money);
+		
+		var yunfei = $(".yfprice span").html();
+		var price = $(".spje span").html();
+		var money = parseFloat(parseFloat(yunfei) + parseFloat(price)).toFixed(2);
+		var gomoney = parseFloat($(".gomoney").val());
+		money = parseFloat(money - gomoney).toFixed(2);
+		if(money<0){
+			money = parseFloat(0).toFixed(2);
+		}
+		$(".allprice span").html(money);
+	});
+	
+	$(".wxpay").click(function(){
+		$(".yepay").removeClass("focus");
+		$(this).addClass("focus");
+		$(".hiddenpayway").val("wechat");
+	});
+	
+	$(".yepay").click(function(){
+		<eq name="paypass" value="is">
+			$(".wxpay").removeClass("focus");
+			$(this).addClass("focus");
+			$(".hiddenpayway").val("yue");
+		<else/>
+			if(confirm("您还未设置支付密码，是否去设置？")){
+				window.location.href="{:U('User/setpaypass')}";
+			}
+		</eq>
+		
+	});
+	
+});
+</script>
+
+</block>
+
+<block name="footer"></block>

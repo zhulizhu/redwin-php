@@ -1,0 +1,83 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<div class="main-title">
+		<h2>分类管理</h2>
+	</div>
+    <form action="{:U('startGrab')}" method="post"  class="form-horizontal" >
+    <div class="tb-unit posr">
+		<div class="tb-unit-bar">
+			<input type="submit" value="执行抓取" class="btn grabpost"  target-form="form-horizontal" />
+		</div>
+    </div>
+	<div class="data-table table-striped">
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th class="row-selected">
+                            <input class="checkbox check-all" type="checkbox">
+                        </th>
+                        <th>选择</th>
+                        <th>分类名称</th>
+                        <th>关键词</th>
+                        <th>抓取来源</th>
+                        <th>抓取数量</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+				<notempty name="tree">
+                <volist name="tree" id="menu">
+                    <tr>
+                        <td><input class="ids row-selected" type="checkbox" name="id[]" value="{$menu.id}">
+                        <input type="hidden" name="model_id{$menu.id}" value="{$menu.model}" />
+                        </td>
+                        <td>{$menu.id}</td>
+                        <td>
+                            <a href="{:U('index?pid='.$menu['id'])}">{$menu.title}</a>
+                        </td>
+                        <td><input type="text" class="text" name="keyword{$menu.id}" value="{:C('WEB_SITE_KEYWORD')}" /></td>
+                        <td>
+                        	<label><input type="radio" name="laiyuan{$menu.id}" value="baidu" checked="checked" />百度新闻</label>
+                            <!--<label><input type="radio" name="laiyuan{$menu.id}" value="tengxun" />腾讯新闻</label>-->
+                        </td>
+                        <td><input type="text" class="text input-small" name="num{$menu.id}" value="100" /></td>
+                        <td>
+                            <a title="编辑" href="{:U('edit?id='.$menu['id'])}">编辑</a>
+                            <a class="confirm ajax-get" title="删除" href="{:U('del?id='.$menu['id'])}">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+				<else/>
+				<td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+				</notempty>
+                </tbody>
+            </table>
+        </form>
+        <!-- 分页 -->
+        <div class="page">
+
+        </div>
+    </div>
+    
+    <script>
+    $(function(){
+		//ajax post submit请求
+    	$(".grabpost").click(function(){
+			var target_form = $(this).attr('target-form');
+			form = $('.'+target_form);
+			target = form.get(0).action;
+			query = form.serialize();
+			updateAlert("OK" ,'alert-success');
+			$.ajax({
+				url:target,
+				data:query,
+				type:"POST"
+			});
+			return false;
+		});
+	})
+    
+    </script>
+</block>

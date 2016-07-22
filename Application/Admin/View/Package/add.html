@@ -1,0 +1,116 @@
+<extend name="Public/base"/>
+
+<block name="sidebar">
+<div id="subnav" class="subnav">
+<h3><i class="icon icon-unfold"></i>套餐管理</h3>
+<ul class="side-sub-menu">
+	<li class="current">
+		<a class="item " href="{$menu.url|U}">套餐列表</a>
+	</li>
+</ul>
+</div>
+</block>
+
+<block name="body">
+    <div class="main-title">
+        <h2><a href="index.php?s=/Admin/Article/index/cate_id/{$topid}.html">{$title}</a>菜单管理 </h2>
+    </div>
+	
+    <div class="data-table table-striped">
+            <table>
+            	<thead>
+            		<form method="post" action="{:U('Package/update')}">
+            		<tr>
+            			<th colspan="5">
+            				套餐名称：<input type="text" name="PackageName" value="" size="20"/>
+            				<input type="hidden" name="price" value="{$price}"/>
+            				<input type="submit" style="width:80px; height:30px; overflow:hidden; text-align:center; " name="" value="提交"/>
+            			</th>
+            		</tr>
+      			   </form>
+            	</thead>
+                <thead>
+                    <tr>
+                        <th class="row-selected">
+                            <input class="checkbox check-all" type="checkbox">
+                        </th>
+                        <th>ID</th>
+                        <th>名称</th>
+                        <th>图片</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+				<notempty name="NewsList">
+                <volist name="NewsList" id="menu">
+                    <tr>
+                        <td><input class="ids row-selected" type="checkbox" name="id[]" value="{$menu.id}"></td>
+                        <td>{$menu.id}</td>
+                        <td>
+                            {$menu.title}
+                        </td>
+                        <td>
+                        	<img src="{$menu['cover_id']|thumb=70,55}" widht="70" height="55"/>
+                        </td>
+                        <td>
+                            <a title="删除" href="{:U('Package/del?id='.$menu['Mark'])}">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+				<else/>
+				<td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+				</notempty>
+                </tbody>
+            </table>
+        <!-- 分页 -->
+        <div class="page">
+
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(function() {
+            //搜索功能
+            $("#search").click(function() {
+                var url = $(this).attr('url');
+                var query = $('.search-form').find('input').serialize();
+                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+                query = query.replace(/^&/g, '');
+                if (url.indexOf('?') > 0) {
+                    url += '&' + query;
+                } else {
+                    url += '?' + query;
+                }
+                window.location.href = url;
+            });
+            //回车搜索
+            $(".search-input").keyup(function(e) {
+                if (e.keyCode === 13) {
+                    $("#search").click();
+                    return false;
+                }
+            });
+            //导航高亮
+            highlight_subnav('{:U('index')}');
+            //点击排序
+        	$('.list_sort').click(function(){
+        		var url = $(this).attr('url');
+        		var ids = $('.ids:checked');
+        		var param = '';
+        		if(ids.length > 0){
+        			var str = new Array();
+        			ids.each(function(){
+        				str.push($(this).val());
+        			});
+        			param = str.join(',');
+        		}
+
+        		if(url != undefined && url != ''){
+        			window.location.href = url + '/ids/' + param;
+        		}
+        	});
+        });
+    </script>
+</block>

@@ -1,0 +1,225 @@
+<extend name="Public/base" />
+
+
+
+<block name="body">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="main-title cf">
+		<h2>
+			编辑用户[{$data.nickname}]
+		</h2>
+	</div>
+	<!-- 标签页导航 -->
+<div class="tab-wrap">
+	<div class="tab-content">
+	<!-- 表单 -->
+     <form action="{:U('update')}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">昵称</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="nickname" value="{$data.nickname}">
+            </div>
+        </div>
+        <div class="form-item cf">
+            <label class="item-label">用户组<span class="check-tips">(用户分组)</span></label>
+            <div class="controls">
+            <select name="auth_group">
+                <volist name="auth_group" id="ag">
+                    <option value="{$ag.id}" <if condition="$ag.id eq $thisgroup">selected="selected"</if>>{$ag.title}</option>
+                </volist>
+            </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">级别归属
+				<span>（<a href="javascript:;" class="startsel">选择修改</a>，<a href="{:U('clr?uid='.$data[id])}" class="clr ajax-get confirm">清除选择</a>）</span>
+			</label>
+            <div class="controls showthis">
+            	{$jibieinfo}
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">电话</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="mobile" value="{$data.mobile}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">保证金</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="bzj" value="{$data.bzj}">
+            </div>
+        </div>
+		 <div class="form-item">
+			 <label class="item-label">追平属性</label>
+			 <div class="controls">
+				 <select name="zp" class="zp">
+					 <option value="1">追平</option>
+					 <option value="0">正常</option>
+				 </select>
+			 </div>
+		 </div>
+		 <br><br><br>
+        <div class="form-item">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+            <a href="{:U('cshpaypass?uid='.$data[id])}" class="csh confirm ajax-get btn submit-btn" >初始化支付密码</a>
+        </div>
+        
+
+        <input type="hidden" name="id" value="{$data.id}" />
+        <input type="hidden" name="jibie" class="jibie" value="{$jibie}" />
+    </form>
+	</div>
+</div>
+
+<div class="bg" style="display:none;"></div>
+<div class="sel_guishu" style="display:none;">
+    <label>请选择分组:<select class="fenzu"><option value="0">所有分组</option><volist name="auth_group" id="ag"><option value="{$ag.id}">{$ag.title}</option></volist></select>&nbsp;或者&nbsp;<input type="text" class="text like" value="通过电话模糊查找" />&nbsp;&nbsp;<input type="button" value="查询" class="chaxun" class="btn" /><input type="button" value="关闭" class="closethis" /></label>
+    <div class="data-table table-striped">
+    	<table class="">
+    		<thead>
+            	<tr>
+                	<th>编号</th>
+                	<th>用户名</th>
+                	<th>分组</th>
+                	<th>电话号码</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$(".startsel").click(function(){
+		$(".bg").show();
+		$(".sel_guishu").show();
+	});
+	$(".closethis").click(function(){
+		closethis();
+	});
+	function closethis(){
+		$(".bg").hide();
+		$(".sel_guishu").hide();
+		$(".tbody").html("");
+		$(".like").val("通过电话模糊查找");
+	}
+	$(document).on("click",".selthis",function(){
+		var title = $(this).attr("title");
+		var username = $(this).attr("value");
+		var tel = $(this).attr("tel");
+		var jibie = $(this).attr("jibie");
+		var str = jibie+"："+username+"&nbsp;&nbsp;电话："+tel;
+		if(title){
+			$(".jibie").val(title);
+		}
+		$(".showthis").html(str);
+		closethis();
+	});
+	$(".like").focus(function(){
+		if($(this).val()=="通过电话模糊查找"){
+			$(this).val("");
+		}
+	});
+	$(".chaxun").click(function(){
+		var fenzu = $(".fenzu").val();
+		var like = $(".like").val();
+		if(like=="通过电话模糊查找"){
+			like = "";
+		}
+		var url = "{:U('likeuser')}";
+		$.post(url,{
+			group:fenzu,
+			like:like
+		},function(data){
+			$(".tbody").html(data);
+		});
+	});
+});
+</script>
+</block>
+
+<block name="script">
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+highlight_subnav('{:U('User/index')}');
+Think.setValue("type", {$data.type|default='""'});
+Think.setValue("display", {$data.display|default=0});
+Think.setValue("zp", {$zp|default=0});
+$('#submit').click(function(){
+	$('#form').submit();
+});
+
+$(function(){
+    $('.time').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language:"zh-CN",
+        minView:2,
+        autoclose:true
+    });
+    showTab();
+
+	<if condition="C('OPEN_DRAFTBOX') and (ACTION_NAME eq 'add' or $data['status'] eq 3)">
+	//保存草稿
+	var interval;
+	$('#autoSave').click(function(){
+        var target_form = $(this).attr('target-form');
+        var target = $(this).attr('url')
+        var form = $('.'+target_form);
+        var query = form.serialize();
+        var that = this;
+
+        $(that).addClass('disabled').attr('autocomplete','off').prop('disabled',true);
+        $.post(target,query).success(function(data){
+            if (data.status==1) {
+                updateAlert(data.info ,'alert-success');
+                $('input[name=id]').val(data.data.id);
+            }else{
+                updateAlert(data.info);
+            }
+            setTimeout(function(){
+                $('#top-alert').find('button').click();
+                $(that).removeClass('disabled').prop('disabled',false);
+            },1500);
+        })
+
+        //重新开始定时器
+        clearInterval(interval);
+        autoSaveDraft();
+        return false;
+    });
+
+	//Ctrl+S保存草稿
+	$('body').keydown(function(e){
+		if(e.ctrlKey && e.which == 83){
+			$('#autoSave').click();
+			return false;
+		}
+	});
+
+	//每隔一段时间保存草稿
+	function autoSaveDraft(){
+		interval = setInterval(function(){
+			//只有基础信息填写了，才会触发
+			var title = $('input[name=title]').val();
+			var name = $('input[name=name]').val();
+			var des = $('textarea[name=description]').val();
+			if(title != '' || name != '' || des != ''){
+				$('#autoSave').click();
+			}
+		}, 1000*parseInt({:C('DRAFT_AOTOSAVE_INTERVAL')}));
+	}
+	autoSaveDraft();
+
+	</if>
+
+});
+</script>
+</block>

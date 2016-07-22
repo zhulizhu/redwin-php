@@ -1,0 +1,215 @@
+<extend name="Base/common"/>
+
+<block name="Comm_top">
+<div id="cart">
+	<div id="cart_globle_top">
+    	<div class="top_top">
+            <div class="lable"> 欢迎来到99车盟汇！ </div>
+            <div class="sc"><a onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)" title="收藏我们">收藏我们</a></div>
+            <div class="gz"><a  href="{:U('Article/detail?id=572')}" title="关注我们">关注我们</a></div>
+            <if condition="get_nickname() eq null">
+            <div class="log"><a href="{:U('User/login')}" title="请登录">请登录</a></div>
+            <div class="reg"><a href="{:U('User/register')}" title="免费注册">免费注册</a></div>
+            <else/>
+            <div class="log"><a href="{:U('User/index')}" title="{:get_nickname()}">{:get_nickname()}</a></div>
+            <div class="reg"><a href="{:U('User/logout')}" title="退出">【退出】</a></div>
+            </if>
+            <div class="get"><a href="{:U('User/index')}" title="我的夺宝">我的夺宝&nbsp;<span class="icon-chevron-down"></span></a>
+            <div class="get_li">
+                <ul>
+                    <li><a href="{:U('User/index')}" title="夺宝记录">夺宝记录</a></li>
+                    <li><a href="{:U('User/index')}" title="中奖记录">中奖记录</a></li>
+                    <li><a href="{:U('User/index')}" title="个人设置">个人设置</a></li>
+                    <li><a href="{:U('User/index')}" title="个人晒单">个人晒单</a></li>
+                </ul>
+            </div>
+        </div>
+            <script type="text/javascript">
+             $(function(){
+                $("#cart_globle_top .top_top .get").hover(function(){
+                    $(this).find(".get_li").show();
+                },function(){
+                    $(this).find(".get_li").hide();
+                })
+            })
+            </script>
+      </div>
+    </div>
+    <div id="cart_globle_bot">
+        <div class="logo">
+                <a href="{:U('Index/index')}" title="{:C('WEB_SITE_TITLE')}">
+                <img src="__IMG__/logo-reg.png" width="246" height="74" title="{:C('WEB_SITE_TITLE')}"/>	
+                </a>
+        </div>
+        <div class="step1"></div>
+    </div>
+</div>
+</block>
+
+<block name="body">
+<div id="EjMain">
+		<div id="Shopping">
+            <if condition="$NewsList neq null">
+			<table cellpadding="0" cellspacing="0" border="0" id="shopping_table">
+				<tr class="tr1">
+                    <td width="14%">我的购物车</td>
+                    <td width="16%">产品名称</td>
+                    <td width="14%">价值</td>
+                    <td width="14%">夺宝价</td>
+                    <td width="14%">数量</td>
+                    <td width="14%">小计</td>
+                    <td width="14%">操作</td>
+                  </tr>
+                  
+                  <volist name="NewsList" id="data">
+                  	<tr class="table_tr">
+                  		<td><a href="{:U('Product/detail?id='.$data['id'])}"><img src="{$data.cover_id|thumb=64,52}" widht="64" height="52"/></a></td>
+                  		<td class="tit"><a href="{:U('Product/detail?id='.$data['id'])}">{$data.title}</a><em class="people">（总需<i>{$data.total}</i>人次，已参与{$data.join}人次）</em></td>
+                        <td style="display:none;" class="alls">{$data.total}</td>
+                        <td class="val"></td>
+                        <td>{$data.price}夺宝币</td>
+                        <input type="hidden" name="pro_id" class="pro_id" value="{$data.id}" />
+                  		<td>
+               
+                  			<div class="length">
+                  				 <a href="{:U('Shopping/UpdataLength?id='.$data['id'].'&length=Minus')}" class="reduce" >-</a>
+                  				 <input id="pamount" class="pamount" name="pamount" size="1" value="{$data.length}" onchange="Cknum()" disabled="disabled">
+								<a href="{:U('Shopping/UpdataLength?id='.$data['id'].'&length=add')}" class="add">+</a>
+                  			</div>
+                            <div class="tip">购买次数越多中奖机率越大哦！</div>
+                     
+                  		</td>
+                  		<td><input type="hidden" id="price" name="price" value="{$data.price}"/>
+                        	<input type="hidden" name="prices" class="pri" value="{$data.prices}"/>
+                        	<div class="Price">{$data.prices}夺宝币</div>
+                        </td>
+                  		<td><a href="{:U('Shopping/Delete?id='.$data['id'].'')}">删除</a></td>
+                  	</tr>
+                  </volist>
+                  <tr class="tr0">
+                  		<td colspan="7"><em class="count"></em></td>
+                  </tr>
+                   <script>
+						$(function(){
+						  $("#Shopping table .val").each(function(){
+							var alls = $(this).parent().find(".alls").text();
+							var val = alls*10;
+							val=Math.round(val);
+							$(this).html("￥"+val+"/个");
+						  });
+						  var count= 0;
+						  $("#Shopping table .pri").each(function(){
+							var cou = $(this).val();
+							 count +=cou*1;
+						  });
+						  $("#Shopping table .count").html("总计：<i>&nbsp;"+count+"&nbsp;</i>夺宝币&nbsp;&nbsp;&nbsp;&nbsp;");
+						});
+						function Cknum(){
+							var rest =  $("#detail .Parameters .info .canshu").find(".n2").text()*1;
+							var shopnum = $("#shopnum").val();
+							if(shopnum>rest){
+								$("#shopnum").val(rest);
+							}
+						}
+				   </script>
+			</table>
+			<div class="Settlement">
+				<a class="checkout" href="javascript:;" title="提交订单">提交订单</a>
+                <script type="text/javascript">
+				$(function(){
+					$(".checkout").click(function(){
+						var index = 0 ;
+						$("#shopping_table .pamount").each(function(){
+							
+							var num = $(this).val();
+							if(parseInt(num)<1){
+								index = index +1;
+							}
+						});
+						if(index==0){
+							window.location.href = "{:U('Shopping/Settlement')}";
+						}else{
+							alert("您的购物车里有数量为0的产品！");
+						}						
+					});
+				});
+				//{:U('Shopping/Settlement')}
+                </script>
+                <script type="text/javascript">
+					$(function(){
+						setInterval(function(){
+							$("#shopping_table .table_tr").each(function() {
+                                var pro_id = $(this).find(".pro_id").val();
+								var pro_num = $(this).find('.pamount').val();
+								var pro_nums = $(this).find('.pamount').val();
+								var description = $(this).find('.tip').val();
+								var url = "{:U('pro_flash')}";
+								$.ajax({
+									url:url,
+									type:'POST',
+									data:"pro_id="+pro_id,
+									async:false,
+									success:function(result){
+										result = parseInt(result);
+										if(result<pro_num){
+											pro_num = result;
+											$(this).find('.tip').val("当前奖品已经超出总需人数，请删除选择其他产品");
+										}
+									}
+								});
+								if(pro_num!=pro_nums){
+									$(this).find('.pamount').val(pro_num);
+									if(pro_num != 0){
+										$.ajax({
+											url:"{:U('Shopping/UpdataCarts')}",
+											type:'POST',
+											data:"id="+pro_id+"&$length"+pro_num,
+											async:false,
+											success:function(result){
+											}
+										});
+									}
+								}
+                            });
+						},3000);	
+					});    
+                </script>
+                
+			</div>
+            <else/>
+            <table cellpadding="0" cellspacing="0" border="0">
+				<tr class="tr1">
+                    <td width="14%">我的购物车</td>
+                    <td width="16%">产品名称</td>
+                    <td width="14%">价值</td>
+                    <td width="14%">夺宝价</td>
+                    <td width="14%">数量</td>
+                    <td width="14%">小计</td>
+                    <td width="14%">操作</td>
+                </tr>
+                <tr>
+                	<td><h3>空空如也。。。</h3></td>
+                </tr>
+                </table>
+            <div class="Settlement">
+				<a class="continue" href="{:U('Index/index')}" title="去买奖品">去买奖品</a>
+			</div>
+            </if>
+		</div>
+      </div>
+      <div id="reco">
+                	<div class="tit"><h2>推荐奖品</h2></div>
+                    <div class="pro">
+                    	<ul>
+                        <volist name="reco" id="list" offset="0" length="5">
+                        	<li>
+                            	<a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}"><img src="{$list.cover_id|thumb=227,183}" width="227" height="183"/></a>
+                                <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}" class="title">{$list.title}</a>
+                                <div class="people">总需:{$list.total}人次<span>仅剩:{$list.diff}人次</span></div>
+                            </li>
+                        </volist>
+                        </ul>
+                    </div>
+                </div>
+
+</block>

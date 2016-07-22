@@ -1,0 +1,10 @@
+<div id="WebNewsList">
+	<ul>
+		<volist name="News_list" id="data">
+		<li>
+			<em><a href="{:U('Article/detail?id='.$data['id'])}" title="{$data.title}">{$data.title}</a></em>
+			<span>{$data.create_time|date='Y-m-d',###}</span>
+		</li>
+		</volist>
+	</ul>
+</div>

@@ -1,0 +1,35 @@
+<extend name="Public/base" />
+
+<block name="body">
+<style>
+.track_list
+{ width:90%; margin:0px auto;}
+.track_list ul
+{ list-style:none;}
+.track_list ul li
+{ border-bottom:1px dashed #ccc; padding-top:10px;}
+</style>
+<div class="track_list">
+	<eq name="error" value="1" >
+        <h3 style=" text-align:center; font-size:14px;">暂未发货，正在为您备货，请耐心等候</h3>
+    <else/>
+    
+    <h4 style="font-size:16px;">快递公司：{$info.express_com}&nbsp;快递单号：{$info.expressnum}</h4>
+    <eq name="result.message" value="ok">
+    <ul>
+    	<volist name="result.data" id="list">
+    	<li>
+        	<p><strong>时间：</strong>{$list.time}</p>
+            <p><strong>内容：</strong>{$list.context}</p>
+        </li>
+        </volist>
+    </ul>
+    <else/>
+    	<h4 style="text-align:center; font-weight:normal; margin-top:10px;">系统未获取到最新信息</h4>
+    </eq>
+    
+    </eq>
+</div>
+
+</block>
+<block name="footer"></block>

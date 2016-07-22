@@ -1,0 +1,307 @@
+<extend name="Base/common"/>
+
+<block name="body">
+
+
+<link rel="stylesheet" href="__PUBLIC__/Wechat/mslide/css/idangerous.swiper.css">
+<link rel="stylesheet" href="__PUBLIC__/Wechat/mslide/css/swiper-demos.css?v=1.8">
+
+
+<div class="header">
+	<a href="__SELF__"><img src="__IMG__/logo.jpg" /></a>
+</div>
+<style>
+.index-slide .con
+{ width:100%;  overflow:hidden;}
+.index-slide .con ul
+{ width:999em; height:100%; list-style:none;}
+.index-slide .con ul li
+{ width:100%; height:100%; float:left; position:relative;}
+</style>
+
+<div class="index-slide" <eq name="slide_status" value="0">style="display:none;"</eq> >
+	<div class="con">
+    	<ul>
+        	<volist name="ads" id="list">
+        		<li class="slideli"><a href="{$list.url}"><img src="{$list.picture|picture}"/></a></li>
+            </volist>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(function(){
+		var slide_index = 0;
+		var slide_count = $(".slideli").length;
+		var w = $(".slideli").width();
+		setInterval(function(){
+			if(slide_index<slide_count-1){
+				$(".slideli").animate({"left":"-="+w+"px"});
+				slide_index = slide_index + 1;
+			}else{
+				$(".slideli").animate({"left":"0px"});
+				slide_index = 0;
+			}
+			
+		},2000);
+	});
+</script>
+
+
+<div class="index-search">
+	<form action="{:U('Product/search')}" method="get" class="search-form">
+	<div class="left">
+    	<input type="text" name="key" class="key" value="请输入您所需要的" style="color: #333;" />
+    </div>
+    <div class="right">
+    	<input type="submit" value="搜索" />
+    </div>
+    </form>
+</div>
+	<div style=" clear:both;height:10px;">&nbsp;</div>
+<script>
+$(function(){
+	$(".search-form").submit(function(){
+		var key = $(".key").val();
+		if(key=="请输入您所需要的" || key==""){
+			$(".key").focus();
+			return false;
+		}
+	});
+	$(".key").focus(function(){
+		if($(this).val()=="请输入您所需要的"){
+			$(this).val("");
+		}
+	});
+});
+</script>
+
+	<style>
+		.seckill{
+			clear: both;
+			width: 94%;
+			height: auto;
+			margin: 0px auto;
+		}
+		.seckill .head{
+			width: 100%;
+			height: 50px;
+			position: relative;
+		}
+		.seckill .head .bg{
+			width: 100%;
+			height: auto;
+			z-index: 1;
+			position: absolute;
+			left:0px;
+			top:0px;
+		}
+		.seckill .head .bg img{
+
+		}
+		.seckill .head .time{
+			width: 40%;
+			position: absolute;
+			right: 0px;
+			top:8px;
+			z-index: 2;
+		}
+		.seckill .time div{
+			float: left;
+		}
+		.seckill .time .dian{
+			width: 4px;
+			height: 18px;
+			background: url(__IMG__/msdian.png) no-repeat;
+			margin: 5px 10px;
+		}
+		.seckill .time .ms{
+			width: 26px;
+			height: 29px;
+			background: url("__IMG__/mstime.png") no-repeat;
+			color: #fff;
+			line-height: 29px;
+			text-align: center;
+		}
+	</style>
+	<if condition="$seckill eq true">
+		<style>
+			.seckill ul li{
+				width: 96%;
+				position: relative;
+			}
+			.seckill ul li .right a{
+				width: 80px;
+				height: 35px;
+				display: block;
+				line-height: 35px;
+				background: #ff4b90;
+				color: #fff;
+				border-radius: 6px;
+				position: absolute;
+				right:10px;
+				bottom: 10px;
+			}
+		</style>
+		<div class="seckill">
+			<div class="list">
+				<ul>
+					<volist name="seclist" id="seclist">
+						<li>
+							<div class="img"><a href="{:U('Product/detail?id='.$seclist['id'])}"><img src="{$seclist.cover_id|thumb=260,260}" class="img-responsive" /></a></div>
+							<div class="info">
+								<div class="title"><a href="{:U('Product/detail?id='.$seclist['id'])}">{$seclist.title}</a></div>
+								<div class="bottom">
+									<div class="left">
+										<p class="price" style="font-size: 16px;">秒杀价：￥{$seclist.proid|auto_price}</p>
+									</div>
+									<div class="right" style="">
+										<a href="{:U('Product/detail?id='.$seclist['id'])}">去抢购</a>
+									</div>
+									<div class="time" style="clear: both; margin-top: 30px;">
+										<div class="hour ms">00</div>
+										<div class="dian"></div>
+										<div class="fen ms">00</div>
+										<div class="dian"></div>
+										<div class="miao ms">00</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</volist>
+				</ul>
+			</div>
+			<script>
+				$(function(){
+					setInterval(function(){
+						$.get("{:U('server_time?end_time='.$seckill['end_time'])}",function(time){
+							$(".seckill .hour").html(time[0]);
+							$(".seckill .fen").html(time[1]);
+							$(".seckill .miao").html(time[2]);
+						});
+					},1000);
+				});
+			</script>
+		</div>
+	</if>
+
+	<div style=" clear:both;height:10px;">&nbsp;</div>
+	<div style="width:94%; margin:0px auto;">
+		<a href="{$zhiding.url}"><img src="{$zhiding.picture|picture}"  <eq name="zhiding_status" value="0">style="display:none;"<else/>style="width:100%;"</eq> /></a>
+	</div>
+	<div style=" clear:both;height:10px;">&nbsp;</div>
+	<div style="width:94%; margin:0px auto;">
+		<a href="{$mrthq.url}"><img src="{$mrthq.picture|picture}"  <eq name="mrthq_status" value="0">style="display:none;"<else/>style="width:100%;"</eq> /></a>
+	</div>
+<div style=" clear:both;height:10px;">&nbsp;</div>
+<div style="width:94%; margin:0px auto;">
+<a href="{$gg.url}"><img src="{$gg.picture|picture}"  <eq name="ggstatus" value="0">style="display:none;"<else/>style="width:100%;"</eq> /></a>
+</div>
+<!--暂时关闭精品推荐
+<div class="index-jp">
+	<div class="head">
+    	<div class="bg">精品推荐</div>
+    </div>
+    <div class="con">
+    	<div class="swiper-container swiper-loop" style="margin:0px; height:auto;">
+        <div class="pagination-loop"></div>
+        <div class="swiper-wrapper">
+          <volist name="jingcai" id="jclist">
+          <div class="swiper-slide">
+          	<img src="{$jclist.cover_id|picture}" style=" height:90%; border:1px solid #ccc; border-radius:5px; vertical-align:top;" />
+          </div>
+          </volist>
+        </div>
+      </div>
+    </div>
+</div>
+-->
+
+
+<div class="index-href" <eq name="jp_status" value="0">style="display:none;"</eq> >
+	<a href="{$jpads.url}"><img src="{$jpads.picture|picture}" /></a>
+</div>
+
+<div class="index-bk">
+	<div class="head">
+    	<div class="bg"><span class="title">当季推荐</span><span class="more"><a href="">MORE》</a></span></div>
+    </div>
+    <div class="con">
+    	<div class="top" <eq name="dj_status" value="0">style="display:none;"</eq> ><a href="{$djads.url}"><img src="{$djads.picture|picture}" /></a></div>
+        <div class="box">
+        	<ul>
+            	<volist name="baokuan" id="list">
+            	<li>
+                	<div class="img"><a href="{:U('Product/detail?id='.$list['id'])}"><img src="{$list.cover_id|thumb=260,260}" class="img-responsive" /></a></div>
+                    <div class="info">
+                    	<div class="title"><a href="{:U('Product/detail?id='.$list['id'])}">{$list.title}</a></div>
+                        <div class="bottom">
+                        	<div class="left">
+                            	<p class="price">会员价 ￥{:auto_price($list['id'])}</p>
+                                <p class="scj">市场价 ￥{$list.price}</p>
+                            </div>
+                            <div class="right">
+                            	总销量<br /><span>{$list.xiaoliang}</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<volist name="catelist" id="list">
+<div class="index-list">
+	<div class="head">
+    	<div class="bg"><span class="title">{$list.title}</span><span class="more"><a href="{:U('Product/lists?category='.$list['name'])}">MORE》</a></span></div>
+    </div>
+    <div class="con">
+    	<neq name="list.pid" value="306">
+    	<div class="top"><a href="{$list.url}"><img src="{$list.icon|picture}" /></a></div>
+        </neq>
+        <div class="box">
+        	<ul>
+            	<volist name="list.list" id="prolist">
+            	<li>
+                	<div class="img"><a href="{:U('Product/detail?id='.$prolist['id'])}"><img src="{$prolist.cover_id|thumb=260,260}" class="img-responsive" /></a></div>
+                    <div class="info">
+                    	<div class="title"><a href="{:U('Product/detail?id='.$prolist['id'])}">{$prolist.title}</a></div>
+                        <div class="bottom">
+                        	<div class="left">
+                            	<p class="price">会员价 ￥{:auto_price($prolist['id'])}</p>
+                                <p class="scj">市场价 ￥{$prolist.price}</p>
+                            </div>
+                            <div class="right">
+                            	总销量<br /><span>{$prolist.xiaoliang}</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+</volist>
+<script>
+var wh = $(window).width();
+if(wh>680){
+	wh = 680;
+}
+
+$(".slideli img").css({"width":wh});
+var h = $(".slideli img").height();
+$(".index-slide .con").css({"height":h+"px"});
+$(".index-slide .con ul").css({"height":h+"px"});
+$(".slideli").css({"width":wh});
+</script>
+<!-- Swiper -->
+<script  src="__PUBLIC__/Wechat/mslide/js/idangerous.swiper-1.9.1.min-index.js"></script>
+<!-- Swiper Scrollbar plugin -->
+<script  src="__PUBLIC__/Wechat/mslide/js/idangerous.swiper.scrollbar-1.2.js"></script>
+<!-- Demos code -->
+<script  src="__PUBLIC__/Wechat/mslide/js/swiper-demos.js"></script>
+
+</block>

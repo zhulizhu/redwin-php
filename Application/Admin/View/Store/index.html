@@ -1,0 +1,11 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<iframe src="http://{:Server_domain}/user/domainlogin.html" frameborder="0" style="margin:0px; padding:0px; width:100%;" class="store"></iframe>
+    <script>
+    $(function(){
+		var height= $(document).height()-150;
+		$(".store").css({"height":height});
+	})
+    </script>
+</block>

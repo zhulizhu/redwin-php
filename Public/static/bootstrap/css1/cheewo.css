@@ -1,0 +1,10 @@
+body
+{ font-family: "微软雅黑","Helvetica Neue", Helvetica, Arial, sans-serif; }
+.text-danger
+{ color:#FF7000;}
+.container
+{ width:1002px;}
+.logo
+{height:130px; overflow:hidden; line-height:130px;}
+.logo .tel
+{ line-height:20px; margin-top:20px;}

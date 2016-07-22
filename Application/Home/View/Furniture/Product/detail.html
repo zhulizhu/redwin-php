@@ -1,0 +1,341 @@
+<extend name="Base/common"/>
+<block name="title">{$info.title}- 99车盟汇</block>
+<block name="body">
+<SCRIPT src="__PUBLIC__/Home/cheewo/js/jquery-1.2.6.pack.js" type=text/javascript></SCRIPT>
+<SCRIPT src="__PUBLIC__/Home/cheewo/js/163css.base.js" type=text/javascript></SCRIPT>
+<div id="Ej_main" class="prolists">
+	<!--当前位置-->
+    <include file="Public/Address"/>
+    <!--右侧-->
+    	<form name="form1" action="{:U('Shopping/UpdateCart')}" method="post">
+        	<div class="detail" id="detail">
+            	<!--产品参数-->
+                <div class="Product_Parameters">
+                    <!--相册放大   代码开始-->       
+                    <div id="preview">
+                        <div class="jqzoom" id="spec-n1">
+                        <IMG height="402"  width="432" src="{$info.cover_id|thumb=432,402}" jqimg="{$info.cover_id|thumb=600,600}">
+                        </div>
+                        <div id="spec-n5">
+                            <div class="control" id="spec-left">
+                            <img src="__IMG__/left.gif" />
+                            </div>
+                            <div id="spec-list">
+                                <ul class="list-h">
+                                	<li>
+                                    	<img src="{$info.cover_id|thumb=73,59}" sqimg="{$info.cover_id|thumb=432,402}" jqimg="{$info.cover_id|thumb=600,600}" width="73" height="59" alt="{$info.title}" />
+                                    </li>
+                                    <volist name="picture" id="picList">
+                                    <li>
+                                    	<img src="{$picList.id|thumb=73,59}" sqimg="{$picList.id|thumb=432,402}" jqimg="{$picList.photo}" width="73" height="59" alt="{$info.title}" />
+                                    </li>
+                                    </volist>
+                                </ul>
+                            </div>
+                            <div class="control" id="spec-right">
+                            <img src="__IMG__/right.gif" />
+                            </div>
+                        </div>
+                        <div id="bdshare" class="bdshare_b fx share"><img width="18" height="18" src="__IMG__/fx.png"/>分享 </div>
+                        <script id="bdshare_js" type="text/javascript" data="type=button&uid=664845" src="http://bdimg.share.baidu.com/static/js/bds_s_v2.js?cdnversion=381133"></script>
+					    <script type="text/javascript">
+                        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + new Date().getHours();
+                        </script> 
+                    </div>
+                    <!--代码结束-->
+                    
+                    <div class="Parameters">
+                    	
+                      <div class="info">
+                      <input type="hidden" name="id" value="{$info.id}">
+                          <div class="title">
+                              <h2>（{$info.periods}）{$info.title}</h2>
+                              <span>{$info.title}</span>
+                          </div>
+                          <div class="canshu">
+                              <div class="need">总需：<span class="n3">{$info.total}</span>人次
+                                <div class="price">价值：<span class="n5" style="color:#d50505;"></span></div></div>
+                                <div class="bar_bg">
+                                <div class="bar">
+                                    <img width="407" height="15" src="__PUBLIC__/home/cheewo/images/bar1.png" />
+                                </div>
+                                </div>
+                                <div class="num">
+                                    <span class="le">
+                                    <p class="n1">{$info.join}</p>
+                                    <p>已参与人次</p>
+                                    </span>
+                                    <span class="ri">
+                                    <p class="n2"></p>
+                                    <p>剩余人次</p>
+                                    </span>
+                                </div>
+                        <script>
+						$(function(){
+						    var pro = $("#detail .Parameters .info .canshu");
+							var n3 = pro.find(".n3").text();
+							var n1 = pro.find(".n1").text();
+							var n2 = n3*1-n1*1;
+							pro.find(".n2").html(n2);
+							var n4 = n1/n3*100;
+							pro.find(".bar").css("width",n4+"%");
+							var n5 = n3*10;
+							n5=Math.round(n5); 
+							pro.find(".n5").html(n5);
+							
+						});
+						function Cknum(){
+							var rest =  $("#detail .Parameters .info .canshu").find(".n2").text()*1;
+							var shopnum = $("#shopnum").val();
+							if(shopnum>rest){
+								$("#shopnum").val(rest);
+							}
+						}
+						</script>
+                          </div>
+                          <div class="buydiv">
+                              <ul>
+                                  <li>
+                                      <div class="lbox">参与：</div>
+                                 
+                                      <div class="rbox">
+                                      <div class="buynum">
+                                      <a href="javascript:lengthUpdate('jian')" id="jian" class="jian" title="减少">-</a>
+                                      <input type="text" id="shopnum" name="shopnum" class="shopnum" value="1" onchange="Cknum()" />
+                                      <a href="javascript:lengthUpdate('jia')" id="jia" class="jia" title="增加">+</a>
+                                      </div>
+                                      <script type="text/javascript">
+                                      function lengthUpdate(kind){
+                                      var f = document.form1;
+                                      var c = f.shopnum.value;
+									  var rest = $("#detail .Parameters .info .canshu").find(".n2").text()*1;
+                                      if(kind == "jia"){
+										  if(c<rest){
+											   c++;
+										  }else{
+											 f.shopnum.value=rest; 
+										  }
+                                     
+                                      }else if(kind == "jian"){
+                                      if(c > 1) c--;
+                                      }
+                                      f.shopnum.value = c;
+                                      }
+                                      </script>
+                                     人次<span>购买次数越多中奖机率越大哦！</span>
+                                      </div>
+                                    
+                                  </li>
+                                  <li class="buybtn">
+                                  		<if condition="$Supplier !=0" >
+                                        	 <if condition="$category['id'] eq 281"><div class="tips">参与人次需是十的倍数哦！</div></if>
+                                        	 <a href="javascript:form1.submit();" title="立即购买"><input class="le" type="image" src="__IMG__/btn_left.png" width="191" height="48" /></a>
+                                      		 <a href="javascript:form1.submit();" title="加入清单"><input class="ri" type="image" src="__IMG__/btn_right.png" width="191" height="48"/></a>
+                                        <else/>
+                                        	 <a href="#"><input type="image" src="__IMG__/btn_left.png" width="191" height="48" /></a>
+                                    		 <a href="#"><input type="image" src="__IMG__/btn_right.png" width="191" height="48" /></a>
+                                        </if>
+                                  </li>
+                              </ul>
+                          </div>
+                          <div class="result">
+                              <ul>
+                              	<li class="r1">公平公正公开</li>
+                                <li class="r2">正品保障</li>
+                                <li class="r3">权益保障</li>
+                              </ul>
+                          </div>
+                          <div class="login">
+                          <if condition="get_nickname() eq null">
+                          	<a href="{:U('User/login')}" title="请登录">请登录</a>，查看您的夺宝号码
+                            
+                          <else/>
+                           <a href="{:U('User/index')}" title="{:get_nickname()}">{:get_nickname()}</a>，查看您的夺宝号码
+                          </if>
+                          </div>
+                      </div>
+                       <div class="reward">
+                       		<div class="reward_t">
+                            	<h2>开奖信息</h2>
+                                <if condition="$award neq null">
+                                 <div class="photo"><img src="{$award.photo|thumb=82,82}" width="82" height="82" /></div>
+                                    <ul>
+                                        <li>恭喜<span>{:get_nickname($award['awarduser'])}</span>获得该期奖品</li>
+                                        <li>用户ID：{$award.awarduser}（用户唯一标识符）</li>
+                                        <li>幸运号码：<span>{$award.awardnum}</span></li>
+                                        <li>本次参与：{$award.join_count}人次</li>
+                                        <li>揭晓时间：{:microtime_format('Y-m-d H:i:s.x',$award['update_time'])}</li>
+                                        <li>夺宝时间：{:microtime_format('Y-m-d H:i:s.x',$award['join_time'])}</li>
+                                    </ul>
+                                    <a href="{:U('Product/detail?id='.$award['id'])}" title="查看详情" class="look">查看详情</a>
+                                	
+                                <else/>
+                                   <img src="__IMG__/none.png" width="260" height="254" />
+                                </if>
+                            </div>
+                            <div class="reward_b">
+                            	<ul>
+                                <if condition="$periods eq null">
+                                <div class="none">暂无内容</div>
+                                <else/>
+                                <volist name="periods" id = "list" offset="0" length="12">
+                                	<li><a href="javascript:void(0)" title="{$list.periods}" id="{$list.id}" >{$list.periods}</a></li>
+                                </volist>
+                                </if>
+                                </ul>
+                              <!--  <div class="page">
+                                <a href="" class="down" title="下一页">下一页</a>
+                                <a href="" class="up" title="上一页">上一页</a>
+                                </div>-->
+                            </div>
+                            <script type="text/javascript">
+							function getAward(id){
+								$.ajax({
+									type:"GET",
+									url:"{:U('getAward')}?id="+id,
+									success:function(data){
+										var data = '('+data+')';
+										var dataObj=eval(data);
+										var str = "";
+										str+='<h2>开奖信息</h2><div class="photo"><img src="'+dataObj.photo+'" width="82" height="82" /></div>';
+										str+='<ul><li>恭喜<span>'+dataObj.awardusername+'</span>获得该期奖品</li>';
+										str+='<li>用户ID：'+dataObj.awarduser+'（用户唯一标识符）</li><li>幸运号码：<span>'+dataObj.awardnum+'</span></li>';
+										str+=' <li>本次参与：'+dataObj.join_count+'人次</li><li>揭晓时间：'+dataObj.update_time+'</li>';
+										str+=' <li>夺宝时间：'+dataObj.join_time+'</li></ul>';
+										str+='<a href="'+dataObj.url+'" title="查看详情" class="look">查看详情</a>';
+										$(".reward .reward_t").html(str);
+										
+									},
+									error:function(){
+										
+									}
+									});
+							}
+							$(".reward .reward_b ul li a").click(function(){
+								var id = $(this).attr("id");
+								 getAward(id);
+								});								
+                            </script>
+                       </div>
+                    </div>
+                </div>
+                <div id="content">
+            	<div class="head">
+                    <h3 class="active">奖品详情</h3>
+                    <h3>所有参与记录</h3>
+                    <h3>晒单</h3>
+                </div>
+                <div class="content">
+                	<div class="box1" style="display:block;">{$info.content}</div>
+                    <div class="box2">
+                    	<div class="record">
+                        <if condition="$ordlist[0]['create_time'] neq null">
+                        	<h2>{$ordlist[0]['create_time']|date='Y-m-d',###}</h2>
+                            <ul>
+                            <volist name="ordlist" id="list">
+                            	<li>
+                                	<div class="date">{:microtime_format("Y-m-d H:i:s.x", $list['create_time'])}</div>
+                                    <div class="little-p"><img src="{$list.photo|thumb=20,20}" width="20" height="20" /></div>
+                                    <div class="info"><span>{$list.nickname}</span>购买了<em>{$list.length}</em>人次</div>
+                                </li>
+                             </volist>
+                            </ul>
+                       <else/>
+                       </if>
+                        </div>
+                    </div>
+                    <div class="box3">
+                    	<div class="sai">
+                        	<ul>
+                            	 <volist name="uPrints" id="list">
+                            	<li>
+                                	<div class="photo"><img src="{$list.photo|thumb=82,82}" width="82" height="82" /><h3>{$list.nickname}</h3></div>
+                                    <div class="cont">
+                                    	<div class="cont-t">
+                                        	<h2><span>{$list.periods}&nbsp;&nbsp;</span>{$list.title}</h2>
+                                            <h4>2015-03-26</h4>
+                                        </div>
+                                        <div class="cont-m">{$list.say}</div>
+                                        <div class="cont-b">
+                                        <volist name="list['pic']" id = "li">
+                                        	<img src="{$li|thumb=138,135}" width="138" height="135" />
+                                        </volist>
+                                        </div>
+                                    </div>
+                                </li>
+                               </volist>
+                            </ul>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            	<div id="reco">
+                	<div class="tit"><h2>推荐奖品</h2></div>
+                    <div class="pro">
+                    	<ul>
+                        <volist name="reco" id="list" offset="0" length="5">
+                        	<li>
+                            	<a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}"><img src="{$list.cover_id|thumb=227,183}" width="227" height="183"/></a>
+                                <a href="{:U('Product/detail?id='.$list['id'])}" title="{$list.title}" class="title">{$list.title}</a>
+                                <div class="people">总需:{$list.total}人次<span>仅剩:{$list.diff}人次</span></div>
+                            </li>
+                        </volist>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </form>
+</div>
+<SCRIPT type=text/javascript>
+$(function(){			
+ $(".jqzoom").jqueryzoom({
+	  xzoom:432,
+	  yzoom:402,
+	  offset:10,
+	  position:"right",
+	  preload:1,
+	  lens:1
+  });
+  $("#spec-list").jdMarquee({
+	  deriction:"left",
+	  width:432,
+	  height:61,
+	  step:2,
+	  speed:4,
+	  delay:10,
+	  control:true,
+	  _front:"#spec-right",
+	  _back:"#spec-left"
+  });
+  $("#spec-list img").bind("mouseover",function(){
+	  var src=$(this).attr("src");//地址
+	  var jqimg=$(this).attr("jqimg");//原图
+	  var sqimg=$(this).attr("sqimg");//432*402
+	  $("#spec-n1 img").eq(0).attr({
+		  src:sqimg.replace("\/n5\/","\/n1\/"),
+		  jqimg:jqimg.replace("\/n5\/","\/n0\/")
+	  });
+	  $(this).css({
+		  "border":"1px solid #ff6600",
+		  "margin":"0px 3.7px"
+	  });
+  }).bind("mouseout",function(){
+	  $(this).css({
+		  "border":"1px solid #cacaca",
+		  "margin":"0px 3.7px"
+	  });
+  });
+  /*奖品内容*/
+  var menu = $("#content .head h3"); 
+  menu.click(function(){
+       $(this).addClass("active") 
+       .siblings().removeClass("active"); 
+        var index = menu.index( $(this) ); //找到h3子节点的索引
+        $("#content .content > div").eq(index).show() 
+        .siblings().hide();   
+    }); 				
+})
+</SCRIPT>
+<SCRIPT src="__PUBLIC__/Home/cheewo/js/163css.lib.js" type=text/javascript></SCRIPT>
+<SCRIPT src="__PUBLIC__/Home/cheewo/js/163css.js" type=text/javascript></SCRIPT>
+</block>

@@ -1,0 +1,118 @@
+<extend name="Base/common" />
+<block name="title">99车盟汇 - 安全中心</block>
+<block name="Comm_top">
+<div id="register_top">
+    	<div class="top_regis">
+            <div class="lable"> 欢迎来到99车盟汇！ </div>
+            <div class="sc"><a onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)" title="收藏我们">收藏我们</a></div>
+            <div class="gz"><a  href="{:U('Article/detail?id=572')}" title="关注我们">关注我们</a></div>
+        </div>
+ </div>
+</block>
+<block name="body">
+ <div id="forget_pwd">
+    <div id="safe_head">
+    <h1>
+    <a class="logo_tb" href="{:U('Index/index')}" title="{:C('WEB_SITE_TITLE')}">99车盟汇</a>
+    <em class="logo_aq">安全中心</em>
+    </h1> 
+    </div>  
+    <div id="content">
+    <div class="password_box">
+    	<div class="hd">
+        <h2 class="hd_title">找回密码</h2>
+        </div>
+        <div class="bd">
+        <div class="password">
+        	<div class="flowsteps">
+            <ol class="num4">
+            <li class="first current">
+            	<span>
+                	<i>1</i>
+                    <em>输入账户名</em>
+                </span>
+            </li>
+            <li>
+            	<span>
+                	<i>2</i>
+                    <em>验证身份</em>
+                </span>
+            </li>
+            <li>
+                <span>
+                	<i>3</i>
+                    <em>重置密码</em>
+                </span>
+            </li>
+            <li class="last">
+                <span>
+                	<i>4</i>
+                    <em>完成</em>
+                </span>
+            </li>
+            </ol>
+            </div>
+            <div class="list">
+            <form method="post" action="__SELF__" onsubmit="return CkUser(this);">
+            <table border="0" cellpadding="0" cellspacing="10">
+            <tr>
+            	<td><span>账户名：</span></td>
+                <td colspan="2"><input type="text" name="user_name" id="user_name" class="user_name"  placeholder="请输入昵称\手机号" /></td>
+            </tr>
+            <tr></tr>
+            <tr>
+            	<td><span>验证码：</span></td>
+                <td><input type="text" id="inputPassword" size="10" class="span3 verify" name="verify"></td>
+                <td><img class="verifyimg reloadverify" alt="点击切换" src="{:U('verify')}" width="120" height="40"></td>
+            </tr>
+            <tr>
+            <td></td>
+            <td colspan="2"><input type="submit" value="下一步" class="next"></td>
+            </tr>
+            </table>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+ </div>
+ <script type="text/javascript">
+ 	
+	$("form").submit(function(){
+    		var self = $(this);
+    		$.post(self.attr("action"), self.serialize(), success, "json");
+
+    		function success(data){
+    			if(data.status){
+    				window.location.href = data.url;
+    			} else {
+    				self.find(".Validform_checktip").text(data.info);
+    				//刷新验证码
+    				$(".reloadverify").click();
+    			}
+    		}
+    	});
+
+		$(function(){
+			var verifyimg = $(".verifyimg").attr("src");
+            $(".reloadverify").click(function(){
+                if( verifyimg.indexOf('?')>0){
+                    $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
+		});
+		$(function(){
+			var verifyimg = $(".verifyimg").attr("src");
+            $(".reloadverify").click(function(){
+                if( verifyimg.indexOf('?')>0){
+                    $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
+	});
+ </script>
+</block>

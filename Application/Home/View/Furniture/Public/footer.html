@@ -1,0 +1,70 @@
+<block name="Comm_Copyright">
+<div id="Comm_Copyright">
+<div id="Comm_bottom">
+	<div id="globle_bottom">
+    	<div class="bottom_Nav">
+    		<ul>
+    			<li><a class="nav1" href="{:U('Article/detail?id=731')}" title="新手指南">新手指南</a>
+                	<ul>
+                    	<article:lists typeid="144" row="4">
+                        <li><a href="{:U('Article/detail?id='.$list[id])}" title="{$list.title}">{$list.title}</a></li>
+                        </article:lists>
+                    </ul>
+                </li>
+    			<li><a class="nav2" href="{:U('Article/detail?id=550')}" title="夺宝保障">夺宝保障</a>
+                	<ul>
+                    	<article:lists typeid="145" row="4">
+                        <li><a href="{:U('Article/detail?id='.$list[id])}" title="{$list.title}">{$list.title}</a></li>
+                        </article:lists>
+                    </ul>
+                </li>
+    			<li><a class="nav3" href="{:U('Article/detail?id=554')}" title="奖品配送">奖品配送</a>
+                	<ul>
+                    	<article:lists typeid="146" row="4">
+                        <li><a href="{:U('Article/detail?id='.$list[id])}" title="{$list.title}">{$list.title}</a></li>
+                        </article:lists>
+                    </ul>
+                </li>
+    			<li><a class="nav4" href="{:U('Article/detail?id=795')}" title="友情链接">友情链接</a>
+                	<ul>
+                    	<article:lists typeid="147" row="4">
+                        <li><a href="{:U('Article/detail?id='.$list[id])}" title="{$list.title}">{$list.title}</a></li>
+                        </article:lists>
+                    </ul>
+                </li>
+    		</ul>
+    	</div>
+        <div class="bottom_aq">
+        	<div class="gz">
+            	<ul>
+                	<li class="gz1">100%公平公正公开</li>
+                    <li class="gz2">100%正品保证</li>
+                    <li class="gz3">100%权益保障</li>
+                </ul>
+            </div>
+            <div class="wx"><img src="__PUBLIC__/home/cheewo/images/wx.png" width="100" height="100" /><span>99车盟汇微信公众号</span></div>
+            <div class="yj"><p>周一至周五：9:00-17:30</p><p style="font-size:12px;">意见反馈请拨打<a style="font-size:14px;">028-83519767</a></p></div>	
+        </div>
+    </div>
+     <div class="Copyright">
+        	<p><a href="{:U('Article/detail?id=560')}" title="关于99车盟汇">关于99车盟汇</a><a href="{:U('Article/detail?id=559')}" title="邮箱官方博客">邮箱官方博客</a><a href="{:U('Article/detail?id=561')}" title="客户服务">客户服务</a><a href="{:U('Article/detail?id=562')}" title="隐私协议">隐私协议</a>
+            <span>|&nbsp;&nbsp;&nbsp;&nbsp;蜀ICP备15011439号&nbsp;&nbsp;&nbsp;&nbsp;99车盟汇公司版权所有2003-2020</span></p>
+     </div>
+</div> 
+</div>
+<include file="Public/var"/>
+<block name="script">
+<script src="__STATIC__/jquery.lazyload.js"></script>
+<script>
+$(function(){
+	$("img.lazy").lazyload();
+})
+</script>
+</block> <!-- 用于加载js代码 -->
+<!-- 页面footer钩子，一般用于加载插件JS文件和JS代码 -->
+{:hook('pageFooter', 'widget')}
+<div class="hidden"><!-- 用于加载统计代码等隐藏元素 -->
+	<block name="hidden"></block>
+</div>
+</block>
+

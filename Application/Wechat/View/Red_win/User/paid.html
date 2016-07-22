@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>待支付</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+    <script rel="script" type="text/javascript" src="../../js/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <script rel="script" type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            font-family: Consolas, '微软雅黑';
+    </style>
+</head>
+<body>
+<nav class="nav" id="nav_bar">
+    <ul class="list-inline">
+        <a href="all_order.html">
+            <li class="col">
+                全部
+            </li>
+        </a>
+        <a href="paid.html">
+            <li class="col pub_li">
+                待付款
+            </li>
+        </a>
+        <a href="product_pay_off.html">
+            <li class="col">
+                待收货
+            </li>
+        </a>
+        <a href="product.html">
+            <li class="col">
+                待评价
+            </li>
+        </a>
+        <a href="sales_return.html">
+            <li class="col">
+                已完成
+            </li>
+        </a>
+    </ul>
+</nav>
+<div id="product">
+    <div class="assess">
+        <div class="hed"><img src="../../images/hdshdshdsh_03.png" alt="">待付款
+            <span><img src="../../images/24.png" alt=""><a href="">78小时后关闭订单</a></span>
+        </div>
+        <div class="bot">
+            <div class="lef_tu">
+                <a href=""><img src="../../images/tianshitianbai.jpg" alt=""></a>
+            </div>
+            <div class="rig_text">
+                <h5><a href="">天使甜白</a></h5>
+
+                <p><a href="">ghgghdsgdsgidsgdisgdkjsghdsklgghgghdsgdsgidsgdisgdkjsghdsk</a></p>
+
+                <div class="mone">
+                    <span><a href="">750ml</a></span>
+                    <span><a href="">单支</a></span>
+                    <span style="display:block; color:black">价格<a href="" style="color:red;">￥789</a></span>
+                </div>
+
+                <div class="logis">
+                    <div class="delet"><a href="">删除</a></div>
+                    <div class="pay_mony"><a href="">去支付</a></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="assess">
+        <div class="hed"><img src="../../images/hdshdshdsh_03.png" alt="">待付款
+            <span><img src="../../images/24.png" alt=""><a href="">78小时后关闭订单</a></span>
+        </div>
+        <div class="bot">
+            <div class="lef_tu">
+                <a href=""><img src="../../images/weierbote%20(2).jpg" alt=""></a>
+            </div>
+            <div class="rig_text">
+                <h5><a href="">维尔波特黑色标</a></h5>
+
+                <p><a href="">ghgghdsgdsgidsgdisgdkjsghdsklgghgghdsgdsgidsgdisgdkjsghdsk</a></p>
+
+                <div class="mone">
+                    <span><a href="">750ml</a></span>
+                    <span><a href="">单支</a></span>
+                    <span style="display:block; color:black">价格<a href="" style="color:red;">￥789</a></span>
+                </div>
+
+                <div class="logis">
+                    <div class="delet"><a href="">删除</a></div>
+                    <div class="pay_mony"><a href="">去支付</a></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function ($) {
+        $(".list-inline a>li").click(function () {
+            $(this).addClass('pub_li').parent().siblings().children().removeClass('pub_li');
+        });
+
+    });
+</script>
+</html>

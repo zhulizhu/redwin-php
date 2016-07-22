@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c4e91940-c117-47de-8dc3-daed23fdb960" name="redwin" url="http://211.149.155.48">
+        <fileTransfer host="211.149.155.48" port="21" rootFolder="/redwin" password="dfe8dfebdf92df9ddfeedf9edfe9df99df9adfecdf9fdfccdf9ddf9d" username="redwin">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

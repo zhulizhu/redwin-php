@@ -1,0 +1,19 @@
+<div id="leftNav">
+<h2>
+    <em>{$SortName.title}</em>
+</h2>
+	<div class="list">
+		{$HtmlUL}
+	</div>
+	<script type="text/javascript">
+	$("#leftNav .list ul li em").bind("click",function(){
+		var li = $(this).parent();
+		 if (li.attr("class")==""){
+			 li.addClass("onfocus");
+		 }else{
+			 li.removeClass("onfocus");
+		}
+	});
+    </script>
+    <!--/左侧分类-->
+</div>

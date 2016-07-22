@@ -1,0 +1,136 @@
+<extend name="Base/common"/>
+
+
+<block name="body">
+
+<div class="top-head">
+	<h2>个人中心</h2>
+    <div class="cart_edit"><a href="{:U('User/logout')}" class="editcart">退出登录</a></div>
+</div>
+<style>
+.myaddress
+{ width:100%; height:40px; background:#fff; margin-top:10px;padding:0px;}
+.myaddress a
+{ width:90%; height:40px; line-height:40px; font-size:16px; text-decoration:none; display:block; margin:0px auto; color:#333;}
+
+.updatepayword
+{ width:100%; height:40px; background:#fff; margin-top:10px;padding:0px;}
+.updatepayword a
+{ width:90%; height:40px; line-height:40px; font-size:16px; text-decoration:none; display:block; margin:0px auto; color:#333;}
+</style>
+<div class="user-index">
+	<div class="user-info" style="position:relative;">
+        <div class="img"><img src="<empty name="info.headimgurl">__PUBLIC__/admin/images/getheadimg.jpg<else/>{$info.headimgurl}</empty>" width="70" height="70" /></div>
+        <p align="center" style="position:absolute; left:20px; bottom:5px; color:#fff; font-size:12px;">UID:<?php echo $info['uid']+10000; ?></p>
+        <div class="right">
+        	<p>{$info.nickname}</p>
+            <p><?php $temp = get_group_by_uid($info['id']); echo $temp['title']; ?></p>
+            <p>累计业绩：{$yeji}</p>
+            <lt name="group.id" value="13">
+                	<p><eq name="up" value="off">升级还需业绩：<lt name="shengyu" value="0">0<else/>{$shengyu}</lt>
+                    <else/><a href="{:U('shengji')}">已达到升级条件，申请升级</a>
+                    </eq>
+                	</p>
+            </lt>
+        </div>
+        <div class="bzj" style="text-align:center;"><a href="{:U('Bzj/index')}" style="color:#fff; text-decoration:none;"><span>保</span>￥{$info.bzj}</a></div>
+    </div>
+    
+    <div class="my-list">
+    	<ul>
+        	<li><a href="{:U('like')}"><p>收藏的产品</p><p>{:like_count()}</p></a></li>
+            <li><a href="{:U('view')}"><p>浏览记录</p><p>{:view_count()}</p></a></li>
+            <li><a href="{:U('team')}"><p>我的团队</p><p>{:count(get_all_team())}</p></a></li>
+        </ul>
+    </div>
+    
+    <div class="my-order" style="height:130px;">
+    	
+        <div class="top"><h3>我的订单</h3><span><a href="{:U('User/myorder')}">查看全部订单>></a></span></div>
+        <div class="bottom">
+        	<ul style="margin-bottom: 10px;">
+            	<li class="ul1" style="width:25%;"><a href="{:U('myorder?type=0')}">待付款<span>{:count(get_order_list(0))}</span></a></li>
+                <li class="ul2" style="width:25%;"><a href="{:U('myorder?type=1')}">待发货<span>{:count(get_order_list(9))}</span></a></li>
+                <li class="ul3" style="width:25%;"><a href="{:U('myorder?type=1')}">待收货<span>{:count(get_order_list(1))}</span></a></li>
+                <li class="ul4" style="width:25%;"><a href="{:U('myorder?type=2')}">待评价<span>{:count(get_order_list(2))}</span></a></li>
+            </ul>
+            <ul style="clear: both; margin-top: 10px; padding-top: 10px;">
+                <li class="ul5" style="width:25%;"><a href="{:U('myorder?type=4')}">退/换货</a></li>
+            </ul>
+        </div>
+        
+    </div>
+    
+    <div class="my-order">
+    	
+        <div class="top"><h3>积分订单</h3><span><a href="{:U('User/myorder')}">查看全部积分订单>></a></span></div>
+        <div class="bottom">
+        	<ul>
+                <li class="ul3" style="width:25%;"><a href="{:U('jforder?type=1')}">待收货<span>{:count(get_jforder_list(1))}</span></a></li>
+                <li class="ul4" style="width:25%;"><a href="{:U('jforder?type=2')}">已完成<span>{:count(get_jforder_list(2))}</span></a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="my-money">
+    	<div class="top"><h3>我的钱包</h3></div>
+        <div class="bottom">
+        	<ul>
+            	<li style="width:20%;"><a href="{:U('yue')}"><p>我的余额</p><p>￥{$info.money}</p></a></li>
+                <li style="width:20%;"><a href="javascript:;"><p>业绩积分</p><p>{$info.xxmoney}</p></a></li>
+                <li style="width:20%;"><a href="{:U('coupons')}"><p>优惠券</p><p>{:get_count_coupons()}</p></a></li>
+                <li style="width:20%;"><a href="javascript:;"><p>商城积分</p><p>{$info.jifen}</p></a></li>
+                <li style="width:20%; text-align:center;"><a href="{:U('youfen')}"><p>优分</p><p>{$info.youfen}</p></a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="myaddress">
+    	<a href="{:U('userhb')}">红包管理>></a>
+    </div>
+    <div style="clear:both; height:0px;"></div>
+    
+    <div class="myaddress">
+    	<a href="{:U('address')}">收货地址管理>></a>
+    </div>
+    <div style="clear:both; height:0px;"></div>
+    <div class="updatepayword">
+    	<a href="{:U('update_paypass')}">修改支付密码>></a>
+    </div>
+    <div style="clear:both; height:10px;"></div>
+    
+    
+
+</div>
+<include file="shopping/wechat_address"/>
+<script>
+var codestring = "";
+var access_tokenstring = "";
+var oldTimeStamp;//保存timestamp，提交用
+var oldNonceStr; //保存nonceStr,提交用
+var sign;
+var isaccget = true;
+
+function editAddress() {
+	var signparas = $.extend(signparasobj, {
+		"accesstoken": "{$web_access_token}",
+		"noncestr": getNonceStr(),
+		"timestamp": getTimeStamp(),
+		"url": window.location.href
+	});
+	//签名
+	var signstring = getSign(perapara(signparas));
+	if (isaccget) {
+		WeixinJSBridge.invoke('editAddress',
+				{
+					"appId": getappid(),
+					"scope": "jsapi_address",
+					"signType": "sha1",
+					"addrSign": signstring,
+					"timeStamp": oldTimeStamp,
+					"nonceStr": oldNonceStr
+				}
+	)};
+};
+</script>
+</block>

@@ -1,0 +1,147 @@
+<extend name="Base/common"/>
+
+<block name="body">
+    <!--点击首页快速导航获取参数值-->
+</head>
+<body onload="init()">
+<div id="category">
+    <div class="cate">
+        <div>
+            <a href="javascript:;">
+                <img src="__IMG__/kdkdftu_03.png" alt="" style="width: 47px;height: 19px;margin: 1px -12px 1px 3px;
+   			 padding: 0;">全部分类
+            </a>
+        </div>
+        <input type="text" placeholder="请输入商品名称" style="float: left">
+        <a href="product_list.html">
+            <img src="__IMG__/tyt_06.png" alt="" style="width:30px;height:30px;vertical-align: middle;float: right;
+    margin: 8px 2px 1px 1px;">
+        </a>
+
+    </div>
+    <div class="pro_list">
+        <ul>
+                    <li onclick="location.href='{:U('detail?id='.$list['id'])}'">
+                        <div class="img"><a href="{:U('detail?id='.$list['id'])}"><img src="/Uploads/Picture/2016-07-20/578f04236ddd0.jpg_200x200.jpg" style="height: 89px;"></a></div>
+                        <div class="info">
+                            <div class="title"><a href="{:U('detail?id='.$list['id'])}">撒丁岛多利亚诺瓦酒庄阿蕾娜达干红葡萄酒</a></div>
+                            <div class="bottom">
+                                <div class="left">
+                                    <p class="price">会员价 ￥0.00</p>
+                                    <p class="scj">市场价 ￥699.00</p>
+                                </div>
+                                <div class="right">
+                                    总销量<br /><span>46</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+        </ul>
+    </div>
+
+    <div class="pop_cate" id="pop_cate" >
+        <div>
+            <div class="pop_lef" id="123">
+                <ul>
+                    <a href="javascript:;">
+                        <li id="one" field="country" class="left_country"><img src="__IMG__/guojia333.png" alt="">国家<span>›</span>
+                        </li>
+                    </a>
+                    <a href="javascript:;">
+                        <li id="two"field="price" class="left_price"><img src="__IMG__/jiage.png" alt="">价格<span>›</span></li>
+                    </a>
+                    <a href="javascript:;">
+                        <li id="three" field="box" class="left_box"><img src="__IMG__/zhengxiang.png" alt="">包装规格<span>›</span></li>
+                    </a>
+                    <a href="javascript:;">
+                        <li id="five" field="occasion" class="left_occasion"><img src="__IMG__/changhe.png" alt="">场合选酒<span>›</span></li>
+                    </a>
+                    <!--<a href="product_list.html">-->
+                        <!--<li id="six"><img  src="__IMG__/jiuzhuang.png" alt="">酒庄分类</li>-->
+                    <!--</a>-->
+                    <a href="javascript:;">
+                        <li id="seven" field="species" class="left_species"><img src="__IMG__/zhonglei.png" alt="">种类分类<span>›</span></li>
+                    </a>
+                    <a href="javascript:;">
+                        <li id="eight" field="grape" class="left_grape"><img src="__IMG__/putao.png" alt="">葡萄种类<span>›</span></li>
+                    </a>
+                    <a href="javascript:;">
+                        <li id="nine" field="color" class="left_color"><img  src="__IMG__/yanse.png" alt="">颜色<span>›</span></li>
+                    </a>
+                    <a href="javascript:;">
+                        <li id="ten" field="taste" class="left_taste"><img src="__IMG__/kougan.png" alt="">口感<span>›</span></li>
+                    </a>
+                    <a href="javascript:;">
+                        <li id="elev" field="tool" class="left_tool"><img src="__IMG__/jiuju222.png" alt="">酒具<span>›</span></li>
+                    </a>
+                    <a href="javascript:;">
+                        <li id="twelve"field="champagne" class="left_champagne"><img src="__IMG__/xiangbing.png" alt="">香槟.起泡<span>›</span></li>
+                    </a>
+                    <a href="javascript:;">
+                        <li id="thirteen" field="enhanced" class="left_enhanced"><img src="__IMG__/jiaqingxing.png" alt="">加强型</li>
+                    </a>
+                </ul>
+            </div>
+            <!--右边country-->
+            <volist name="newArray" id="newArray">
+            <div class="pop_rig {$newArray.name}">
+                <ul>
+                    <volist name="newArray.list" id="linkage">
+                    <a href="{:U('Product/Searchs')}?{$newArray.name}={$linkage.id}">
+                        <li>{$linkage.title}</li>
+                    </a>
+                    </volist>
+                </ul>
+            </div>
+            </volist>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+//首页链接到分类页面
+    $(function(){
+       $(".pop_cate").hide();
+        $(".pop_rig").hide();
+        var str = getParameter("id");
+        if(str){
+            var field = $("#"+str).attr("field");
+            $(".pop_lef ul li").removeClass("public_pop");
+            $("#"+str).addClass("public_pop");
+        }else{
+            var field = $(".pop_lef ul li").eq(0).attr("field");
+            $(".pop_lef ul li").eq(0).addClass("public_pop");
+
+        }
+        $(".pop_rig").hide();
+        $("."+field).show();
+        $(".pop_lef ul a").click(function(){     //点击分类页面,显示右边目录
+            var field = $(this).find("li").attr("field");
+            $(".pop_lef ul a li").removeClass("public_pop");
+            $(".left_"+field).addClass("public_pop");
+            $(".pop_rig").hide();
+            $("."+field).show();
+        });
+        $(".pop_rig ul a li").click(function(){     //点击右边目录
+            $("this").addClass("public_pop").siblings().removeClass("public_pop");
+        });
+        $(".cate").click(function(){
+            $(".pop_cate").toggle();
+                })
+
+    });
+
+        function getParameter(param)
+        {
+            var query = window.location.search;//获取URL地址中？后的所有字符
+            var iLen = param.length;//获取你的参数名称长度
+            var iStart = query.indexOf(param);//获取你该参数名称的其实索引
+            if (iStart == -1)//-1为没有该参数
+                return "";
+            iStart += iLen + 1;
+            var iEnd = query.indexOf("&", iStart);//获取第二个参数的其实索引
+            if (iEnd == -1)//只有一个参数
+                return query.substring(iStart);//获取单个参数的参数值
+            return query.substring(iStart, iEnd);//获取第二个参数的值
+        }
+</script>
+</block>

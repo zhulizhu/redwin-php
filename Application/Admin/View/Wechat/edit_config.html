@@ -1,0 +1,99 @@
+<extend name="Public/base" />
+<block name="body">
+	<!-- 标题 -->
+	<div class="main-title">
+		<h2>{$meta_title}</h2>
+	</div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">名称<span class="check-tips">（只用于后台显示，区别不同的公众号）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="name" value="{$info.name}" />
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">微信号<span class="check-tips">（必填，可在公众号的账号信息处查阅）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="wechatname" value="{$info.wechatname}" />
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">账户类型<span class="check-tips">（请选择公众账号类型）</span></label>
+            <div class="controls">
+                <input type="radio" name="type" value="1"  /> 订阅号
+                <input type="radio" name="type" value="2"  /> 订阅号（认证）
+                <input type="radio" name="type" value="3"  /> 服务号
+                <input type="radio" name="type" value="4"  /> 服务号（认证）
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">原始ID<span class="check-tips">（必填，可在公众号的帐号信息处查阅）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="wechatid" value="{$info.wechatid}" />
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">Token<span class="check-tips">（必填，可在公众号的开发模式处查阅）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="token" value="{$info.token}" />
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">appID<span class="check-tips">（可在公众号的开发模式处查阅，订阅号需认证才有）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="appID" value="{$info.appID}" />
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">appsecret<span class="check-tips">（同上）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="appsecret" value="{$info.appsecret}" />
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">绑定微信号<span class="check-tips">（绑定私人微信号，以便接收消息）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="admin_id" value="{$info.admin_id}" />
+            </div>
+        </div>
+        <!--<div class="form-item">
+            <label class="item-label">access_token<span class="check-tips">（不用填写，系统会自动更新）</span></label>
+            <div class="controls">
+            	<label class="textarea input-large">
+            		<textarea name="access_token">{$info.access_token}</textarea>
+            	</label>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">菜单<span class="check-tips">（同上）</span></label>
+            <div class="controls">
+            	<label class="textarea input-large">
+            		<textarea name="menu">{$info.menu}</textarea>
+            	</label>
+            </div>
+        </div>-->
+        <div class="form-item">
+            <label class="item-label">状态<span class="check-tips">（开启就会使用）</span></label>
+            <div class="controls">
+            	<label class="radio">
+            		<input type="radio" name="status" value="1"<eq name="info.status" value="1"> checked="checked"</eq> />开启
+            	</label>
+            	<label class="radio">
+            		<input type="radio" name="status" value="0"<eq name="info.status" value="0"> checked="checked"</eq> />关闭
+            	</label>
+            </div>
+        </div>
+        <div class="form-item">
+            <input type="hidden" name="id" value="{$info.id}">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+<block name="script">
+	<script type="text/javascript">
+	Think.setValue("type", {$info.type|default=1});
+		//导航高亮
+		highlight_subnav("WechatEdit/config");
+    </script>
+</block>

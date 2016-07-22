@@ -1,0 +1,44 @@
+<extend name="Base/common"/>
+<block name="header">
+	<header class="announced" id="overview">
+		<div class="container">
+			<div class="img"><img src="__PUBLIC__/Wechat/images/huangguan.png"></div>
+			<h2>揭晓结果</h2>
+			<div class="luckno">{$product.awardnum}</div>
+		</div>
+	</header>
+</block>
+<block name="body">
+<div class="detail">
+    <div class="hj_info">
+        <ul>
+           <li>
+                    <div class="hj_title">{$product.periods}{$product.title}</div>
+                    <div class="hj_need">
+                    	<div class="hj_img"><img src="{$product.photo|picture}"/></div>
+						<div class="hj_user">
+						<ul>
+	                    	<li>
+	                    		<div class="name"><span style="color:#ff8b2b;">获&nbsp;&nbsp;奖&nbsp;&nbsp;者：</span>{$product.nickname}</div>
+	                    	</li>
+	                    	<li>
+	                    		<div class="id">获奖人ID：{$product.awarduser}(ID为用户唯一不变的标示)</div>
+	                    	</li>
+                    	</ul>
+                    	</div>
+                    </div>
+           </li>
+       </ul>
+   	<div style="font-size:20px; font-weight:bold; margin-top:20px;">幸运号码：<span style="color:#ff8b2b">{$product.awardnum}</span></div>
+   	<div style="margin-top:10px;">夺宝时间：{$product.create_time|date='Y-m-d H:i:s',###}</div>
+   	<div>揭晓时间：{$product.update_time|date='Y-m-d H:i:s',###}</div>
+        
+    </div>
+    
+    <div class="hot">
+    	<a href="{:U('Product/joins','id='.$product['id'])}"><div class="kuaidi"><div class="left">所有参与记录</div><div class="right">></div></div></a>
+   
+    </div>
+  
+</div>
+</block>

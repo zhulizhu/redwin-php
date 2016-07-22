@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<include file="Public/head"/>
+</head>
+<body>
+	<!-- 头部 -->
+	<include file="Public/header"/>
+    <!-- 头部 -->
+	<include file="Public/address"/>
+    
+<div id="EjMain">
+	<!--左侧导航-->
+	<div id="left">
+		 {:leftnav()}
+	</div>
+    
+    <div id="right">
+    	<div id="right_List">
+			<div id="WebNewsList">
+				<ul>
+					<volist name="News_list" id="data">
+					<li>
+						<em><a href="{:U('Article/detail?id='.$data['id'])}" title="{$data.title}">{$data.title}</a></em>
+						<span>{$data.create_time|date='Y-m-d',###}</span>
+					</li>
+					</volist>
+				</ul>
+			</div>
+	    	<include file="Public/thePageInfo"/>
+        </div>
+    </div>
+</div>
+	<!-- 底部 -->
+	<include file="Public/footer"/>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<!-- 标题 -->
+	<div class="main-title">
+		<h2>{$meta_title}</h2> <h3 class="a3"></h3>
+	</div>
+
+	<!-- 按钮工具栏 -->
+	<div class="cf">
+		<div class="fl">
+        	<if condition="$nowwechatid eq 'all'">
+            	<a href="javascript:;" class="disabled btn">更新资料</a>
+            <else/>
+            	<a href="{:U('WechatUser/upinfo')}" class="async-get btn" title="已请求，请稍后刷新查看">更新资料</a>
+            </if>
+            <button class="btn ajax-post confirm" target-form="ids" url="{:U('del?model='.$model)}">删 除</button>
+		</div>
+
+        <!-- 高级搜索 -->
+        <div class="search-form fr cf">
+        	<div class="fl">
+            <select class="change-get" target-form="wechatid" url="{:U('Wechat/changeuser','',false)}">
+            	<option value="all">所有账户</option>
+                <volist name="moreuser" id="mo">
+                <option value="{$mo.wechatid}" <if condition="$nowwechatid eq $mo[wechatid]" > selected</if> > {$mo.name} </option>
+                </volist>
+            </select>&nbsp;&nbsp;
+            </div>
+            <div class="sleft">
+                <input type="text" name="key" class="search-input" value="{:I('key')}" placeholder="请输入昵称">
+                <a class="sch-btn" href="javascript:;" id="search" url="{:U($act_name)}"><i class="btn-search"></i></a>
+            </div>
+        </div>
+	</div>
+
+
+	<!-- 数据表格 -->
+    <div class="data-table">
+		<table>
+    <thead>
+        <tr>
+		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+		<th width="40">编号</th>
+		<th width="150">用户/粉丝</th>
+		<th>关注的公众号</th>
+		<th>性别</th>
+		<th>地区</th>
+		<th>最初关注时间</th>
+		<th>最后来访时间</th>
+		<th>关注状态</th>
+		<th>操作</th>
+		</tr>
+    </thead>
+    <tbody>
+		<volist name="list" id="vo">
+		<tr>
+            <td>
+             <input class="ids" type="checkbox" name="ids[]" value="{$vo.id}" />
+             <input class="ids" type="checkbox" name="openid[]" value="{$vo.openid}" style="display:none" />
+             <input class="ids" type="checkbox" name="wechatid[]" value="{$vo.wechatid}" style="display:none" />
+            </td>
+			<td>{$vo.id} </td>
+            <td class="moreinfo">
+            	<img src="{$vo.headimgurl|default='__PUBLIC__/Admin/images/getheadimg.jpg'}" width="48" align="top" />
+                &nbsp;{$vo.nickname|default='未知'}
+            	<div>
+            		<span>详细资料</span>
+            		<dl class="first"><dt>OpenID：</dt><dd>{$vo.openid|default='未知'}</dd></dl>
+            		<dl><dt>昵称：</dt><dd>{$vo.nickname|default='未知'}</dd></dl>
+            		<dl><dt>性别：</dt><dd><if condition="$vo.sex eq 1">男<elseif condition="$vo.sex eq 2" />女<else />未知</if></dd></dl>
+            		<dl><dt>地区：</dt><dd>{$vo.country|default='未知'}&nbsp;{$vo.province|default='未知'}&nbsp;{$vo.city|default='未知'}</dd></dl>
+            		<dl><dt>语言：</dt><dd>{$vo.language|default='未知'}</dd></dl>
+				</div>
+			</td>
+			<td>{$vo.wechatid|get_wechat_name}</td>
+			<td><if condition="$vo.sex eq 1">男<elseif condition="$vo.sex eq 2" />女<else />未知</if></td>
+			<td>{$vo.country|default='未知'}&nbsp;{$vo.province|default='未知'}&nbsp;{$vo.city|default='未知'}</td>
+			<td>{$vo.addtime|time_format}</td>
+			<td>{$vo.logtime|time_format}</td>
+			<td><if condition="$vo.subscribe eq 1">已关注<elseif condition="$vo.subscribe eq 0" />未关注<else />未知</if></td>
+			<td><a href="{:U('WechatUser/send?id='.$vo['id'])}">发送消息</a>
+				<a class="ajax-get" href="{:U('WechatUser/upinfo?ids='.$vo['id'].'&openid='.$vo['openid'].'&wechatid='.$vo['wechatid'])}">更新资料</a>
+                <a class="ajax-get confirm" title="删除" href="{:U('del?model='.$model.'&ids='.$vo['id'])}">删除</a></td>
+		</tr>
+		</volist>
+	</tbody>
+    </table> 
+
+        
+	</div>
+
+	<!-- 分页 -->
+    <div class="page">
+        {$_page}
+    </div>
+</div>
+
+</block>
+<block name="script">
+<style type="text/css">
+.moreinfo{position:relative;z-index:1}
+.moreinfo *{float:left;background:#fff}
+.moreinfo div{width:380px;border:1px solid #ccc;display:none;position:absolute;left:100px;bottom:0}
+.moreinfo span{width:360px;padding:5px 10px;border-bottom:1px solid #ccc;font-size:16px;background:#eee}
+.moreinfo dl{width:360px;line-height:30px;margin:0 10px;border-top:1px solid #eee;display:inline}
+.moreinfo dl.first{border:0}
+.moreinfo dt{width:80px;text-align:right}
+.moreinfo dd{width:280px;text-indent:10px}
+td.hover{z-index:2}
+</style>
+    <script type="text/javascript">
+        $(function() {
+			// 更多信息
+			$('td.moreinfo').hoverDelay({over:".find('div').slideDown()",out:".find('div').slideUp()"});
+            //搜索功能
+            $("#search").click(function() {
+                var url = $(this).attr('url');
+                var query = $('.search-form').find('input').serialize();
+                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+                query = query.replace(/^&/g, '');
+                if (url.indexOf('?') > 0) {
+                    url += '&' + query;
+                } else {
+                    url += '?' + query;
+                }
+                window.location.href = url;
+            });
+            //回车搜索
+            $(".search-input").keyup(function(e) {
+                if (e.keyCode === 13) {
+                    $("#search").click();
+                    return false;
+                }
+            });
+            //导航高亮
+            highlight_subnav("{:U('index')}");
+            //点击排序
+        	$('.list_sort').click(function(){
+        		var url = $(this).attr('url');
+        		var ids = $('.ids:checked');
+        		var param = '';
+        		if(ids.length > 0){
+        			var str = new Array();
+        			ids.each(function(){
+        				str.push($(this).val());
+        			});
+        			param = str.join(',');
+        		}
+
+        		if(url != undefined && url != ''){
+        			window.location.href = url + '/ids/' + param;
+        		}
+        	});
+        });
+    </script>
+</block>

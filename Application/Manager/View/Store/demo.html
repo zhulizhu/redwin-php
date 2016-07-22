@@ -1,0 +1,25 @@
+<extend name="Public/base"/>
+
+<block name="body">
+
+<div class="demolist">
+<h2>模板风格</h2>
+	<div class="tab">
+    	<strong>类型：</strong>
+        <a href="">电脑商务</a><a href="">欧美时尚</a>
+    </div>
+    <div class="list">
+    	<ul>
+        	<volist name="list" id="list">
+			<li>
+    			<p class="img"><img src="{$list.picture}" width="254" height="220" /></p>
+        		<p align="center"><strong>{$list.title}</strong></p>
+                <p align="center">￥{$list.addon.Month_price}/月 &nbsp; ￥{$list.addon.Yeah_price}/年 &nbsp; ￥{$list.addon.ever_price}/永久 &nbsp; </p>
+                <p align="center"><input type="button" value="申请试用" class="btn" /><a class="btn" href="{:U('buythis?id='.$list[id])}" />立即购买</a></p>
+    		</li>
+            </volist>
+		</ul>
+    </div>
+</div>
+
+</block>
