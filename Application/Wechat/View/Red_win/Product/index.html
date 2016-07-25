@@ -14,28 +14,29 @@
         </div>
         <input type="text" placeholder="请输入商品名称" style="float: left">
         <a href="product_list.html">
-            <img src="__IMG__/tyt_06.png" alt="" style="width:30px;height:30px;vertical-align: middle;float: right;
+            <img src="__IMG__/tyt_06.png" alt="" style="position:absolute;top:0;right:8%;width:30px;height:30px;vertical-align: middle;float: right;
     margin: 8px 2px 1px 1px;">
         </a>
-
     </div>
     <div class="pro_list">
         <ul>
-                    <li onclick="location.href='{:U('detail?id='.$list['id'])}'">
-                        <div class="img"><a href="{:U('detail?id='.$list['id'])}"><img src="/Uploads/Picture/2016-07-20/578f04236ddd0.jpg_200x200.jpg" style="height: 89px;"></a></div>
+            <volist name="prolist" id="prolist">
+                    <li onclick="location.href='{:U('detail?id='.$prolist['id'])}'">
+                        <div class="img"><a href="{:U('detail?id='.$prolist['id'])}"><img src="{$prolist.cover_id|thumb=500,500}" style="height: 89px;"></a></div>
                         <div class="info">
-                            <div class="title"><a href="{:U('detail?id='.$list['id'])}">撒丁岛多利亚诺瓦酒庄阿蕾娜达干红葡萄酒</a></div>
+                            <div class="title"><a href="{:U('detail?id='.$prolist['id'])}">{$prolist.id}{$prolist.title}</a></div>
                             <div class="bottom">
                                 <div class="left">
-                                    <p class="price">会员价 ￥0.00</p>
-                                    <p class="scj">市场价 ￥699.00</p>
+                                    <p class="price">会员价 ￥{$prolist.price}</p>
+                                    <p class="scj">市场价 ￥{$prolist.id|auto_price}</p>
                                 </div>
                                 <div class="right">
-                                    总销量<br /><span>46</span>
+                                    总销量<br /><span>{$prolist.xiaoliang}</span>
                                 </div>
                             </div>
                         </div>
                     </li>
+            </volist>
         </ul>
     </div>
 
@@ -102,18 +103,23 @@
     $(function(){
        $(".pop_cate").hide();
         $(".pop_rig").hide();
+        var open = false;
         var str = getParameter("id");
         if(str){
+            $(".pop_cate").show();
             var field = $("#"+str).attr("field");
+            $("."+field).show();
             $(".pop_lef ul li").removeClass("public_pop");
             $("#"+str).addClass("public_pop");
+            $("body").height($(window).height());
+            $("body").css({"overflow-y": "hidden"});
+            open = true;
         }else{
             var field = $(".pop_lef ul li").eq(0).attr("field");
             $(".pop_lef ul li").eq(0).addClass("public_pop");
-
         }
-        $(".pop_rig").hide();
-        $("."+field).show();
+        //$(".pop_rig").hide();
+        //$("."+field).show();
         $(".pop_lef ul a").click(function(){     //点击分类页面,显示右边目录
             var field = $(this).find("li").attr("field");
             $(".pop_lef ul a li").removeClass("public_pop");
@@ -124,10 +130,24 @@
         $(".pop_rig ul a li").click(function(){     //点击右边目录
             $("this").addClass("public_pop").siblings().removeClass("public_pop");
         });
-        $(".cate").click(function(){
-            $(".pop_cate").toggle();
-                })
 
+        $(".cate").click(function(){
+            if(open){
+                $(".pop_cate").hide();
+                open = false;
+                $("body").height($(document).height());
+                $("body").css({"overflow": "auto"});
+            }else{
+                $(".pop_cate").show();
+                var field = $(".pop_lef ul li").eq(0).attr("field");
+                $(".pop_lef ul li").removeClass("public_pop");
+                $(".pop_lef ul li").eq(0).addClass("public_pop");
+                $("."+field).show();
+                open = true;
+                $("body").height($(window).height());
+                $("body").css({"overflow-y": "hidden"});
+            }
+        })
     });
 
         function getParameter(param)

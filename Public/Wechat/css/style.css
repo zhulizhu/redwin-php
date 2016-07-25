@@ -70,7 +70,7 @@ h5 a {
 
 #home_page .form-control {
     display: block;
-    width: 84%;
+    width: 98%;
     height: 34px;
     padding: 6px 12px;
     font-size: 14px;
@@ -2931,6 +2931,9 @@ a:visited {
     height: 55px;
     border-bottom: 1px solid #e5e5e5;
     margin-left: 3%;
+    position: fixed;
+    top:0;
+    background-color: #fff;
 }
 
 #category .cate div:nth-child(1) {
@@ -2948,7 +2951,7 @@ a:visited {
 }
 
 #category .cate input {
-    width: 50%;
+    width: 58%;
     height: 34px;
     text-indent: 10px;
     border-radius: 30px;

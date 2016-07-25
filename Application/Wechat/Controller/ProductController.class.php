@@ -16,14 +16,12 @@ class ProductController extends HomeController {
 	
 	/* 文档模型频道页 */
 	public function index() {
-		$Product = D ( 'Product' );
-		$Procate = D('Procate');
-		$where['id'] = array("in","287,306,313,318");
-		$catetree = M('Procate')->where($where)->select();
-		for($i=0;$i<count($catetree);$i++){
-			$catetree[$i]['_child'] = $Procate->getTree($catetree[$i]['id']);
-		}
-		$this->assign("tree",$catetree);
+
+		$where = array();
+		$where['category_id'] = 332;
+		$where['status'] = 1;
+		$list = M("Product")->where($where)->select();
+		$this->assign("prolist",$list);
 		$this->assign("sharetitle","产品中心-");
 
 		$where = array();
@@ -42,7 +40,6 @@ class ProductController extends HomeController {
 			$newArray[] = $temp;
 		}
 		$this->assign("newArray",$newArray);
-
 		$this->display ();
 	}
 	
@@ -282,7 +279,7 @@ class ProductController extends HomeController {
 			$where ["id"] [] = $info ["picture"];
 			$result = M ( 'picture' )->where ( $where )->select ();
 			for($i = 0; $i < count ( $result ); $i ++) {
-				$result [$i] ["photo"] = thumb ( $result [$i] ["id"],500,500 );
+				$result [$i] ["photo"] = thumb ( $result [$i] ["id"] , 700 ,700 );
 			}
 			$this->assign ( 'picture', $result );
 		}
@@ -358,7 +355,7 @@ class ProductController extends HomeController {
 	/* 搜索页面 */
 	public function Search($p = 1) {
 		$Product = D ( 'Product' );
-		$where['description'] = array("like","%".I('get.key')."%");
+		$where['description'] = array("like","%".I('get.txt')."%");
 		$where['status'] = 1;
 		$where['display'] = 1;
 		$list = M('Product')->where($where)->select();

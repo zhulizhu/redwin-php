@@ -39,7 +39,7 @@
     	
         <div class="left">
         	<div class="title">{$info.title}</div>
-			<div class="title" style="color:#333;font-weight: normal;">lallalallallaaaaaa</div>
+			<div class="title" style="color:#333;font-weight: normal;">{$info.english}</div>
             <div class="price">
             	<div class="xianjia">￥<span>{:auto_price($info['id'])}</span></div>
                 <div class="yuanjia">原价：<span>￥{$info.price}</span>销量：{$info.xiaoliang}&nbsp;库存：{$info.kucun}</div>
@@ -126,7 +126,7 @@
 				</li>
 				<li>
 					<span class="til">口感</span>
-					<span class="blo">{$info.taste}</span>
+					<span class="blo">{$info.taste|get_linkage_value}</span>
 				</li>
 				<li style="width:90%;">
 					<span class="til">其他</span>
