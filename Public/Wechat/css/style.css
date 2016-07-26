@@ -231,7 +231,7 @@ h5 a {
     overflow: hidden;
     width: 100%!important;
     margin:0!important;
-    height: auto;
+    height: 38px !important;
     color: black;
     font-weight:bold;
     margin-top:14px!important;
@@ -2999,10 +2999,9 @@ a:visited {
     line-height: 45px;
 }
 
-#home_page .con .rig h4 {
-    width: 25px;
+#home_page .con .rig {
     height: auto;
-    margin: 1px 10px 1px 9px;
+    margin: 4px 10px 1px 9px;
 }
 
 #category .pop_cate div > ul > a > li span {
